@@ -21,6 +21,8 @@ test('external and legacy recordings cannot enter the inventory', () => {
     assert.equal(getPreparedRecording(segment, { [recordingKey(segment)]: { url } }), null);
   }
   assert.equal(getPreparedRecording(segment, {}), null);
+  const m4a = { url: `/narration/${'b'.repeat(64)}.m4a` };
+  assert.equal(getPreparedRecording(segment, { [recordingKey(segment)]: m4a }), m4a);
 });
 
 test('original meanings are limited to an identified Gita verse and available language', () => {
@@ -33,7 +35,7 @@ test('original meanings are limited to an identified Gita verse and available la
   assert.equal(originalMeaning(null, 'en', meanings), null);
 });
 
-test('every imported narration entry has a valid bundled WAV and commercial text provenance', async () => {
+test('every imported narration entry has valid bundled audio and commercial text provenance', async () => {
   assert.equal(Object.keys(inventory).length, 31);
   const locales = new Set();
   for (const [serialized, entry] of Object.entries(inventory)) {
@@ -43,8 +45,9 @@ test('every imported narration entry has a valid bundled WAV and commercial text
     assert.ok(['public-domain', 'project-original', 'permission-granted'].includes(entry.rights));
     assert.ok(entry.rightsNote);
     const bytes = await readFile(new URL(`../../public${entry.url}`, import.meta.url));
-    assert.equal(bytes.subarray(0, 4).toString(), 'RIFF');
-    assert.equal(bytes.subarray(8, 12).toString(), 'WAVE');
+    const wav = bytes.subarray(0, 4).toString() === 'RIFF' && bytes.subarray(8, 12).toString() === 'WAVE';
+    const m4a = bytes.subarray(4, 8).toString() === 'ftyp';
+    assert.ok(wav || m4a);
     assert.ok(bytes.length > 12 && bytes.length <= 4 * 1024 * 1024);
   }
   assert.deepEqual([...locales].sort(), ['bn-IN', 'en-IN', 'hi-IN', 'mr-IN', 'sa-IN', 'ta-IN', 'te-IN']);

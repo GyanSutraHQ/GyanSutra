@@ -1,6 +1,6 @@
 {
   "[\"sa-IN\",\"verse\",\"धृतराष्ट्र उवाच ,\"]": {
-    "url": "/narration/635f749acff97333b0ffa863f752a578a4276cabe42ea6760edf035bd27de5b1.wav",
+    "url": "/narration/635f749acff97333b0ffa863f752a578a4276cabe42ea6760edf035bd27de5b1.m4a",
     "voice": "Sanskrit (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -10,7 +10,7 @@
     "seconds": 2.05
   },
   "[\"sa-IN\",\"verse\",\"धर्मक्षेत्रे कुरुक्षेत्रे समवेता युयुत्सवः ,\"]": {
-    "url": "/narration/9151fc7b0ee9be82816de8baf9ad1d7342755ad43b0b985ae8010cb5c22dc72f.wav",
+    "url": "/narration/9151fc7b0ee9be82816de8baf9ad1d7342755ad43b0b985ae8010cb5c22dc72f.m4a",
     "voice": "Sanskrit (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -20,7 +20,7 @@
     "seconds": 5.72
   },
   "[\"sa-IN\",\"verse\",\"मामकाः पाण्डवाश्चैव किमकुर्वत सञ्जय .\"]": {
-    "url": "/narration/c72ec2406a9d3ff566977880c7d405ef2b5d996f6dad2dc69479335bdcc2f853.wav",
+    "url": "/narration/c72ec2406a9d3ff566977880c7d405ef2b5d996f6dad2dc69479335bdcc2f853.m4a",
     "voice": "Sanskrit (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -30,7 +30,7 @@
     "seconds": 4.27
   },
   "[\"sa-IN\",\"verse\",\"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन ,\"]": {
-    "url": "/narration/b7af11a740e48b7f2f4d92ec1c305b855f848f14f2eae8895206ee580dfe1a89.wav",
+    "url": "/narration/b7af11a740e48b7f2f4d92ec1c305b855f848f14f2eae8895206ee580dfe1a89.m4a",
     "voice": "Sanskrit (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -40,7 +40,7 @@
     "seconds": 3.5
   },
   "[\"sa-IN\",\"verse\",\"मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि .\"]": {
-    "url": "/narration/eaa06812bfb10180bb750a43e6a6464d6092689978ef1c03a2113445f6d84fe0.wav",
+    "url": "/narration/eaa06812bfb10180bb750a43e6a6464d6092689978ef1c03a2113445f6d84fe0.m4a",
     "voice": "Sanskrit (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -50,7 +50,7 @@
     "seconds": 4.78
   },
   "[\"en-IN\",\"translation\",\"Now, the meaning.\"]": {
-    "url": "/narration/3c31b86684ff14db451f3b09d9861d494d05dd6d4e842d7999a2fbfac1f9a6b4.wav",
+    "url": "/narration/3c31b86684ff14db451f3b09d9861d494d05dd6d4e842d7999a2fbfac1f9a6b4.m4a",
     "voice": "English (Indian) (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -60,7 +60,7 @@
     "seconds": 1.71
   },
   "[\"hi-IN\",\"translation\",\"अब इसका अर्थ सुनिए.\"]": {
-    "url": "/narration/d823688a5b60811a8eb93c2712606e206fa4604cba88bc510dfe7164011b247c.wav",
+    "url": "/narration/d823688a5b60811a8eb93c2712606e206fa4604cba88bc510dfe7164011b247c.m4a",
     "voice": "Hindi (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -70,7 +70,7 @@
     "seconds": 1.62
   },
   "[\"bn-IN\",\"translation\",\"এবার এর অর্থ শুনুন.\"]": {
-    "url": "/narration/10f283bdef081ab2b1b4aa3847c2760605e72a31e34fc4062acf3396cc1777e7.wav",
+    "url": "/narration/10f283bdef081ab2b1b4aa3847c2760605e72a31e34fc4062acf3396cc1777e7.m4a",
     "voice": "Bengali (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -80,7 +80,7 @@
     "seconds": 1.97
   },
   "[\"mr-IN\",\"translation\",\"आता याचा अर्थ ऐकूया.\"]": {
-    "url": "/narration/9cfe37bd64d2075a189c9a3b3b98039d2391408d764bae28240693e7d411ff97.wav",
+    "url": "/narration/9cfe37bd64d2075a189c9a3b3b98039d2391408d764bae28240693e7d411ff97.m4a",
     "voice": "Marathi (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -90,7 +90,7 @@
     "seconds": 2.73
   },
   "[\"te-IN\",\"translation\",\"ఇప్పుడు దీని అర్థం వినండి.\"]": {
-    "url": "/narration/09fa06d96e32eb82bc0aa0c8385178bc9837862d979b61a54f7b513a1962819c.wav",
+    "url": "/narration/09fa06d96e32eb82bc0aa0c8385178bc9837862d979b61a54f7b513a1962819c.m4a",
     "voice": "Telugu (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -100,7 +100,7 @@
     "seconds": 2.82
   },
   "[\"ta-IN\",\"translation\",\"இப்போது இதன் பொருளைக் கேளுங்கள்.\"]": {
-    "url": "/narration/3eabc43b8668b81a73ae9b4330f6db877954e719cb4e412a33826f539a39cba0.wav",
+    "url": "/narration/3eabc43b8668b81a73ae9b4330f6db877954e719cb4e412a33826f539a39cba0.m4a",
     "voice": "Tamil (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -110,7 +110,7 @@
     "seconds": 2.22
   },
   "[\"en-IN\",\"translation\",\"Dhritarashtra asked Sanjaya: When my sons and Pandu’s sons gathered at Kurukshetra, that sacred field, eager to fight, what did they do?\"]": {
-    "url": "/narration/9427f4742783e2d14fdb2ce398ce8638420b4aeae3ca372213820de8091f9570.wav",
+    "url": "/narration/9427f4742783e2d14fdb2ce398ce8638420b4aeae3ca372213820de8091f9570.m4a",
     "voice": "English (Indian) (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -120,7 +120,7 @@
     "seconds": 9.3
   },
   "[\"hi-IN\",\"translation\",\"धृतराष्ट्र ने संजय से पूछा: धर्मभूमि कुरुक्षेत्र में युद्ध की इच्छा से इकट्ठे हुए मेरे पुत्रों और पांडु के पुत्रों ने क्या किया?\"]": {
-    "url": "/narration/3568fa8288973cd72863b36575ec47d5b9b8d7b922b537cb65b202fa18a35891.wav",
+    "url": "/narration/3568fa8288973cd72863b36575ec47d5b9b8d7b922b537cb65b202fa18a35891.m4a",
     "voice": "Hindi (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -130,7 +130,7 @@
     "seconds": 10.24
   },
   "[\"bn-IN\",\"translation\",\"ধৃতরাষ্ট্র সঞ্জয়কে জিজ্ঞেস করলেন: পবিত্র কুরুক্ষেত্রে যুদ্ধের ইচ্ছায় একত্র হওয়ার পর আমার পুত্ররা এবং পাণ্ডুর পুত্ররা কী করল?\"]": {
-    "url": "/narration/3994bd382fdf90d2c6aaea91c8a3b4955c1772f0cb031dceaa9dbaacb99e6098.wav",
+    "url": "/narration/3994bd382fdf90d2c6aaea91c8a3b4955c1772f0cb031dceaa9dbaacb99e6098.m4a",
     "voice": "Bengali (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -140,7 +140,7 @@
     "seconds": 8.96
   },
   "[\"mr-IN\",\"translation\",\"धृतराष्ट्राने संजयाला विचारले: पवित्र कुरुक्षेत्रावर युद्ध करण्याच्या इच्छेने एकत्र आलेल्या माझ्या पुत्रांनी आणि पांडूच्या पुत्रांनी काय केले?\"]": {
-    "url": "/narration/e5487ee8cae30f8b530090cdf43c3846527c93ad8d3538bc1279e7d388cf906b.wav",
+    "url": "/narration/e5487ee8cae30f8b530090cdf43c3846527c93ad8d3538bc1279e7d388cf906b.m4a",
     "voice": "Marathi (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -150,7 +150,7 @@
     "seconds": 10.84
   },
   "[\"te-IN\",\"translation\",\"ధృతరాష్ట్రుడు సంజయుణ్ణి అడిగాడు: పవిత్రమైన కురుక్షేత్రంలో యుద్ధం చేయాలనే కోరికతో చేరిన నా కుమారులు, పాండు కుమారులు ఏమి చేశారు?\"]": {
-    "url": "/narration/0a6f0aaec36df656151250f556f42d84e9268b12618619c506625c38d33265a0.wav",
+    "url": "/narration/0a6f0aaec36df656151250f556f42d84e9268b12618619c506625c38d33265a0.m4a",
     "voice": "Telugu (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -160,7 +160,7 @@
     "seconds": 9.73
   },
   "[\"ta-IN\",\"translation\",\"திருதராஷ்டிரன் சஞ்சயனிடம் கேட்டான்: புனிதமான குருக்ஷேத்திரத்தில் போரிடும் விருப்பத்துடன் கூடிய என் மகன்களும் பாண்டுவின் மகன்களும் என்ன செய்தார்கள்?\"]": {
-    "url": "/narration/3bc6aa40117f6670dfee39e78f693800d8e883ebc77928fe739834db017a6a9c.wav",
+    "url": "/narration/3bc6aa40117f6670dfee39e78f693800d8e883ebc77928fe739834db017a6a9c.m4a",
     "voice": "Tamil (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -170,7 +170,7 @@
     "seconds": 10.33
   },
   "[\"en-IN\",\"translation\",\"Your part is to act; the fruits of action are never yours to command.\"]": {
-    "url": "/narration/3cae8b153e659c5d3f839077d79ee265fafd9214f9f9ec50b2cec8997d5dd8f2.wav",
+    "url": "/narration/3cae8b153e659c5d3f839077d79ee265fafd9214f9f9ec50b2cec8997d5dd8f2.m4a",
     "voice": "English (Indian) (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -180,7 +180,7 @@
     "seconds": 4.44
   },
   "[\"en-IN\",\"translation\",\"Do not make those fruits your motive, and do not become attached to doing nothing.\"]": {
-    "url": "/narration/d53202f9686d5f52b0bd73615045c58bf4145d4c140a53be0fe9e9e132041b33.wav",
+    "url": "/narration/d53202f9686d5f52b0bd73615045c58bf4145d4c140a53be0fe9e9e132041b33.m4a",
     "voice": "English (Indian) (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -190,7 +190,7 @@
     "seconds": 5.04
   },
   "[\"hi-IN\",\"translation\",\"तुम्हारा अधिकार कर्म करने पर है; उसके फल को अपनी इच्छा से तय करने पर नहीं।\"]": {
-    "url": "/narration/b7ee01d030bf2812204bad39dcac9b25576ecf64e6d57129e36e6e0bc7fd5e3a.wav",
+    "url": "/narration/b7ee01d030bf2812204bad39dcac9b25576ecf64e6d57129e36e6e0bc7fd5e3a.m4a",
     "voice": "Hindi (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -200,7 +200,7 @@
     "seconds": 5.81
   },
   "[\"hi-IN\",\"translation\",\"फल पाने की चाह को कर्म का उद्देश्य मत बनाओ, और कर्म न करने में भी आसक्त मत हो।\"]": {
-    "url": "/narration/ebac1396bb7368a912e71054a3a742e65884ec48a855416519876b029224b56d.wav",
+    "url": "/narration/ebac1396bb7368a912e71054a3a742e65884ec48a855416519876b029224b56d.m4a",
     "voice": "Hindi (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -210,7 +210,7 @@
     "seconds": 7.09
   },
   "[\"bn-IN\",\"translation\",\"তোমার অধিকার কাজ করার মধ্যে; তার ফল নিজের ইচ্ছামতো ঠিক করার মধ্যে নয়।\"]": {
-    "url": "/narration/52c2bf6f489a0c59f5325523bd27dfc3d1a7f87a6555f640540de815cf64665e.wav",
+    "url": "/narration/52c2bf6f489a0c59f5325523bd27dfc3d1a7f87a6555f640540de815cf64665e.m4a",
     "voice": "Bengali (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -220,7 +220,7 @@
     "seconds": 5.38
   },
   "[\"bn-IN\",\"translation\",\"ফল পাওয়ার আকাঙ্ক্ষাকে কাজের উদ্দেশ্য কোরো না, আবার কাজ না করার প্রতিও আসক্ত হয়ো না।\"]": {
-    "url": "/narration/e00b9708ce74737eeb5bdfdbbac6ad02cc84ba26e215ba9cf35623a129b7d3f6.wav",
+    "url": "/narration/e00b9708ce74737eeb5bdfdbbac6ad02cc84ba26e215ba9cf35623a129b7d3f6.m4a",
     "voice": "Bengali (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -230,7 +230,7 @@
     "seconds": 5.81
   },
   "[\"mr-IN\",\"translation\",\"तुझा अधिकार कर्म करण्यावर आहे; त्याचे फळ स्वतःच्या इच्छेप्रमाणे ठरवण्यावर नाही.\"]": {
-    "url": "/narration/d1bb50056f9bceead9ee5906a26215882dd03159c3145af6d6ea53864620b3b8.wav",
+    "url": "/narration/d1bb50056f9bceead9ee5906a26215882dd03159c3145af6d6ea53864620b3b8.m4a",
     "voice": "Marathi (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -240,7 +240,7 @@
     "seconds": 6.4
   },
   "[\"mr-IN\",\"translation\",\"फळ मिळवण्याची इच्छा कर्माचा हेतू बनवू नकोस, आणि कर्म न करण्याचीही आसक्ती धरू नकोस.\"]": {
-    "url": "/narration/aed687518caa6a085a256f54333142c80720c0fa1d0da91d4b0d8eac8b83a74d.wav",
+    "url": "/narration/aed687518caa6a085a256f54333142c80720c0fa1d0da91d4b0d8eac8b83a74d.m4a",
     "voice": "Marathi (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -250,7 +250,7 @@
     "seconds": 6.83
   },
   "[\"te-IN\",\"translation\",\"నీ అధికారం కర్మ చేయడంలో ఉంది; దాని ఫలితాన్ని నీ ఇష్టప్రకారం నిర్ణయించడంలో లేదు.\"]": {
-    "url": "/narration/bdced6df89e74ef09b607399e0d7ed618cef6b2f60657b4870ef3bd56914630e.wav",
+    "url": "/narration/bdced6df89e74ef09b607399e0d7ed618cef6b2f60657b4870ef3bd56914630e.m4a",
     "voice": "Telugu (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -260,7 +260,7 @@
     "seconds": 5.89
   },
   "[\"te-IN\",\"translation\",\"ఫలితం పొందాలనే కోరికను కర్మకు ఉద్దేశంగా చేసుకోకు.\"]": {
-    "url": "/narration/738beea49a601c7a56fb53898ee4c9d699bbe6b45560b6a06d6e2768ebb3f610.wav",
+    "url": "/narration/738beea49a601c7a56fb53898ee4c9d699bbe6b45560b6a06d6e2768ebb3f610.m4a",
     "voice": "Telugu (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -270,7 +270,7 @@
     "seconds": 4.1
   },
   "[\"te-IN\",\"translation\",\"అలాగే కర్మ చేయకుండా ఉండటంపైనా ఆసక్తి పెంచుకోకు.\"]": {
-    "url": "/narration/6aabe580e862ccc06e35a0e4322cbf4b8a21e138fcb9a70924b281d56ecc43f8.wav",
+    "url": "/narration/6aabe580e862ccc06e35a0e4322cbf4b8a21e138fcb9a70924b281d56ecc43f8.m4a",
     "voice": "Telugu (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -280,7 +280,7 @@
     "seconds": 4.01
   },
   "[\"ta-IN\",\"translation\",\"செயலில் ஈடுபடுவதே உனக்குரிய பொறுப்பு; அதன் பலனை உன் விருப்பப்படி நிர்ணயிப்பது அல்ல.\"]": {
-    "url": "/narration/f99313663442580eba662b8dc83012e722f1d2336df787c0914f16b28bb7f380.wav",
+    "url": "/narration/f99313663442580eba662b8dc83012e722f1d2336df787c0914f16b28bb7f380.m4a",
     "voice": "Tamil (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -290,7 +290,7 @@
     "seconds": 6.06
   },
   "[\"ta-IN\",\"translation\",\"பலனைப் பெறும் ஆசையைச் செயலின் நோக்கமாகக் கொள்ளாதே.\"]": {
-    "url": "/narration/41ddcd5bf9cbbf09f7ea3f00a05cb6ed384becbd2553597eb85d248896ec7d30.wav",
+    "url": "/narration/41ddcd5bf9cbbf09f7ea3f00a05cb6ed384becbd2553597eb85d248896ec7d30.m4a",
     "voice": "Tamil (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",
@@ -300,7 +300,7 @@
     "seconds": 3.5
   },
   "[\"ta-IN\",\"translation\",\"அதேபோல், செயலற்றிருப்பதிலும் பற்று வைக்காதே.\"]": {
-    "url": "/narration/f064834bf7d08ad9d7a38129b8ad1dfc7632e257c3615bf67ae4b9d3f0d75997.wav",
+    "url": "/narration/f064834bf7d08ad9d7a38129b8ad1dfc7632e257c3615bf67ae4b9d3f0d75997.m4a",
     "voice": "Tamil (Male)",
     "model": "mlx-community/svara-tts-v1-8bit",
     "revision": "4531082be5031017247db28b144d0d9390f82273",

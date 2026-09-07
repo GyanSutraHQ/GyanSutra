@@ -46,6 +46,9 @@ export function buildNarration({ sanskrit, translation, explanation, context, co
   };
   // Dandas mark breath/verse boundaries. Verse references are visual metadata.
   const verse = cleanSpeechText(sanskrit)
+    // The source preserves a handful of edition alternatives in English
+    // parentheses. They are useful on screen, but are not part of a recitation.
+    .replace(/\s*\((?:or|var)\s*[^)]*\)/giu, '')
     .replace(/[॥|।]+\s*[०-९\d]+(?:[.।:|-][०-९\d]+)*\s*[॥|।]*/gu, '॥')
     .replace(/[०-९\d]+(?:[.:][०-९\d]+)*\s*$/u, '')
     .replace(/॥|\|\|/g, '.\n').replace(/।|\|/g, ',\n');

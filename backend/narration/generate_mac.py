@@ -102,6 +102,15 @@ def main():
         raise RuntimeError('Apple Metal GPU is unavailable; run on your Apple Silicon Mac')
     manifest_path = args.output / 'manifest.json'
     manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+    # A regenerated queue may remove spoken editorial notes or other stale
+    # entries. Keep the import manifest aligned with the current queue while
+    # leaving old lossless files on disk for manual recovery.
+    allowed_keys = {key(item) for item in items}
+    current_manifest = {item_key: value for item_key, value in manifest.items()
+                        if item_key in allowed_keys}
+    if current_manifest != manifest:
+        manifest = current_manifest
+        atomic_json(manifest_path, manifest)
     model = None
     for index, item in enumerate(items):
         voice = f"{VOICES[item['locale']]} ({args.gender})"
@@ -115,18 +124,27 @@ def main():
             model = load_voice(home)
         print(f'[{index + 1}/{len(items)}] {voice}: {item["text"]}', flush=True)
         started = time.monotonic()
-        mx.random.seed(args.seed)
-        chunks = []
-        for result in model.generate(text=item['text'], voice=voice, temperature=0.65,
-                top_p=0.9, top_k=40, repetition_penalty=1.1, max_tokens=4096):
-            if result.token_count >= 4096:
-                raise RuntimeError('Generation hit its token limit; split the text before retrying')
-            chunks.append(np.asarray(result.audio).reshape(-1))
-        if not chunks:
-            raise RuntimeError('Model returned no audio')
-        audio = np.concatenate(chunks)
-        if not np.isfinite(audio).all() or len(audio) < model.sample_rate // 4 or np.max(np.abs(audio)) < 0.001:
-            raise RuntimeError('Model returned invalid or silent audio')
+        audio = None
+        generation_seed = args.seed
+        for attempt in range(3):
+            generation_seed = args.seed + attempt
+            mx.random.seed(generation_seed)
+            chunks = []
+            for result in model.generate(text=item['text'], voice=voice, temperature=0.65,
+                    top_p=0.9, top_k=40, repetition_penalty=1.1, max_tokens=4096):
+                if result.token_count >= 4096:
+                    raise RuntimeError('Generation hit its token limit; split the text before retrying')
+                chunks.append(np.asarray(result.audio).reshape(-1))
+            if chunks:
+                candidate = np.concatenate(chunks)
+                if (np.isfinite(candidate).all() and len(candidate) >= model.sample_rate // 4
+                        and np.max(np.abs(candidate)) >= 0.001):
+                    audio = candidate
+                    break
+            mx.clear_cache()
+            print(f'Retrying empty or invalid audio with seed {generation_seed + 1}…', flush=True)
+        if audio is None:
+            raise RuntimeError('Model returned no valid audio after three seeds')
         temporary = target.with_suffix('.tmp')
         sf.write(temporary, audio, model.sample_rate, format='WAV', subtype='PCM_16')
         if temporary.stat().st_size > 4 * 1024 * 1024:
@@ -136,6 +154,7 @@ def main():
         manifest[key(item)] = {**item, 'file': target.name, 'voice': voice, 'model': MODEL,
             'revision': REVISION, 'seconds': round(len(audio) / model.sample_rate, 2),
             'generationSeconds': round(time.monotonic() - started, 2),
+            'generationSeed': generation_seed,
             'audioSHA256': hashlib.sha256(target.read_bytes()).hexdigest(), 'listeningReviewed': False}
         atomic_json(manifest_path, manifest)
         write_gallery(args.output, manifest)

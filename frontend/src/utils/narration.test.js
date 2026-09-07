@@ -25,6 +25,17 @@ test('does not repeat identical meanings or read excluded sections', () => {
   assert.deepEqual(buildNarration({ labels }), []);
 });
 
+test('does not recite textual-variant notes embedded in Sanskrit', () => {
+  const script = buildNarration({
+    sanskrit: 'रागद्वेषविमुक्तैस्तु विषयानिन्द्रियैश्चरन् | (or वियुक्तैस्तु)\nआत्मवश्यैर्विधेयात्मा प्रसादमधिगच्छति ||२-६४||',
+    labels,
+  });
+  assert.deepEqual(script.map((part) => part.text), [
+    'रागद्वेषविमुक्तैस्तु विषयानिन्द्रियैश्चरन् ,',
+    'आत्मवश्यैर्विधेयात्मा प्रसादमधिगच्छति .',
+  ]);
+});
+
 test('chunks bounded text without losing words or reading link syntax', () => {
   const source = `${'A long phrase, '.repeat(100)}End.`;
   const chunks = speechChunks(source);

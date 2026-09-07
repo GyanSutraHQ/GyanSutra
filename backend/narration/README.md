@@ -49,6 +49,9 @@ paid cloud GPU or Python worker on Render is needed.
 # Already installed on this Mac; needed when setting up a new environment.
 sh backend/narration/install-mac.sh
 
+# Needed only for compact app copies; lossless masters remain on the SSD.
+brew install ffmpeg
+
 # Optional robust download on slow / unreliable connections.
 sh backend/narration/run-mac.sh --download
 sh backend/narration/run-mac.sh --download --decoder
@@ -61,7 +64,7 @@ sh backend/narration/run-mac.sh \
 # Open samples/listen.html on the SSD and listen to the actual voices.
 # Import completed non-demo clips into the website / Android static assets.
 node backend/narration/import-audio.mjs \
-  '/Volumes/SP Extreme SSD/GyanSutraAudio/samples'
+  '/Volumes/SP Extreme SSD/GyanSutraAudio/samples' --aac --prune
 
 # Build and copy the updated audio into the Android project.
 cd frontend
@@ -88,7 +91,7 @@ node backend/narration/prepare-queue.mjs --all-gita \
 sh backend/narration/run-mac.sh \
   --queue '/Volumes/SP Extreme SSD/GyanSutraAudio/gita-queue.json' \
   --output '/Volumes/SP Extreme SSD/GyanSutraAudio/gita'
-node backend/narration/import-audio.mjs '/Volumes/SP Extreme SSD/GyanSutraAudio/gita'
+node backend/narration/import-audio.mjs '/Volumes/SP Extreme SSD/GyanSutraAudio/gita' --aac --prune
 ```
 
 This uses the app's actual `buildNarration` function, so punctuation, pauses and
@@ -152,11 +155,13 @@ those of your hosting provider. No paid service is activated by these scripts.
 - Order remains Sanskrit → meaning → optional explanation → context, with pauses.
 - Missing clips use the best installed device voice and show that source.
   A named meaning voice overrides saved prose, while saved Sanskrit remains.
-- Recent downloaded clips use a bounded cache. Bundled Android WAVs can be
+- Recent downloaded clips use a bounded cache. Bundled Android audio can be
   read offline. Website offline availability depends on its cache.
 - Stop, navigation and language changes cancel playback and pending lookups.
   An audio playback failure stops rather than unexpectedly repeating a verse.
-- Import verifies each WAV's SHA-256, format and size before updating the inventory.
+- Import verifies each master WAV's SHA-256, format and size before updating the
+  inventory. `--aac` creates 64-kbit/s AAC app copies while retaining lossless
+  masters on the SSD; `--prune` removes superseded generated app assets.
 
 ## Other engines
 
@@ -183,5 +188,5 @@ npm run build:android
 ```
 
 These cover sequencing, exact text matching, saved/device fallback, cancellation,
-cache migration, WAV handling and basic provenance validation. They do not
+cache migration, bundled-audio handling and basic provenance validation. They do not
 replace listening to Sanskrit with someone fluent in its pronunciation.

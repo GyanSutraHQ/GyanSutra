@@ -3,6 +3,6 @@ export const recordingKey = ({ locale, kind, text }) => JSON.stringify([locale, 
 
 export function getPreparedRecording(segment, inventory) {
   const item = inventory[recordingKey(segment)];
-  if (!item || !/^\/narration\/[a-f0-9]{64}\.wav$/.test(item.url)) return null;
+  if (!item || !/^\/narration\/[a-f0-9]{64}\.(?:wav|m4a)$/.test(item.url)) return null;
   return item;
 }
