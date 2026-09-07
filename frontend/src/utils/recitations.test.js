@@ -1,37 +1,51 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { getVerseRecording, GITA_VERSE_COUNTS } from './recitations.js';
+import { readFile } from 'node:fs/promises';
+import { getPreparedRecording, recordingKey } from './recitations.js';
+import { originalMeaning } from './originalMeanings.js';
+import inventory from '../data/narrationInventory.json' with { type: 'json' };
 
-test('maps all 701 Gita verse references to pinned, attributed recordings', () => {
-  let count = 0;
-  const urls = new Set();
-  GITA_VERSE_COUNTS.forEach((total, index) => {
-    for (let verse = 1; verse <= total; verse++) {
-      const recording = getVerseRecording({ book: 'bhagavad-gita', chapterNumber: index + 1, verseNumber: verse });
-      assert.match(recording.url, /\/1c5a5105c2e52438fa3c4dfe8727c5abf53233f4\/audio\/.*\.m4a$/);
-      assert.equal(recording.artist, 'Rohan');
-      assert.equal(recording.license, 'CC BY-NC-ND 4.0');
-      urls.add(recording.url);
-      count++;
-    }
-  });
-  assert.equal(count, 701);
-  assert.equal(urls.size, count);
+test('saved narration must match the exact text, language and section', () => {
+  const segment = { locale: 'sa-IN', kind: 'verse', text: 'कर्मण्येवाधिकारस्ते,' };
+  const entry = { url: `/narration/${'a'.repeat(64)}.wav` };
+  const inventory = { [recordingKey(segment)]: entry };
+  assert.equal(getPreparedRecording(segment, inventory), entry);
+  for (const change of [{ text: 'Another verse' }, { locale: 'hi-IN' }, { kind: 'translation' }]) {
+    assert.equal(getPreparedRecording({ ...segment, ...change }, inventory), null);
+  }
 });
 
-test('handles source filename spaces without changing verse numbering', () => {
-  const url = (chapterNumber, verseNumber) => getVerseRecording({ book: 'bhagavad-gita', chapterNumber, verseNumber }).url;
-  assert.ok(url(13, 14).endsWith('/13%20.14.m4a'));
-  assert.ok(url(13, 26).endsWith('/13.%2026.m4a'));
-  assert.ok(url(17, 2).endsWith('/17.2.m4a'));
-  assert.ok(url(18, 59).endsWith('/18%20.59.m4a'));
+test('external and legacy recordings cannot enter the inventory', () => {
+  const segment = { locale: 'sa-IN', kind: 'verse', text: 'Verse' };
+  for (const url of ['https://example.org/audio/2.47.m4a', '//example.org/a.wav', '/narration/../a.wav']) {
+    assert.equal(getPreparedRecording(segment, { [recordingKey(segment)]: { url } }), null);
+  }
+  assert.equal(getPreparedRecording(segment, {}), null);
 });
 
-test('never substitutes a Gita verse for another book or invalid reference', () => {
-  for (const book of ['ramayana', 'upanishads', undefined]) {
-    assert.equal(getVerseRecording({ book, chapterNumber: 2, verseNumber: 47 }), null);
+test('original meanings are limited to an identified Gita verse and available language', () => {
+  const meanings = { '2.47': { en: 'Original project prose' } };
+  const verse = { id: 'bhagavad-gita_2_47', chapterNumber: 2, verseNumber: 47 };
+  assert.equal(originalMeaning(verse, 'en', meanings).translation, 'Original project prose');
+  assert.equal(originalMeaning({ ...verse, book: 'ramayana' }, 'en', meanings), null);
+  assert.equal(originalMeaning({ ...verse, chapterNumber: 1 }, 'en', meanings), null);
+  assert.equal(originalMeaning(verse, 'hi', meanings), null);
+  assert.equal(originalMeaning(null, 'en', meanings), null);
+});
+
+test('every imported narration entry has a valid bundled WAV and commercial text provenance', async () => {
+  assert.equal(Object.keys(inventory).length, 31);
+  const locales = new Set();
+  for (const [serialized, entry] of Object.entries(inventory)) {
+    const [locale, kind, text] = JSON.parse(serialized);
+    locales.add(locale);
+    assert.equal(getPreparedRecording({ locale, kind, text }, inventory), entry);
+    assert.ok(['public-domain', 'project-original', 'permission-granted'].includes(entry.rights));
+    assert.ok(entry.rightsNote);
+    const bytes = await readFile(new URL(`../../public${entry.url}`, import.meta.url));
+    assert.equal(bytes.subarray(0, 4).toString(), 'RIFF');
+    assert.equal(bytes.subarray(8, 12).toString(), 'WAVE');
+    assert.ok(bytes.length > 12 && bytes.length <= 4 * 1024 * 1024);
   }
-  for (const [chapterNumber, verseNumber] of [[0, 1], [19, 1], [1, 48], [1, 0], [1, 1.5], [1, '1-2']]) {
-    assert.equal(getVerseRecording({ book: 'bhagavad-gita', chapterNumber, verseNumber }), null);
-  }
+  assert.deepEqual([...locales].sort(), ['bn-IN', 'en-IN', 'hi-IN', 'mr-IN', 'sa-IN', 'ta-IN', 'te-IN']);
 });

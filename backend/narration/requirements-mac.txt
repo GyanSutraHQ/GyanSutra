@@ -1,0 +1,3 @@
+# Apple Silicon native inference; kept separate from the optional PyTorch worker.
+mlx-audio[tts] @ https://github.com/Blaizzy/mlx-audio/archive/41537ec5cf79bcf731a0dd6749cac12ab554a691.zip
+soundfile==0.14.0

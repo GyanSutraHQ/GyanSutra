@@ -4,7 +4,8 @@ import { deviceVoice } from '../utils/narration.js';
 
 const abortError = () => new DOMException('Reading stopped', 'AbortError');
 
-export function createNarrationPlayer({ TextToSpeech, fetchNarrationAudio, fetchRecitationAudio, Audio: AudioElement, online }) {
+export function createNarrationPlayer({ TextToSpeech, fetchNarrationAudio,
+  fetchPreparedAudio = async () => null, Audio: AudioElement, online }) {
   let currentSession;
   return function startNarrationSession(onInterrupt) {
     currentSession?.stop();
@@ -32,7 +33,7 @@ export function createNarrationPlayer({ TextToSpeech, fetchNarrationAudio, fetch
         onInterrupt();
       },
       async play(segments, { voices, selectedVoice, rate, onSegment, onFallback,
-        recording, mode = 'recorded', onSource = () => {} }) {
+        mode = 'saved', onSource = () => {} }) {
         await primed;
         if (signal.aborted) throw abortError();
         await TextToSpeech.stop().catch(() => {});
@@ -62,28 +63,6 @@ export function createNarrationPlayer({ TextToSpeech, fetchNarrationAudio, fetch
             audio.onplaying = null;
           }
         };
-        // A whole, unedited recording replaces the complete Sanskrit section.
-        // Never replay its individual verse chunks after successful playback.
-        if (recording && segments[0]?.kind === 'verse') {
-          onSegment(segments[0], 0, segments.length, 'preparing');
-          let blob;
-          try { blob = await abortable(fetchRecitationAudio(recording, signal), signal); }
-          catch {
-            if (signal.aborted) throw abortError();
-            onFallback('recording');
-          }
-          if (blob) {
-            onSource('recording');
-            onSegment(segments[0], 0, segments.length, 'playing');
-            // Playback failure stops the reading; a partly heard shloka must not
-            // restart unexpectedly in another voice.
-            await playBlob(blob);
-            const verseParts = segments.filter((part) => part.kind === 'verse');
-            const lastVerse = verseParts[verseParts.length - 1];
-            segments = segments.filter((part) => part.kind !== 'verse');
-            if (segments.length) await pause(lastVerse.pause / rate, signal);
-          }
-        }
         // Prepare one segment ahead while the current one plays. Always settle
         // the promise so Stop cannot leave an unhandled fetch rejection.
         const prepare = (segment) => fetchNarrationAudio(segment, signal)
@@ -94,18 +73,25 @@ export function createNarrationPlayer({ TextToSpeech, fetchNarrationAudio, fetch
           if (signal.aborted) throw abortError();
           onSegment(segment, index, segments.length, 'preparing');
           let blob;
-          if (useNeural) {
+          if (!selectedVoice || segment.kind === 'verse') {
+            try { blob = await abortable(fetchPreparedAudio(segment, signal), signal); }
+            catch {
+              if (signal.aborted) throw abortError();
+              onFallback('prepared');
+            }
+          }
+          if (useNeural && !blob) {
             try {
               const result = await pending;
               if (result.error) throw result.error;
               blob = result.blob;
-              pending = index + 1 < segments.length ? prepare(segments[index + 1]) : null;
             } catch {
               if (signal.aborted) throw abortError();
               useNeural = false;
               onFallback('neural');
             }
           }
+          if (useNeural) pending = index + 1 < segments.length ? prepare(segments[index + 1]) : null;
           if (signal.aborted) throw abortError();
           onSegment(segment, index, segments.length, 'playing');
           if (blob) {

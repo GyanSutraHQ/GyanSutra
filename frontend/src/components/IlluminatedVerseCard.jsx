@@ -34,6 +34,8 @@ import AnimatedButton from './AnimatedButton';
 import ReadAloudControls from './ReadAloudControls';
 import useLanguage from '../i18n/useLanguage';
 import useLocalizedVerse, { GENERATED_LANGUAGES } from '../hooks/useLocalizedVerse';
+import { originalMeaning } from '../utils/originalMeanings';
+import originalMeanings from '../data/originalMeanings.json';
 
 import './IlluminatedVerseCard.css';
 
@@ -301,8 +303,9 @@ export default function IlluminatedVerseCard({
   const labels = READING_COPY[language] || READING_COPY.en;
   const navigate = useNavigate();
   const isFull = variant === 'full';
-  const needsLocalization = GENERATED_LANGUAGES.has(language);
-  const localization = useLocalizedVerse(verse, language, { enabled: isFull });
+  const originalContent = originalMeaning(verse, language, originalMeanings);
+  const needsLocalization = GENERATED_LANGUAGES.has(language) && !originalContent;
+  const localization = useLocalizedVerse(verse, language, { enabled: isFull && !originalContent });
 
   if (!verse) return null;
 
@@ -330,7 +333,7 @@ export default function IlluminatedVerseCard({
 
   const isClickable = !!onClick || variant === 'compact' || variant === 'citation';
   const isRamayana = verse.book === 'ramayana' || Boolean(verse.kanda);
-  const localizedContent = localization.content;
+  const localizedContent = originalContent || localization.content;
   const sourceLanguage = language === 'hi' && translationHindi
     ? 'hindi'
     : translationEnglish ? 'english' : 'hindi';
@@ -344,8 +347,8 @@ export default function IlluminatedVerseCard({
     localizedContent?.wordMeanings?.length ? localizedContent.wordMeanings : wordMeanings,
   );
   const translationText = stripReferencePrefix(localizedContent?.translation || sourceTranslation);
-  const explanationText = stripReferencePrefix(localizedContent?.explanation || sourceExplanation);
-  const contextText = localizedContent?.context || comments;
+  const explanationText = originalContent ? '' : stripReferencePrefix(localizedContent?.explanation || sourceExplanation);
+  const contextText = originalContent ? '' : localizedContent?.context || comments;
   const contextLanguage = localizedContent?.context ? contentLanguage : 'english';
   const preferredCommentaryLanguage = needsLocalization ? 'english' : sourceLanguage;
   const commentaries = detailedExplanations
@@ -374,7 +377,7 @@ export default function IlluminatedVerseCard({
       ? `${labels.machineTranslatedFrom}${sourceTranslator ? ` ${sourceTranslator}` : ` ${sourceLanguage}`}`
       : sourceTranslator ? `${labels.translatedBy} ${sourceTranslator}` : null
       : sourceTranslator ? `${labels.translatedBy} ${sourceTranslator}` : null;
-  const localizationMessage = !needsLocalization
+  const localizationMessage = originalContent ? labels.editorialPending : !needsLocalization
     ? null
     : localization.status === 'loading'
       ? labels.translating
@@ -388,7 +391,7 @@ export default function IlluminatedVerseCard({
     : hasCommentary
       ? [{ author: labels.commentaries, language: sourceLanguage, explanation: sourceCommentary }]
       : [];
-  const readAloudExplanation = explanationText
+  const readAloudExplanation = originalContent ? '' : explanationText
     || displayedCommentaries[0]?.explanation
     || '';
   const sourceDescription = isRamayana

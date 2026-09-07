@@ -8,7 +8,7 @@ const deferred = () => { let resolve; const promise = new Promise((r) => { resol
 const tick = () => new Promise((resolve) => setImmediate(resolve));
 
 function setup(fetchAudio = async () => { throw new Error('unavailable'); }, speak = async () => {},
-  fetchRecitationAudio = async () => new Blob(['recording']), finishAudio = true) {
+  finishAudio = true, fetchPreparedAudio = async () => null) {
   const spoken = [];
   const played = [];
   let stops = 0;
@@ -26,7 +26,7 @@ function setup(fetchAudio = async () => { throw new Error('unavailable'); }, spe
   }
   const start = createNarrationPlayer({
     Audio, online: () => true, fetchNarrationAudio: fetchAudio,
-    fetchRecitationAudio,
+    fetchPreparedAudio,
     TextToSpeech: { stop: async () => { stops++; }, speak: async (options) => { spoken.push(options); await speak(options); }, getSupportedVoices: async () => ({ voices }) },
   });
   return { start, spoken, played, stops: () => stops };
@@ -117,35 +117,54 @@ test('a later service failure falls back at that segment without repeating the v
   session.stop();
 });
 
-const recording = { url: 'https://example.org/2.47.m4a' };
 const meaning = { ...segment, text: 'अर्थ', kind: 'translation', locale: 'hi-IN' };
 
-test('human recording replaces all Sanskrit chunks, then device reads meaning in order', async () => {
-  let neuralRequests = 0;
-  let recordingRequests = 0;
-  const { start, spoken, played } = setup(async () => { neuralRequests++; }, undefined,
-    async () => { recordingRequests++; return new Blob(['recording']); });
-  const sources = [];
-  const session = start(() => {});
-  await session.play([segment, { ...segment, text: 'Second half' }, meaning], {
-    ...options, mode: 'recorded', recording, selectedVoice: 'hi', onSource: (source) => sources.push(source),
+test('saved verse and meaning play in order without a server or installed voice', async () => {
+  const requested = [];
+  const { start, spoken, played } = setup(undefined, undefined, true, async (part) => {
+    requested.push(part.text);
+    return new Blob(['saved']);
   });
-  assert.equal(recordingRequests, 1);
-  assert.equal(neuralRequests, 0);
-  assert.equal(played.length, 1);
-  assert.deepEqual(spoken.map((s) => s.text), ['अर्थ']);
-  assert.deepEqual(sources, ['recording', 'device']);
+  const session = start(() => {});
+  await session.play([segment, meaning], { ...options, mode: undefined, voices: [] });
+  assert.deepEqual(requested, [segment.text, meaning.text]);
+  assert.equal(played.length, 2);
+  assert.equal(spoken.length, 0);
   session.stop();
 });
 
-test('unavailable recording falls back to the whole verse before the meaning', async () => {
-  const { start, spoken } = setup(undefined, undefined, async () => { throw new Error('404'); });
+test('one missing saved clip falls back locally and later saved clips still play', async () => {
+  const { start, spoken, played } = setup(undefined, undefined, true,
+    async (part) => part.kind === 'verse' ? null : new Blob(['saved']));
   const session = start(() => {});
-  const reasons = [];
-  await session.play([segment, meaning], { ...options, mode: 'recorded', recording, onFallback: (reason) => reasons.push(reason) });
-  assert.deepEqual(reasons, ['recording']);
-  assert.deepEqual(spoken.map((s) => s.text), [segment.text, 'अर्थ']);
+  await session.play([segment, meaning], { ...options, mode: undefined });
+  assert.deepEqual(spoken.map((part) => part.text), [segment.text]);
+  assert.equal(played.length, 1);
   session.stop();
+});
+
+test('a chosen device meaning voice keeps the saved Sanskrit voice', async () => {
+  const { start, spoken, played } = setup(undefined, undefined, true,
+    async () => new Blob(['saved']));
+  const session = start(() => {});
+  await session.play([segment, meaning], { ...options, mode: undefined, selectedVoice: 'hi' });
+  assert.deepEqual(spoken.map((part) => part.text), [meaning.text]);
+  assert.equal(played.length, 1);
+  session.stop();
+});
+
+test('stop during saved audio lookup settles immediately and prevents late playback', async () => {
+  const pending = deferred();
+  const { start, spoken, played } = setup(undefined, undefined, true, () => pending.promise);
+  const session = start(() => {});
+  const playing = session.play([segment], { ...options, mode: undefined });
+  const rejected = assert.rejects(playing, { name: 'AbortError' });
+  await tick();
+  session.stop();
+  await rejected;
+  pending.resolve(new Blob(['saved']));
+  await tick();
+  assert.equal(spoken.length + played.length, 0);
 });
 
 test('default mode never contacts the unconfigured neural worker', async () => {
@@ -156,30 +175,4 @@ test('default mode never contacts the unconfigured neural worker', async () => {
   assert.equal(requested, false);
   assert.equal(spoken.length, 1);
   session.stop();
-});
-
-test('stop during recording download settles immediately and never starts late audio', async () => {
-  const pending = deferred();
-  const { start, played, spoken } = setup(undefined, undefined, () => pending.promise);
-  const session = start(() => {});
-  const playing = session.play([segment, meaning], { ...options, mode: 'recorded', recording });
-  const rejected = assert.rejects(playing, { name: 'AbortError' });
-  await tick();
-  session.stop();
-  await rejected;
-  pending.resolve(new Blob(['recording']));
-  await tick();
-  assert.equal(played.length + spoken.length, 0);
-});
-
-test('stop mid-recording prevents the meaning from starting', async () => {
-  const { start, played, spoken } = setup(undefined, undefined, undefined, false);
-  const session = start(() => {});
-  const playing = session.play([segment, meaning], { ...options, mode: 'recorded', recording });
-  const rejected = assert.rejects(playing, { name: 'AbortError' });
-  await tick();
-  assert.equal(played.length, 1);
-  session.stop();
-  await rejected;
-  assert.equal(spoken.length, 0);
 });

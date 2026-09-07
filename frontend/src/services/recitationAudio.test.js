@@ -6,6 +6,18 @@ const bytes = new Uint8Array([0, 0, 0, 24, 102, 116, 121, 112, 77, 52, 65, 32]);
 const recording = { url: 'https://example.org/2.47.m4a' };
 const signal = () => new AbortController().signal;
 
+test('purges the legacy cache and reads a bundled WAV while offline', async () => {
+  const deleted = [];
+  const wav = new TextEncoder().encode('RIFF0000WAVEfmt ');
+  const fetchAudio = createRecitationFetcher({
+    caches: { delete: async (key) => { deleted.push(key); } },
+    online: () => false, fetch: async () => new Response(wav),
+  });
+  const result = await fetchAudio({ url: `/narration/${'a'.repeat(64)}.wav` }, signal());
+  assert.equal(result.type, 'audio/wav');
+  assert.deepEqual(deleted, ['gyansutra-recitations-v1']);
+});
+
 function cacheStorage() {
   const entries = new Map();
   const cache = {

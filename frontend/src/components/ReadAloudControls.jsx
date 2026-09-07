@@ -4,7 +4,6 @@ import { TextToSpeech } from '@capacitor-community/text-to-speech';
 
 import { buildNarration, LANGUAGE_LOCALES, rankedVoices } from '../utils/narration';
 import { startNarrationSession } from '../services/readAloud';
-import { getVerseRecording, RAMAYANA_COLLECTION } from '../utils/recitations';
 import './ReadAloudControls.css';
 
 const COPY = {
@@ -68,12 +67,12 @@ const CONTENT_LANGUAGE_CODES = {
   english: 'en', hindi: 'hi', bengali: 'bn', marathi: 'mr', telugu: 'te', tamil: 'ta',
 };
 const RECITATION_COPY = {
-  en: { automatic: 'Best available device voice', voice: 'Meaning voice', recorded: 'Human recitation', device: 'Device voice', failed: 'Recording unavailable. Reading the shloka with a device voice.', credit: 'Recitation', collection: 'Human Ramayana recordings by sarga (Internet Archive)' },
-  hi: { automatic: 'उपलब्ध सर्वोत्तम डिवाइस आवाज़', voice: 'अर्थ की आवाज़', recorded: 'मानव स्वर में पाठ', device: 'डिवाइस की आवाज़', failed: 'रिकॉर्डिंग उपलब्ध नहीं है। डिवाइस की आवाज़ से श्लोक पढ़ा जा रहा है।', credit: 'पाठ', collection: 'सर्ग अनुसार रामायण का मानव स्वर में पाठ (Internet Archive)' },
-  bn: { automatic: 'সেরা উপলব্ধ ডিভাইস কণ্ঠ', voice: 'অর্থের কণ্ঠ', recorded: 'মানবকণ্ঠে আবৃত্তি', device: 'ডিভাইসের কণ্ঠ', failed: 'রেকর্ডিং পাওয়া যাচ্ছে না। ডিভাইসের কণ্ঠে শ্লোক পড়া হচ্ছে।', credit: 'আবৃত্তি', collection: 'সর্গ অনুযায়ী মানবকণ্ঠে রামায়ণ পাঠ (Internet Archive)' },
-  mr: { automatic: 'उपलब्ध सर्वोत्तम डिवाइस आवाज', voice: 'अर्थाचा आवाज', recorded: 'मानवी आवाजातील पठण', device: 'डिवाइसचा आवाज', failed: 'रेकॉर्डिंग उपलब्ध नाही. डिवाइसच्या आवाजात श्लोक वाचत आहे.', credit: 'पठण', collection: 'सर्गानुसार रामायणाचे मानवी पठण (Internet Archive)' },
-  te: { automatic: 'అందుబాటులో ఉన్న ఉత్తమ పరికరం స్వరం', voice: 'అర్థం చదివే స్వరం', recorded: 'మానవ స్వరంలో పఠనం', device: 'పరికరం స్వరం', failed: 'రికార్డింగ్ అందుబాటులో లేదు. పరికరం స్వరంతో శ్లోకం చదువుతోంది.', credit: 'పఠనం', collection: 'సర్గాల వారీగా మానవ స్వరంలో రామాయణ పఠనం (Internet Archive)' },
-  ta: { automatic: 'கிடைக்கும் சிறந்த சாதனக் குரல்', voice: 'பொருளை வாசிக்கும் குரல்', recorded: 'மனிதக் குரலில் பாராயணம்', device: 'சாதனத்தின் குரல்', failed: 'பதிவு கிடைக்கவில்லை. சாதனத்தின் குரலில் சுலோகம் வாசிக்கப்படுகிறது.', credit: 'பாராயணம்', collection: 'சர்க்கம் வாரியாக மனிதக் குரலில் இராமாயணப் பாராயணம் (Internet Archive)' },
+  en: { voice: 'Meaning voice', device: 'Device voice' },
+  hi: { voice: 'अर्थ की आवाज़', device: 'डिवाइस की आवाज़' },
+  bn: { voice: 'অর্থের কণ্ঠ', device: 'ডিভাইসের কণ্ঠ' },
+  mr: { voice: 'अर्थाचा आवाज', device: 'डिवाइसचा आवाज' },
+  te: { voice: 'అర్థం చదివే స్వరం', device: 'పరికరం స్వరం' },
+  ta: { voice: 'பொருளை வாசிக்கும் குரல்', device: 'சாதனத்தின் குரல்' },
 };
 const SPEEDS = [
   { value: 0.8, label: '0.8×' },
@@ -96,7 +95,8 @@ export default function ReadAloudControls({
 }) {
   const labels = COPY[language] || COPY.en;
   const audioLabels = RECITATION_COPY[language] || RECITATION_COPY.en;
-  const recording = getVerseRecording({ book, chapterNumber, verseNumber });
+  const generatedLabel = ({ en: 'AI narration', hi: 'एआई वाचन', bn: 'এআই কণ্ঠ', mr: 'एआय वाचन', te: 'ఏఐ పఠనం', ta: 'AI வாசிப்பு' })[language] || 'AI narration';
+  const automaticLabel = ({ en: 'Automatic: saved audio, then device voice', hi: 'स्वचालित: सहेजा गया ऑडियो, फिर डिवाइस आवाज़', bn: 'স্বয়ংক্রিয়: সংরক্ষিত অডিও, তারপর ডিভাইসের কণ্ঠ', mr: 'स्वयंचलित: जतन केलेला ऑडिओ, मग डिवाइस आवाज', te: 'స్వయంచాలకం: సేవ్ చేసిన ఆడియో, తర్వాత పరికరం స్వరం', ta: 'தானியங்கி: சேமித்த ஒலி, பின்னர் சாதனக் குரல்' })[language] || 'Automatic: saved audio, then device voice';
   const spokenLabels = COPY[CONTENT_LANGUAGE_CODES[contentLanguage]] || COPY.en;
   const preferredLocale = LANGUAGE_LOCALES[contentLanguage] || 'en-IN';
   const [status, setStatus] = useState('idle');
@@ -138,6 +138,7 @@ export default function ReadAloudControls({
     setError('');
     setProgress(null);
     setFallback(false);
+    setAudioSource('device');
     return () => { sessionRef.current?.stop(); sessionRef.current = null; };
   }, [verseKey, book, chapterNumber, verseNumber, sanskrit, translation, explanation, context, contentLanguage, language, disabled]);
 
@@ -155,7 +156,7 @@ export default function ReadAloudControls({
     setError('');
     setFallback(false);
     setStatus('preparing');
-    setAudioSource(recording ? 'recording' : 'device');
+    setAudioSource('device');
     const session = startNarrationSession(() => {
       if (sessionRef.current === session) {
         sessionRef.current = null;
@@ -166,7 +167,7 @@ export default function ReadAloudControls({
     sessionRef.current = session;
     try {
       await session.play(segments, {
-        voices, selectedVoice, rate, recording,
+        voices, selectedVoice, rate,
         onSource: setAudioSource,
         onSegment: (segment, index, total, phase) => {
           if (sessionRef.current !== session) return;
@@ -234,7 +235,7 @@ export default function ReadAloudControls({
           <label className="read-aloud__field read-aloud__field--voice">
             <span>{audioLabels.voice}</span>
             <select value={selectedVoice} onChange={(event) => setSelectedVoice(event.target.value)} disabled={active}>
-              <option value="">{audioLabels.automatic}</option>
+              <option value="">{automaticLabel}</option>
               {matchingVoices.map((voice) => (
                 <option key={`${voice.voiceURI}-${voice.index}`} value={voice.voiceURI}>{voice.name}</option>
               ))}
@@ -245,22 +246,13 @@ export default function ReadAloudControls({
 
       <p className="read-aloud__status" aria-live="polite">
         {statusMessage || labels.sequence}
-        {active && progress && ` · ${labels[progress.kind]} · ${audioSource === 'recording' ? audioLabels.recorded : audioLabels.device}`}
-        {active && fallback && ` ${fallback === 'recording' ? audioLabels.failed : labels.fallback}`}
+        {active && progress && ` · ${labels[progress.kind]} · ${audioSource === 'neural' ? generatedLabel : audioLabels.device}`}
+        {active && fallback && ` ${labels.fallback}`}
       </p>
 
-      {recording && (
+      {audioSource === 'neural' && (
         <p className="read-aloud__credit">
-          {audioLabels.credit}: <a href={recording.sourceURL} target="_blank" rel="noopener noreferrer">{recording.artist}</a>
-          {' · '}<a href={recording.licenseURL} target="_blank" rel="noopener noreferrer">{recording.license}</a>
-          {' · '}{audioLabels.voice}: {audioLabels.device}
-        </p>
-      )}
-      {book === 'ramayana' && (
-        <p className="read-aloud__credit">
-          <a href={RAMAYANA_COLLECTION.sourceURL} target="_blank" rel="noopener noreferrer"
-            onClick={() => sessionRef.current?.stop()}>{audioLabels.collection}</a>
-          {' · '}{RAMAYANA_COLLECTION.artist}
+          {generatedLabel} · <a href="/narration-notices.html" target="_blank" rel="noopener noreferrer">Svara-TTS · Built with Llama</a>
         </p>
       )}
 

@@ -1,137 +1,187 @@
-# Read-aloud: human recitation and device meanings
+# Local narration on an Apple Silicon Mac
 
-## Current default — no voice server required
+GyanSutra now supports **pregenerated narration for both Sanskrit and meanings**.
+The selected local engine is [Svara-TTS, MLX 8-bit](https://huggingface.co/mlx-community/svara-tts-v1-8bit),
+running on the Mac's Apple GPU. Generate once on the SSD, then bundle the small
+audio files with the website and Android app. Render does not run this model;
+your Mac does not need to stay online for users to play imported clips.
 
-Gita readings play Rohan's human Sanskrit recording for the selected verse,
-pause, then read the displayed meaning with the best available device voice.
-The optional explanation and context follow in that order. Choosing a meaning
-voice changes prose narration; it does not replace the human Sanskrit recording.
-Recordings are played as complete, unedited files, never mixed into a new file.
+The previous Rohan / GitaGuru audio source has been removed because its
+CC BY-NC-ND licence prohibits commercial use. The app deletes its old
+`gyansutra-recitations-v1` cache on reader initialization. No third-party human
+recording is currently selected automatically.
 
-The inventory covers **701 verses across 18 chapters**, matching this app's
-35-verse chapter 13 numbering. All 701 mapped filenames were checked against
-the pinned upstream Git tree. Space-containing filenames have explicit mappings.
-This verifies file coverage; it is not a listening review of all 701 recordings.
+## Current setup and coverage
 
-- Creator: **Rohan**, credited by the Bhagavad Gita / GitaGuru project.
-- [Source and attribution](https://github.com/bhagavdgita/bhagavdgita.github.io/tree/1c5a5105c2e52438fa3c4dfe8727c5abf53233f4)
-- [Audio-specific license notice](https://github.com/bhagavdgita/bhagavdgita.github.io/blob/1c5a5105c2e52438fa3c4dfe8727c5abf53233f4/audio/README.md)
-- Audio license: [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
-  These recordings are for the current noncommercial app. Commercial or ad-funded
-  use requires a different recording source or permission from the rights holder.
-  The source's MIT code license does not license its audio. Attribution and the
-  audio license are visible beside Listen.
+- Machine: MacBook Air M4, 16 GB unified memory.
+- External folder: `/Volumes/SP Extreme SSD/GyanSutraAudio`.
+- Isolated Python 3.13 environment and MLX Audio dependencies installed there.
+- Apple Metal GPU availability verified.
+- Model: 3.51 GB of 8-bit weights, plus tokenizer and SNAC decoder. Both model
+  files were SHA-256 verified after download. Allow roughly 10 GB for the
+  environment, model cache and generated masters.
+- `sample-queue.json`: 37 segments covering Gita 1.1 and 2.47, introductions in
+  six meaning languages, original meanings for both verses in all six languages,
+  and six short voice demonstrations.
+- The two evaluation verses display these original AI-assisted meanings, with
+  project attribution and an editorial-review-pending note. Other verses retain
+  their existing text sources; this change does not clear the whole corpus.
+- All 37 evaluation clips were generated: 196.8 seconds of audio in 660.72
+  seconds of M4 generation time. The 31 non-demo clips (about 9 MB) were imported
+  for Gita 1.1 and 2.47 and copied into the Android project.
+- The checked-in `frontend/src/data/narrationInventory.json` is the authoritative
+  list of clips actually imported. An empty inventory means no new audio has
+  been shipped yet. Installing software alone does not change the app's voice.
+- Generated clips carry `listeningReviewed: false` until a fluent listener has
+  checked them. Automated waveform checks cannot certify pronunciation or emotion.
 
-Recordings are fetched directly from the pinned public GitHub source on first
-play, with no API key or Python worker. The browser/Android webview caches up to
-32 recent recordings for offline reuse where Cache Storage is available. Each
-download is limited to 4 MiB and 12 seconds. Storage can be evicted by the device,
-so offline availability is not permanent. Cached files stay byte-for-byte intact.
-Download failure falls back to device Sanskrit/Hindi narration; playback failure
-stops with an error so a partially heard verse is not unexpectedly repeated.
+The download server was intermittent during setup. `--download` preserves
+completed ranges and verifies the complete model's SHA-256 before installation.
+The initial installation and evaluation generation are complete; subsequent
+batches reuse the verified model without downloading it again.
 
-Ramayana verse readings still use device narration. The openly shared
-[V. Sriram / Harisitaramamurti collection](https://archive.org/details/Ramayana-recitation-Sriram-harisItArAmamUrti-Ghanapaati-v2)
-is linked from Ramayana Listen controls for human recitation by sarga.
-Its tracks are chapter-length and use a Gita Press-based text; verified timings
-for this app's individual verses are not available. It is not silently substituted
-for a single selected verse. The [project page](https://sanskrit.github.io/groups/dyuganga/projects/audio/ramayana-audio/)
-describes its CC BY-SA 4.0 publication approach.
+## Generate and import audio
 
-The default reader **does not call `/api/narration`**. Existing Render hosting
-needs no extra memory, voice service, paid account, or model download for this mode.
-
-## Other options researched (2026-09-05)
-
-| Option | Useful improvement | Remaining constraint |
-| --- | --- | --- |
-| [Gemini 2.5 Flash Preview TTS](https://ai.google.dev/gemini-api/docs/pricing) | Expressive meaning narration with a listed Developer API free tier; Render can call the API | Preview quotas and project eligibility; paid-tier keys can incur charges. Not enabled by this change. |
-| Generate audio ahead of time | Generate each stable translation once, review it, and serve cached files without continuous model hosting | Requires generation compute and storage initially; regenerate when the text or translation changes. |
-| [Vāgdhenu](https://huggingface.co/prathoshap/vagdhenu) | Sanskrit-specific chant model, worth evaluating for verse recordings absent from human collections | Needs generation compute, metrical/reference preparation and pronunciation review; not a free hosted production API. |
-| [Google Cloud Chirp 3 HD](https://cloud.google.com/text-to-speech/pricing) | Natural meaning voices with a published monthly free allowance | Billing must be enabled and overages are charged; not an unconditional zero-cost option. |
-
-Gemini's [speech documentation](https://ai.google.dev/gemini-api/docs/speech-generation)
-lists the app's six meaning languages. Sanskrit is not listed, so it should not
-replace authentic Sanskrit recitation without separate evaluation. The next
-worthwhile experiment is a small, quota-limited set of pregenerated meanings,
-with the exact displayed text and audio reviewed together. API free-tier access
-has not been tested against this app's account, and no paid API was activated.
-
-## Optional Indic Parler worker — retained, not used by default
-
-The existing `POST /api/narration` integration is available for a future explicitly
-selected neural mode (`mode: 'neural'` in the playback service). It uses
-[AI4Bharat Indic Parler-TTS](https://huggingface.co/ai4bharat/indic-parler-tts),
-an Apache-2.0 model with Sanskrit and all six app languages. Aryan reads Sanskrit;
-recommended language-specific speakers explain the meaning. A fixed description
-requests measured, reverent recitation and warm, conversational explanations.
-The scripture and translations are never rewritten by a language model.
-
-The model is free to run, with no subscription or per-character API charge.
-Hosting, electricity and hardware are separate. This is a 0.9B parameter model,
-not a small Android voice library. Initial model downloads require several GB.
-Use a GPU for interactive generation; CPU generation can exceed the app's
-90-second request timeout. Cached readings avoid repeated synthesis. This does
-not guarantee human emotion, correct Vedic chanting, or flawless pronunciation:
-review generated scripture audio with a fluent speaker before public release.
-
-## Start locally
-
-Use Python 3.11 in an isolated environment (the upstream stack pins Transformers
-4.46.1 and has older audio dependencies). From this directory:
+Run from the repository root, with the SSD connected. No API key, subscription,
+paid cloud GPU or Python worker on Render is needed.
 
 ```sh
-python3.11 -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
-.venv/bin/uvicorn server:app --host 127.0.0.1 --port 8001 --workers 1
+# Already installed on this Mac; needed when setting up a new environment.
+sh backend/narration/install-mac.sh
+
+# Optional robust download on slow / unreliable connections.
+sh backend/narration/run-mac.sh --download
+sh backend/narration/run-mac.sh --download --decoder
+
+# Generate samples. Repeating this command skips completed matching clips.
+sh backend/narration/run-mac.sh \
+  --queue backend/narration/sample-queue.json \
+  --output '/Volumes/SP Extreme SSD/GyanSutraAudio/samples'
+
+# Open samples/listen.html on the SSD and listen to the actual voices.
+# Import completed non-demo clips into the website / Android static assets.
+node backend/narration/import-audio.mjs \
+  '/Volumes/SP Extreme SSD/GyanSutraAudio/samples'
+
+# Build and copy the updated audio into the Android project.
+cd frontend
+npm run android:sync
 ```
 
-Startup downloads and loads the model before accepting requests. Test readiness
-with `curl http://127.0.0.1:8001/health`. Then set this in `backend/.env` and restart
-the Node backend:
+Set `NARRATION_HOME` to use another disk location. Keep the environment, model
+cache and generated originals together. Don't unplug the SSD during a batch.
+Generation uses one model and one clip at a time. Closing the terminal stops
+the command; rerun it to resume. No background login service is installed.
 
-```dotenv
-NARRATION_SERVICE_URL=http://127.0.0.1:8001
+The default selects each language's male voice. To compare the female voices,
+run with `--gender Female` and a different output folder. `--limit 3` limits
+the run to the first three queue entries. Samples are evaluation material;
+Svara speech is not a guarantee of authentic chanting, metre or Vedic svaras.
+
+## Expand the library
+
+For the complete Sanskrit Gita queue:
+
+```sh
+node backend/narration/prepare-queue.mjs --all-gita \
+  --output='/Volumes/SP Extreme SSD/GyanSutraAudio/gita-queue.json'
+sh backend/narration/run-mac.sh \
+  --queue '/Volumes/SP Extreme SSD/GyanSutraAudio/gita-queue.json' \
+  --output '/Volumes/SP Extreme SSD/GyanSutraAudio/gita'
+node backend/narration/import-audio.mjs '/Volumes/SP Extreme SSD/GyanSutraAudio/gita'
 ```
 
-The frontend uses its existing `VITE_API_BASE_URL`; Android requires a reachable
-HTTPS Node backend. A worker on your laptop is not reachable from the deployed
-backend until you configure hosting/networking. No model or secret goes in the APK.
+This uses the app's actual `buildNarration` function, so punctuation, pauses and
+text segmentation agree with playback. It doesn't silently rewrite scripture.
+The full batch has not been claimed as generated or listening-reviewed.
+Generation time and audio duration are recorded for every completed clip;
+use the first samples to estimate your batch runtime.
 
-For a private remote worker, set `NARRATION_SERVICE_TOKEN` to the same secret in
-both services, use HTTPS, and restrict access to the Node backend. Keep one worker
-per model/GPU. Never expose an unauthenticated worker to the public internet.
-`NARRATION_DEVICE` optionally selects a PyTorch device; default is CUDA if present,
-otherwise CPU. `NARRATION_CACHE_DIR` sets the disk cache directory (512 MiB limit).
+Other books and meanings use the same JSON queue format:
 
-## Optional neural playback and failure behavior
+```json
+[
+  {
+    "text": "Now, the meaning.",
+    "locale": "en-IN",
+    "kind": "translation",
+    "rights": "project-original",
+    "rightsNote": "Original GyanSutra section introduction"
+  }
+]
+```
 
-- Danda and line boundaries create short breath pauses; section changes get a
-  longer pause. The order is verse → meaning → optional explanation → context.
-- Markdown formatting and verse reference numbers are omitted from speech.
-- One segment is prepared ahead; WAV output is cached on the worker and in a
-  bounded Node memory cache. The client does not persist scripture audio.
-- Stop, navigation, language/content changes and a new reading cancel the current
-  session. A worker already generating may finish and cache the cancelled segment.
-- If the worker is unconfigured, unavailable, busy or too slow, playback explicitly
-  reports device-voice fallback and continues from the current segment.
-- Device fallback prefers available natural/enhanced voices, then locale matches.
-  Sanskrit falls back to Hindi only when a Sanskrit device voice is absent. This
-  fallback can mispronounce Sanskrit. Missing voices produce an installation
-  prompt on Android instead of silently skipping the verse.
-- Choosing a named device voice bypasses the neural worker for that reading.
+Supported locales: `sa-IN`, `en-IN`, `hi-IN`, `bn-IN`, `mr-IN`, `te-IN`, `ta-IN`.
+Use `buildNarration` to export the **exact displayed text** and section headings.
+Sections are `verse`, `translation`, `explanation`, `context`; texts are limited
+to 360 characters. Add `demoOnly: true` to samples that should not enter the app.
+Each queue item must record its text rights and provenance. The script checks
+these fields, but they are declarations, not independent legal verification.
+
+**Modern translations need separate rights.** The current Gita dataset includes
+translations and commentaries credited to named authors. They are not
+automatically public domain because the Sanskrit scripture is ancient.
+The sample queue excludes these texts. Obtain applicable permissions or use
+original / appropriately public-domain translations before exporting a
+commercial meaning-audio library. A TTS model's licence does not clear its input.
+
+## Commercial use and attribution
+
+- [Svara-TTS by Kenpath](https://huggingface.co/kenpath/svara-tts-v1) and its MLX
+  conversion are published under Apache 2.0.
+- The model derives from Orpheus / Llama 3.2. Preserve the underlying
+  [Llama 3.2 licence](licenses/LLAMA-3.2.txt) and comply with its
+  [Acceptable Use Policy](https://www.llama.com/llama3_2/use-policy).
+  Its commercial terms include an additional licence requirement for entities
+  exceeding the specified 700-million-MAU threshold. It is not unconditional MIT.
+- [MLX Audio](https://github.com/Blaizzy/mlx-audio) is MIT;
+  [SNAC](https://huggingface.co/hubertsiuzdak/snac_24khz) is MIT.
+- The app discloses AI narration and links to `/narration-notices.html`, including
+  “Built with Llama” attribution. The model weights stay on the SSD, outside Git
+  and outside the APK. Keep licence notices with any weights you redistribute.
+- Only supplied model voices are used; no person's voice is cloned.
+
+Local generation has no per-character or API charge. Electricity and your
+existing hardware are still resources, and public hosting/storage limits remain
+those of your hosting provider. No paid service is activated by these scripts.
+
+## Playback behavior
+
+- Saved clips are matched by complete text, locale and section. A changed
+  translation cannot accidentally play the old translation's audio.
+- Order remains Sanskrit → meaning → optional explanation → context, with pauses.
+- Missing clips use the best installed device voice and show that source.
+  A named meaning voice overrides saved prose, while saved Sanskrit remains.
+- Recent downloaded clips use a bounded cache. Bundled Android WAVs can be
+  read offline. Website offline availability depends on its cache.
+- Stop, navigation and language changes cancel playback and pending lookups.
+  An audio playback failure stops rather than unexpectedly repeating a verse.
+- Import verifies each WAV's SHA-256, format and size before updating the inventory.
+
+## Other engines
+
+The existing `server.py` / `requirements.txt` Indic Parler worker and Node
+`/api/narration` route remain optional. They are **not** used by default and have
+not been activated by this local workflow. Indic Parler's original Hugging Face
+repository requires account access acceptance. Do not assume Render's free
+instance can run a multi-GB model.
+
+[Vāgdhenu](https://huggingface.co/prathoshap/vagdhenu) remains a Sanskrit-specific
+chanting alternative to evaluate, but its upstream GPU setup isn't a verified
+drop-in Apple Silicon installation. Svara was selected for its published native
+MLX workflow and coverage of all seven required languages, not a claim that it
+is objectively the best voice. Listen and compare before a full-library batch.
 
 ## Verification
 
 ```sh
-curl -f http://127.0.0.1:8001/synthesize \
-  -H 'Content-Type: application/json' \
-  -d '{"text":"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।","locale":"sa-IN","style":"recitation"}' \
-  --output /tmp/gyansutra-recitation.wav
+python3 -m unittest discover -s backend/narration -p 'test_*.py'
+cd frontend
+npm run test:narration
+npm run lint
+npm run build:android
 ```
 
-Listen to Sanskrit and each supported meaning language on actual target devices.
-Check Stop during preparation, Stop mid-sentence, a second verse taking over,
-offline playback and switching language mid-reading. Automated tests cover
-script ordering, voice selection, cancellation and the API contract; they cannot
-verify emotion or pronunciation.
+These cover sequencing, exact text matching, saved/device fallback, cancellation,
+cache migration, WAV handling and basic provenance validation. They do not
+replace listening to Sanskrit with someone fluent in its pronunciation.
