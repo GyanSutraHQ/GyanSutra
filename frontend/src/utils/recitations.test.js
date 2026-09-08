@@ -36,7 +36,7 @@ test('original meanings are limited to an identified Gita verse and available la
 });
 
 test('every imported narration entry has valid bundled audio and commercial text provenance', async () => {
-  assert.equal(Object.keys(inventory).length, 31);
+  assert.equal(Object.keys(inventory).length, 1536);
   const locales = new Set();
   for (const [serialized, entry] of Object.entries(inventory)) {
     const [locale, kind, text] = JSON.parse(serialized);

@@ -27,8 +27,13 @@ recording is currently selected automatically.
   project attribution and an editorial-review-pending note. Other verses retain
   their existing text sources; this change does not clear the whole corpus.
 - All 37 evaluation clips were generated: 196.8 seconds of audio in 660.72
-  seconds of M4 generation time. The 31 non-demo clips (about 9 MB) were imported
-  for Gita 1.1 and 2.47 and copied into the Android project.
+  seconds of M4 generation time. The 31 non-demo clips were imported as about
+  1.4 MB of AAC for Gita 1.1 and 2.47.
+- The complete Sanskrit Gita batch is generated and imported: 1,510 unique
+  spoken segments covering all 701 verses, 6,548.45 seconds of audio, and
+  36,046.88 seconds of recorded M4 generation time. Lossless masters use about
+  307 MB on the SSD; the complete AAC bundle, including the original evaluation
+  meanings, uses about 58 MB and contains 1,536 exact spoken segments.
 - The checked-in `frontend/src/data/narrationInventory.json` is the authoritative
   list of clips actually imported. An empty inventory means no new audio has
   been shipped yet. Installing software alone does not change the app's voice.
@@ -96,9 +101,10 @@ node backend/narration/import-audio.mjs '/Volumes/SP Extreme SSD/GyanSutraAudio/
 
 This uses the app's actual `buildNarration` function, so punctuation, pauses and
 text segmentation agree with playback. It doesn't silently rewrite scripture.
-The full batch has not been claimed as generated or listening-reviewed.
-Generation time and audio duration are recorded for every completed clip;
-use the first samples to estimate your batch runtime.
+The full batch is generated and waveform/integrity checked. It is not claimed as
+listening-reviewed: a fluent Sanskrit reviewer should still check pronunciation
+through `gita/listen.html`. Generation time and audio duration are recorded for
+every completed clip.
 
 Other books and meanings use the same JSON queue format:
 
