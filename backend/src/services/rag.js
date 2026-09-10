@@ -68,8 +68,8 @@ const CACHE_ENABLED = booleanFromEnv('RAG_CACHE_ENABLED', true);
 const CACHE_MAX_ENTRIES = integerFromEnv('RAG_CACHE_MAX_ENTRIES', 250, 10, 2_000);
 const RESPONSE_CACHE_TTL_MS = integerFromEnv('RAG_RESPONSE_CACHE_TTL_SECONDS', 21_600, 30, 604_800) * 1_000;
 const RETRIEVAL_CACHE_TTL_MS = integerFromEnv('RAG_RETRIEVAL_CACHE_TTL_SECONDS', 3_600, 30, 86_400) * 1_000;
-const CORPUS_VERSION = (process.env.RAG_CORPUS_VERSION || 'gita-ramayana-v1').trim();
-const PROMPT_VERSION = 'sarathi-grounded-v3-multilingual';
+const CORPUS_VERSION = (process.env.RAG_CORPUS_VERSION || 'gita-ramayana-vishnu-purana-v1').trim();
+const PROMPT_VERSION = 'sarathi-grounded-v4-vishnu-purana';
 const RESPONSE_LANGUAGES = {
   en: 'English',
   hi: 'natural Devanagari Hindi',
@@ -102,7 +102,7 @@ const providerCircuits = new Map();
 let activeGenerations = 0;
 const generationQueue = [];
 
-const SYSTEM_PROMPT = `You are Sarathi (सारथि), Gyan Sutra's guide to the Bhagavad Gita and Valmiki Ramayana.
+const SYSTEM_PROMPT = `You are Sarathi (सारथि), Gyan Sutra's guide to the Bhagavad Gita, Valmiki Ramayana, and Vishnu Purana.
 
 GROUNDING CONTRACT:
 - The Source Pack below is the only authority for scripture facts, quotations, verse numbers, characters, and guru views.
@@ -412,7 +412,7 @@ function buildContext(verses, question, language = 'en') {
       `[S${sourceNumber}] ${verseReference(verse)}`,
       verse.sanskrit ? `Sanskrit: ${truncateAtBoundary(verse.sanskrit, 700)}` : '',
       verse.transliteration ? `Transliteration: ${truncateAtBoundary(verse.transliteration, 500)}` : '',
-      verse.translationEnglish ? `English translation: ${truncateAtBoundary(verse.translationEnglish, 900)}` : '',
+      verse.translationEnglish ? `English translation: ${truncateAtBoundary(verse.translationEnglish, verse.book === 'vishnu-purana' ? 4_000 : 900)}` : '',
       verse.translationHindi ? `Hindi translation: ${truncateAtBoundary(verse.translationHindi, 900)}` : '',
       verse.explanationEnglish ? `Source explanation: ${truncateAtBoundary(verse.explanationEnglish, 900)}` : '',
       verse.comments ? `Source notes: ${truncateAtBoundary(verse.comments, 550)}` : '',
@@ -466,6 +466,11 @@ function buildCitation(verse) {
     kandaNumber: verse.kandaNumber,
     sarga: verse.sarga,
     shlokaNumber: verse.shlokaNumber,
+    partNumber: verse.partNumber,
+    partTitle: verse.partTitle,
+    sectionNumber: verse.sectionNumber,
+    passageNumber: verse.passageNumber,
+    storyTitle: verse.storyTitle,
     sanskrit: verse.sanskrit,
     transliteration: verse.transliteration,
     translationEnglish: verse.translationEnglish,
@@ -509,9 +514,11 @@ function buildExtractiveAnswer(question, verses, reason = 'generation_unavailabl
   }
 
   const keyVerses = verses.slice(0, 2).map((verse, index) => {
-    const reference = verse.book === 'ramayana' || verse.kandaNumber
-      ? `${referenceWords[1]}, ${referenceWords[4]} ${verse.kandaNumber}, ${referenceWords[5]} ${verse.sarga}, ${referenceWords[6]} ${verse.shlokaNumber}`
-      : `${referenceWords[0]}, ${referenceWords[2]} ${verse.chapterNumber}, ${referenceWords[3]} ${verse.verseNumber}`;
+    const reference = verse.book === 'vishnu-purana' || verse.partNumber
+      ? `Vishnu Purana, Part ${verse.partNumber}, Section ${verse.sectionNumber}`
+      : verse.book === 'ramayana' || verse.kandaNumber
+        ? `${referenceWords[1]}, ${referenceWords[4]} ${verse.kandaNumber}, ${referenceWords[5]} ${verse.sarga}, ${referenceWords[6]} ${verse.shlokaNumber}`
+        : `${referenceWords[0]}, ${referenceWords[2]} ${verse.chapterNumber}, ${referenceWords[3]} ${verse.verseNumber}`;
     const meaning = sourceMeaning(verse, safeLanguage);
     const sourceText = reason === 'direct_text' && verse.sanskrit
       ? [truncateAtBoundary(verse.sanskrit, 700), meaning === verse.sanskrit ? '' : meaning].filter(Boolean).join('\n\n')
@@ -558,7 +565,7 @@ function sanitizeContextIds(contextIds) {
   return [...new Set(contextIds
     .filter((id) => typeof id === 'string')
     .map((id) => id.trim())
-    .filter((id) => /^(bhagavad-gita|valmiki-ramayana)_\d+_\d+(?:_\d+)?$/.test(id))
+    .filter((id) => /^(?:bhagavad-gita_\d+_\d+|valmiki-ramayana_\d+_\d+_\d+|vishnu-purana_\d+_\d+(?:_\d+)?)$/.test(id))
     .slice(0, 4))];
 }
 

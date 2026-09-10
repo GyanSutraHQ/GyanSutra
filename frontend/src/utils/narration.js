@@ -1,6 +1,6 @@
 // Keep the spoken script deterministic: no generated paraphrases of scripture.
 export const LANGUAGE_LOCALES = {
-  english: 'en-IN', hindi: 'hi-IN', bengali: 'bn-IN', marathi: 'mr-IN', telugu: 'te-IN', tamil: 'ta-IN',
+  sanskrit: 'sa-IN', english: 'en-IN', hindi: 'hi-IN', bengali: 'bn-IN', marathi: 'mr-IN', telugu: 'te-IN', tamil: 'ta-IN',
 };
 
 export function cleanSpeechText(value) {
@@ -33,7 +33,7 @@ export function speechChunks(value, maximum = 360) {
   return chunks;
 }
 
-export function buildNarration({ sanskrit, translation, explanation, context, contentLanguage, full, labels }) {
+export function buildNarration({ sanskrit, translation, explanation, context, contentLanguage, full, labels, scope = 'all' }) {
   const result = [];
   const add = (text, kind, locale, heading) => {
     const chunks = speechChunks(text);
@@ -52,10 +52,14 @@ export function buildNarration({ sanskrit, translation, explanation, context, co
     .replace(/[॥|।]+\s*[०-९\d]+(?:[.।:|-][०-९\d]+)*\s*[॥|।]*/gu, '॥')
     .replace(/[०-९\d]+(?:[.:][०-९\d]+)*\s*$/u, '')
     .replace(/॥|\|\|/g, '.\n').replace(/।|\|/g, ',\n');
-  add(verse, 'verse', 'sa-IN');
+  if (scope === 'all' || scope === 'verse') add(verse, 'verse', 'sa-IN');
   const locale = LANGUAGE_LOCALES[contentLanguage] || 'en-IN';
-  add(translation, 'translation', locale, labels.meaningIntro || labels.translation);
-  if (full) {
+  if (scope === 'all' || scope === 'translation') {
+    add(translation, 'translation', locale, scope === 'all' ? labels.meaningIntro || labels.translation : '');
+  }
+  if (scope === 'explanation') add(explanation, 'explanation', locale);
+  if (scope === 'context') add(context, 'context', locale);
+  if (scope === 'all' && full) {
     if (cleanSpeechText(explanation) !== cleanSpeechText(translation)) {
       add(explanation, 'explanation', locale, labels.explanationIntro || labels.explanation);
     }

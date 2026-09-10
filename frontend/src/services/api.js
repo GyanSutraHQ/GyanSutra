@@ -102,6 +102,9 @@ export const getChapterVerses = (id) => request(`/chapters/${id}/verses`);
 export const getSources = () => request('/sources');
 export const getSourceVerses = (sourceId) => request(`/verses/source/${sourceId}`);
 export const getRamayanaSarga = (kandaNum, sargaNum) => request(`/verses/ramayana/${kandaNum}/${sargaNum}`);
+export const getVishnuPurana = () => request('/vishnu-purana');
+export const getVishnuPuranaPart = (partNumber) => request(`/vishnu-purana/${partNumber}`);
+export const getVishnuPuranaSection = (partNumber, sectionNumber) => request(`/vishnu-purana/${partNumber}/${sectionNumber}`);
 
 // ── Verses ────────────────────────────────────────────────────────────────────
 export const getVerse = (id) => request(`/verses/${id}`);

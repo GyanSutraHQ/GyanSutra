@@ -10,6 +10,7 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "ingest": "node scripts/ingest.js",
+    "ingest:vishnu": "node scripts/ingest_vishnu_purana.js",
     "test": "jest --runInBand"
   },
   "dependencies": {

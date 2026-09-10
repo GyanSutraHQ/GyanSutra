@@ -20,9 +20,13 @@ const SOURCES = [
     description: 'The great epic of the Kurukshetra War and the destinies of princes.',
   },
   {
-    id: 'puranas',
-    title: 'Puranas',
-    description: 'Ancient lore and mythological narratives of the divine.',
+    id: 'vishnu-purana',
+    title: 'Vishnu Purana',
+    description: 'A complete Purana of creation, sacred order, dynasties, Krishna, and liberation.',
+    available: true,
+    partCount: 6,
+    sectionCount: 126,
+    translation: 'M. N. Dutt (1896), public domain',
   },
 ];
 

@@ -73,6 +73,23 @@ describe('Gyan Sutra API', () => {
     expect(response.body.uptimeSeconds).toEqual(expect.any(Number));
   });
 
+  test('serves the complete Vishnu Purana index and source metadata', async () => {
+    const response = await request(app).get('/api/vishnu-purana').expect(200);
+
+    expect(response.body.partCount).toBe(6);
+    expect(response.body.sectionCount).toBe(126);
+    expect(response.body.parts.map((part) => part.sectionCount)).toEqual([22, 16, 18, 24, 38, 8]);
+    expect(response.body.edition.translation).toMatch(/Manmatha Nath Dutt/);
+  });
+
+  test('serves a complete Vishnu Purana section with its reading guide', async () => {
+    const response = await request(app).get('/api/vishnu-purana/1/1').expect(200);
+
+    expect(response.body.section.id).toBe('vishnu-purana_1_1');
+    expect(response.body.section.synopsis).toMatch(/Maitreya/i);
+    expect(response.body.section.paragraphs.join(' ')).toMatch(/Salutation unto Vāsudeva/);
+  });
+
   test('rejects disallowed browser origins with a 403', async () => {
     const response = await request(app)
       .get('/health')

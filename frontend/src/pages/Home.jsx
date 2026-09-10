@@ -26,6 +26,7 @@ export default function Home() {
   const sources = [
     { id: 'bhagavad-gita', title: language === 'en' ? 'Bhagavad Gita' : t('heroTitleHighlight'), devanagari: 'गीता', count: t('chapters18'), description: t('gitaDescription') },
     { id: 'ramayana', title: language === 'en' ? 'Valmiki Ramayana' : t('ramayana'), devanagari: 'राम', count: t('kandas7'), description: t('ramayanaDescription') },
+    { id: 'vishnu-purana', title: 'Vishnu Purana', devanagari: 'विष्णु', count: '6 parts · 126 sections', description: 'A complete journey through creation, cosmology, dharma, royal lineages, Krishna’s life, and liberation.' },
   ];
   const dailyMeaning = GENERATED_LANGUAGES.has(language)
     ? (dailyLocalization.content?.translation

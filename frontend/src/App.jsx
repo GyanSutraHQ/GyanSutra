@@ -51,6 +51,9 @@ const routeImports = {
   kandaReader: () => import('./pages/KandaReader'),
   faq: () => import('./pages/FAQ'),
   ask: () => import('./pages/Ask'),
+  vishnuPurana: () => import('./pages/VishnuPurana'),
+  vishnuPuranaPart: () => import('./pages/VishnuPuranaPart'),
+  vishnuPuranaSection: () => import('./pages/VishnuPuranaSection'),
 };
 
 const ChapterReader = lazyWithRetry(routeImports.chapterReader);
@@ -60,6 +63,9 @@ const Ramayana      = lazyWithRetry(routeImports.ramayana);
 const KandaReader   = lazyWithRetry(routeImports.kandaReader);
 const FAQ           = lazyWithRetry(routeImports.faq);
 const Ask           = lazyWithRetry(routeImports.ask);
+const VishnuPurana  = lazyWithRetry(routeImports.vishnuPurana);
+const VishnuPuranaPart = lazyWithRetry(routeImports.vishnuPuranaPart);
+const VishnuPuranaSection = lazyWithRetry(routeImports.vishnuPuranaSection);
 
 // Quiet route loading state for the rare case where an idle preload has not finished.
 function PageLoader() {
@@ -283,6 +289,7 @@ export default function App() {
     || location.pathname.startsWith('/chapters')
     || location.pathname.startsWith('/verses');
   const isRamayanaRoute = location.pathname.startsWith('/ramayana');
+  const isVishnuPuranaRoute = location.pathname.startsWith('/vishnu-purana');
   const sarathiPrompts = [t('promptDuty'), t('promptDetachment'), t('promptDecision')];
 
   return (
@@ -316,6 +323,7 @@ export default function App() {
               <span className="gs-header__nav-label">{t('read')}</span>
               <Link to="/bhagavad-gita" aria-current={isGitaRoute ? 'page' : undefined} className={`gs-header__nav-link${isGitaRoute ? ' gs-header__nav-link--active' : ''}`}>{language === 'en' ? 'Bhagavad Gita' : t('heroTitleHighlight')}</Link>
               <Link to="/ramayana" aria-current={isRamayanaRoute ? 'page' : undefined} className={`gs-header__nav-link${isRamayanaRoute ? ' gs-header__nav-link--active' : ''}`}>{t('ramayana')}</Link>
+              <Link to="/vishnu-purana" aria-current={isVishnuPuranaRoute ? 'page' : undefined} className={`gs-header__nav-link${isVishnuPuranaRoute ? ' gs-header__nav-link--active' : ''}`}>Vishnu Purana</Link>
             </nav>
 
             {/* Desktop utilities. Mobile keeps a calmer app bar and moves
@@ -379,6 +387,9 @@ export default function App() {
                 <Route path="/chapters/:id" element={<PageTransition><ChapterReader /></PageTransition>} />
                 <Route path="/ramayana" element={<PageTransition><Ramayana /></PageTransition>} />
                 <Route path="/ramayana/:kandaNum" element={<PageTransition><KandaReader /></PageTransition>} />
+                <Route path="/vishnu-purana" element={<PageTransition><VishnuPurana /></PageTransition>} />
+                <Route path="/vishnu-purana/:partNumber" element={<PageTransition><VishnuPuranaPart /></PageTransition>} />
+                <Route path="/vishnu-purana/:partNumber/:sectionNumber" element={<PageTransition><VishnuPuranaSection /></PageTransition>} />
                 <Route path="/faq" element={<PageTransition><FAQ /></PageTransition>} />
                 <Route path="/ask" element={<PageTransition><Ask /></PageTransition>} />
                 <Route path="/:source_id" element={<PageTransition><TextReader /></PageTransition>} />

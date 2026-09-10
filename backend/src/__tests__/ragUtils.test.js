@@ -13,6 +13,8 @@ describe('RAG utility behavior', () => {
     ['chapter 18 verse 66', 'bhagavad-gita_18_66'],
     ['Ramayana 5.1.1', 'valmiki-ramayana_5_1_1'],
     ['Sundara Kanda, Sarga 1, Shloka 1', 'valmiki-ramayana_5_1_1'],
+    ['Vishnu Purana Part 5 Section 3', 'vishnu-purana_5_3'],
+    ['विष्णु पुराण अंश ६ अध्याय ८', 'vishnu-purana_6_8'],
   ])('parses %s as %s', (question, expectedId) => {
     expect(parseExplicitReference(question)?.id).toBe(expectedId);
   });
@@ -44,5 +46,10 @@ describe('RAG utility behavior', () => {
     const answer = 'Chapter 18 Verse 66 [S3]';
     expect(unsupportedAnswerReferences(answer, ['bhagavad-gita_2_47'], 1))
       .toEqual(expect.arrayContaining(['Chapter 18 Verse 66', '[S3]']));
+  });
+
+  test('collects multiple Vishnu Purana section references', () => {
+    expect(parseExplicitReferences('Compare Vishnu Purana Part 1 Section 1 and Part 6 Section 8').map(reference => reference.id))
+      .toEqual(['vishnu-purana_1_1', 'vishnu-purana_6_8']);
   });
 });

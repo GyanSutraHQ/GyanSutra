@@ -9,7 +9,7 @@ const FAQ_DATA = [
     id: 'reading-1',
     category: 'Reading',
     question: 'Which texts can I read?',
-    answer: 'The Bhagavad Gita and Valmiki Ramayana are available now. The Upanishads, Mahabharata, and Puranas are in preparation.',
+    answer: 'The Bhagavad Gita, Valmiki Ramayana, and the complete English Vishnu Purana are available now. The Upanishads and Mahabharata are in preparation.',
   },
   {
     id: 'reading-2',

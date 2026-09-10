@@ -81,6 +81,12 @@ function citationLabel(citation, language, t) {
     return `${language === 'en' ? 'Valmiki Ramayana' : t('ramayana')} ${kanda}.${sarga}.${shloka}`;
   }
 
+  if (citation.book === 'vishnu-purana' || citation.id?.startsWith('vishnu-purana_')) {
+    const part = citation.partNumber || idParts[1];
+    const section = citation.sectionNumber || idParts[2];
+    return `Vishnu Purana · Part ${part} · Section ${section}`;
+  }
+
   return citation.book || 'Scripture source';
 }
 

@@ -10,10 +10,19 @@ const routes = [
   { url: '/search', changefreq: 'weekly', priority: 0.8 },
   { url: '/bhagavad-gita', changefreq: 'weekly', priority: 0.9 },
   { url: '/ramayana', changefreq: 'weekly', priority: 0.9 },
+  { url: '/vishnu-purana', changefreq: 'monthly', priority: 0.9 },
   // Note: Dynamic routes like /verses/:id or /chapters/:id can be added 
   // by querying the backend API or parsing static data, but for a fast,
   // autonomous pass without logic changes, we'll map the core layouts.
 ];
+
+[22, 16, 18, 24, 38, 8].forEach((sectionCount, index) => {
+  const part = index + 1;
+  routes.push({ url: `/vishnu-purana/${part}`, changefreq: 'monthly', priority: 0.8 });
+  for (let section = 1; section <= sectionCount; section += 1) {
+    routes.push({ url: `/vishnu-purana/${part}/${section}`, changefreq: 'yearly', priority: 0.7 });
+  }
+});
 
 const generateSitemap = () => {
   let xml = `<?xml version="1.0" encoding="UTF-8"?>

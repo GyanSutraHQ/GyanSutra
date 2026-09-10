@@ -333,6 +333,7 @@ export default function IlluminatedVerseCard({
 
   const isClickable = !!onClick || variant === 'compact' || variant === 'citation';
   const isRamayana = verse.book === 'ramayana' || Boolean(verse.kanda);
+  const isVishnuPurana = verse.book === 'vishnu-purana' || id?.startsWith('vishnu-purana_');
   const localizedContent = originalContent || localization.content;
   const sourceLanguage = language === 'hi' && translationHindi
     ? 'hindi'
@@ -367,8 +368,9 @@ export default function IlluminatedVerseCard({
   ));
   const sourceTranslator = localizedContent?.basedOn?.author
     || translationSources?.[sourceLanguage]?.author
-    || (!isRamayana && sourceLanguage === 'english' ? 'Swami Sivananda' : null)
-    || (!isRamayana && sourceLanguage === 'hindi' ? 'Swami Tejomayananda' : null)
+    || (isVishnuPurana && sourceLanguage === 'english' ? 'M. N. Dutt' : null)
+    || (!isRamayana && !isVishnuPurana && sourceLanguage === 'english' ? 'Swami Sivananda' : null)
+    || (!isRamayana && !isVishnuPurana && sourceLanguage === 'hindi' ? 'Swami Tejomayananda' : null)
     || (isRamayana && source?.includes('rahular/itihasa') && sourceLanguage === 'english'
       ? 'M. N. Dutt'
       : null);
@@ -391,10 +393,9 @@ export default function IlluminatedVerseCard({
     : hasCommentary
       ? [{ author: labels.commentaries, language: sourceLanguage, explanation: sourceCommentary }]
       : [];
-  const readAloudExplanation = originalContent ? '' : explanationText
-    || displayedCommentaries[0]?.explanation
-    || '';
-  const sourceDescription = isRamayana
+  const sourceDescription = isVishnuPurana
+    ? 'Complete English translation: M. N. Dutt (1896), public domain'
+    : isRamayana
     ? (source?.includes('rahular/itihasa')
       ? 'Sanskrit: Valmiki Ramayana Dataset · English translation: M. N. Dutt via the Itihāsa corpus'
       : 'Sanskrit and supporting text: Valmiki Ramayana Dataset')
@@ -404,7 +405,9 @@ export default function IlluminatedVerseCard({
     if (onClick) {
       onClick(verse);
     } else if (id) {
-      navigate(`/verses/${id}`);
+      navigate(isVishnuPurana
+        ? `/vishnu-purana/${verse.partNumber || chapterNumber}/${verse.sectionNumber || verseNumber}`
+        : `/verses/${id}`);
     }
   };
 
@@ -422,7 +425,9 @@ export default function IlluminatedVerseCard({
       onKeyDown={isClickable ? handleKeyDown : undefined}
       tabIndex={isClickable ? 0 : undefined}
       role={isClickable ? 'button' : 'article'}
-      aria-label={`${t('chapter')} ${chapterNumber}, ${t('verse')} ${verseNumber}`}
+      aria-label={isVishnuPurana
+        ? `Vishnu Purana, Part ${verse.partNumber || chapterNumber}, Section ${verse.sectionNumber || verseNumber}`
+        : `${t('chapter')} ${chapterNumber}, ${t('verse')} ${verseNumber}`}
       id={`verse-${id || `${chapterNumber}-${verseNumber}`}`}
     >
       {/* Corner flourishes - the recurring motif */}
@@ -432,7 +437,9 @@ export default function IlluminatedVerseCard({
       {/* Verse reference badge */}
       <div className="verse-card__ref">
         <span className="verse-card__ref-label">
-          {verse.book === 'ramayana' || verse.kanda
+          {isVishnuPurana
+            ? `Vishnu Purana · Part ${verse.partNumber || chapterNumber} · Section ${verse.sectionNumber || verseNumber}`
+            : verse.book === 'ramayana' || verse.kanda
             ? `${verse.kanda || `${t('kanda')} ${verse.kandaNumber}`} · ${t('sarga')} ${verse.sarga} · ${t('shloka')} ${verse.shlokaNumber}`
             : `${t('chapter')} ${chapterNumber} · ${t('verse')} ${verseNumber}`}
         </span>
@@ -446,13 +453,14 @@ export default function IlluminatedVerseCard({
       {isFull && (
         <ReadAloudControls
           verseKey={id || `${chapterNumber}-${verseNumber}`}
-          book={isRamayana ? 'ramayana' : verse.source_id || verse.book || (id?.startsWith('bhagavad-gita_') ? 'bhagavad-gita' : undefined)}
+          book={isRamayana ? 'ramayana' : isVishnuPurana ? 'vishnu-purana' : verse.source_id || verse.book || (id?.startsWith('bhagavad-gita_') ? 'bhagavad-gita' : undefined)}
           chapterNumber={chapterNumber}
           verseNumber={verseNumber}
           sanskrit={sanskrit}
           translation={translationText}
-          explanation={readAloudExplanation}
+          explanation={originalContent ? '' : explanationText}
           context={contextText}
+          commentaries={displayedCommentaries}
           language={language}
           contentLanguage={contentLanguage}
           disabled={needsLocalization && localization.status === 'loading'}
@@ -612,7 +620,9 @@ export default function IlluminatedVerseCard({
             <AnimatedButton
               onClick={(e) => {
                 e.stopPropagation();
-                const sarathiPrompt = verse.book === 'ramayana'
+                const sarathiPrompt = isVishnuPurana
+                  ? `Explain Vishnu Purana Part ${verse.partNumber || chapterNumber}, Section ${verse.sectionNumber || verseNumber}, using only the source text.`
+                  : verse.book === 'ramayana'
                   ? `Explain ${verse.kanda || 'Kanda ' + verse.kandaNumber}, Sarga ${verse.sarga}, Shloka ${verse.shlokaNumber} in simple terms.`
                   : `Explain Bhagavad Gita ${chapterNumber}.${verseNumber} in simple terms.`;
                   

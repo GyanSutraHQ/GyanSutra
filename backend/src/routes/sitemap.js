@@ -10,7 +10,7 @@ router.get('/sitemap.xml', (req, res) => {
   };
 
   // Static pages
-  const statics = ['/', '/ramayana', '/gita', '/sarathi', '/faq', '/about', '/blog', '/search', '/contact'];
+  const statics = ['/', '/ramayana', '/gita', '/vishnu-purana', '/sarathi', '/faq', '/about', '/blog', '/search', '/contact'];
   statics.forEach(p => addUrl(p, '0.8', 'monthly'));
 
   // Ramayana Kanda & Sarga pages
@@ -38,6 +38,14 @@ router.get('/sitemap.xml', (req, res) => {
     addUrl(`/gita/${ch}`, '0.9', 'weekly');
     for (let v = 1; v <= verseCount; v++) {
       addUrl(`/gita/${ch}/${v}`, '0.7', 'monthly');
+    }
+  });
+
+  [22, 16, 18, 24, 38, 8].forEach((sectionCount, index) => {
+    const part = index + 1;
+    addUrl(`/vishnu-purana/${part}`, '0.9', 'monthly');
+    for (let section = 1; section <= sectionCount; section++) {
+      addUrl(`/vishnu-purana/${part}/${section}`, '0.7', 'yearly');
     }
   });
 

@@ -25,6 +25,20 @@ test('does not repeat identical meanings or read excluded sections', () => {
   assert.deepEqual(buildNarration({ labels }), []);
 });
 
+test('plays a selected section independently without repeating the shloka', () => {
+  const props = {
+    sanskrit: 'धर्मक्षेत्रे कुरुक्षेत्रे।',
+    translation: 'What did they do?',
+    explanation: 'A guru explains the setting in detail.',
+    context: 'The dialogue begins before battle.',
+    contentLanguage: 'english', labels,
+  };
+  assert.deepEqual(buildNarration({ ...props, scope: 'translation' }).map((part) => part.kind), ['translation']);
+  assert.ok(buildNarration({ ...props, scope: 'explanation' }).every((part) => part.kind === 'explanation'));
+  assert.ok(buildNarration({ ...props, scope: 'context' }).every((part) => part.kind === 'context'));
+  assert.ok(buildNarration({ ...props, scope: 'verse' }).every((part) => part.kind === 'verse'));
+});
+
 test('does not recite textual-variant notes embedded in Sanskrit', () => {
   const script = buildNarration({
     sanskrit: 'रागद्वेषविमुक्तैस्तु विषयानिन्द्रियैश्चरन् | (or वियुक्तैस्तु)\nआत्मवश्यैर्विधेयात्मा प्रसादमधिगच्छति ||२-६४||',

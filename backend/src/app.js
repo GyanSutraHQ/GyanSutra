@@ -14,6 +14,7 @@ const askRouter = require('./routes/ask');
 const recommendationsRouter = require('./routes/recommendations');
 const sitemapRoute = require('./routes/sitemap');
 const robotsRoute = require('./routes/robots');
+const vishnuPuranaRouter = require('./routes/vishnuPurana');
 
 const app = express();
 
@@ -106,6 +107,7 @@ app.use('/api/search', searchRouter);
 app.use('/api/ask', askRouter);
 app.use('/api/recommendations', recommendationsRouter);
 app.use('/api/narration', require('./routes/narration'));
+app.use('/api/vishnu-purana', vishnuPuranaRouter);
 
 app.use(sitemapRoute);
 app.use(robotsRoute);

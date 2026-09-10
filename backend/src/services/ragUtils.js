@@ -33,6 +33,22 @@ function normalizeQuestion(value) {
 function parseExplicitReference(value) {
   const question = normalizeQuestion(value);
 
+  const vishnuPurana = question.match(
+    /(?:vishnu\s*purana|viṣṇu\s*purāṇa|विष्णु\s*पुराण)[^\d]{0,30}(?:part|book|a[mṃ]s[ha]|अंश)\s*(\d)[^\d]{0,20}(?:section|chapter|अध्याय)\s*(\d{1,2})/i,
+  );
+  if (vishnuPurana) {
+    const partNumber = Number(vishnuPurana[1]);
+    const sectionNumber = Number(vishnuPurana[2]);
+    if (partNumber >= 1 && partNumber <= 6 && sectionNumber >= 1) {
+      return {
+        type: 'vishnu-purana',
+        id: `vishnu-purana_${partNumber}_${sectionNumber}`,
+        partNumber,
+        sectionNumber,
+      };
+    }
+  }
+
   const gitaPatterns = [
     /(?:bhagavad\s*gita|gita|bg|भगवद्?\s*गीता|गीता)\s*(?:chapter|अध्याय)?\s*(\d{1,2})\s*[.:/\-]\s*(\d{1,3})/i,
     /(?:chapter|अध्याय)\s*(\d{1,2})(?:\s*,?\s*|\s+and\s+)(?:verse|shloka|श्लोक)\s*(\d{1,3})/i,
@@ -115,6 +131,18 @@ function parseExplicitReferences(value) {
   const seen = new Set(references.map((reference) => reference.id));
   const question = normalizeQuestion(value);
 
+  if (/(vishnu\s*purana|viṣṇu\s*purāṇa|विष्णु\s*पुराण)/i.test(question)) {
+    for (const match of question.matchAll(/(?:part|book|a[mṃ]s[ha]|अंश)\s*(\d)[^\d]{0,20}(?:section|chapter|अध्याय)\s*(\d{1,2})/gi)) {
+      const partNumber = Number(match[1]);
+      const sectionNumber = Number(match[2]);
+      const id = `vishnu-purana_${partNumber}_${sectionNumber}`;
+      if (partNumber >= 1 && partNumber <= 6 && sectionNumber >= 1 && !seen.has(id)) {
+        references.push({ type: 'vishnu-purana', id, partNumber, sectionNumber });
+        seen.add(id);
+      }
+    }
+  }
+
   if (/(bhagavad\s*gita|\bgita\b|\bbg\b|भगवद्?\s*गीता|गीता)/i.test(question)) {
     for (const match of question.matchAll(/(\d{1,2})\s*[.:/\-]\s*(\d{1,3})/g)) {
       const chapterNumber = Number(match[1]);
@@ -186,6 +214,8 @@ function candidateText(verse) {
     verse?.transliteration,
     verse?.explanationEnglish,
     verse?.comments,
+    verse?.storyTitle,
+    verse?.storySummary,
     Array.isArray(verse?.tags) ? verse.tags.join(' ') : '',
     commentaries,
   ].filter(Boolean).join(' ');
@@ -231,6 +261,10 @@ function truncateAtBoundary(value, maxChars) {
 }
 
 function verseReference(verse) {
+  if (verse?.book === 'vishnu-purana' || verse?.partNumber) {
+    const passage = verse.passageNumber ? `, Passage ${verse.passageNumber}` : '';
+    return `Vishnu Purana, Part ${verse.partNumber}, Section ${verse.sectionNumber}${passage}`;
+  }
   if (verse?.book === 'ramayana' || verse?.kanda || verse?.kandaNumber) {
     return `Valmiki Ramayana, ${verse.kanda || `Kanda ${verse.kandaNumber}`}, Sarga ${verse.sarga}, Shloka ${verse.shlokaNumber}`;
   }
@@ -249,6 +283,12 @@ function toRetrievedVerse(doc, similarity = 1) {
     kandaNumber: doc.kandaNumber,
     sarga: doc.sarga,
     shlokaNumber: doc.shlokaNumber,
+    partNumber: doc.partNumber,
+    partTitle: doc.partTitle,
+    sectionNumber: doc.sectionNumber,
+    passageNumber: doc.passageNumber,
+    storyTitle: doc.storyTitle,
+    storySummary: doc.storySummary,
     sanskrit: doc.sanskrit || '',
     transliteration: doc.transliteration || '',
     translationEnglish: doc.translationEnglish || '',
@@ -286,6 +326,11 @@ function unsupportedAnswerReferences(answer, allowedIds, sourceCount) {
   for (const match of text.matchAll(/(?:valmiki\s+)?ramayana[^\n]{0,50}?(?:kanda\s*)?(\d)[,.:\-\s]+(?:sarga\s*)?(\d{1,3})[,.:\-\s]+(?:shloka|verse)\s*(\d{1,3})/gi)) {
     const id = `valmiki-ramayana_${Number(match[1])}_${Number(match[2])}_${Number(match[3])}`;
     if (!allowed.has(id)) unsupported.push(match[0]);
+  }
+
+  for (const match of text.matchAll(/vishnu\s*purana[^\n]{0,40}?(?:part|book)\s*(\d)[^\d]{0,20}(?:section|chapter)\s*(\d{1,2})/gi)) {
+    const prefix = `vishnu-purana_${Number(match[1])}_${Number(match[2])}`;
+    if (![...allowed].some((id) => id === prefix || id.startsWith(`${prefix}_`))) unsupported.push(match[0]);
   }
 
   return [...new Set(unsupported)];
