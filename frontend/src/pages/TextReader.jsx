@@ -9,6 +9,7 @@ import { getAllChapters } from '../services/api';
 import LoadingSpinner from '../components/LoadingSpinner';
 import AnimatedButton from '../components/AnimatedButton';
 import useLanguage from '../i18n/useLanguage';
+import SEOHead from '../components/SEO/SEOHead';
 
 import './TextReader.css';
 
@@ -100,6 +101,7 @@ export default function TextReader() {
   if (!meta.available) {
     return (
       <main className="text-reader">
+        <SEOHead title={meta.title} description={`${meta.title} is being prepared for the Gyan Sutra scripture library.`} canonical={`/${source_id}`} noindex />
         <div className="text-reader__container">
           <Link to="/" className="text-reader__back">← {labels.library}</Link>
           <header className="text-reader__header">
@@ -131,6 +133,11 @@ export default function TextReader() {
 
   return (
     <main className="text-reader">
+      <SEOHead
+        title="Bhagavad Gita — All 18 Chapters"
+        description="Read all 18 chapters of the Bhagavad Gita with Sanskrit, transliteration, translations, commentary, and audio."
+        canonical="/bhagavad-gita"
+      />
       <div className="text-reader__container">
 
         {/* Back link */}

@@ -54,17 +54,15 @@ jobs:
           VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL || 'https://gyansutra.onrender.com' }}
         run: npm run build
 
-      # ── 5. SPA fallback - copy index.html → 404.html ──────────────────────
-      #   public/404.html (the purpose-built redirect shim) is already copied
-      #   into dist/ by Vite. This step is a belt-and-suspenders safety copy
-      #   in case the shim is not present for any reason.
+      # ── 5. GitHub Pages-only SPA fallback ─────────────────────────────────
+      # Cloudflare must not receive a top-level 404.html because its absence
+      # enables Cloudflare Pages' native 200-status SPA fallback. GitHub Pages
+      # still needs this generated fallback for routes not statically emitted.
       - name: Ensure SPA 404 fallback exists
         run: |
           if [ ! -f frontend/dist/404.html ]; then
             cp frontend/dist/index.html frontend/dist/404.html
             echo "Copied index.html → 404.html (fallback)"
-          else
-            echo "404.html already present (from public/404.html)"
           fi
 
       # ── 6. Disable Jekyll processing ──────────────────────────────────────

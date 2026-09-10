@@ -18,7 +18,7 @@ links to human sarga recordings. No voice server is needed by default. See
 
 ```
 ┌─ Cloudflare Pages ──────────────┐   ┌─ GitHub Pages ──────────────────┐
-│  https://gyansutraapp.pages.dev │   │  https://santanu-sp.github.io/  │
+│  https://gyansutraapp.com       │   │  https://santanu-sp.github.io/  │
 │  (React + Vite PWA, base='/')   │   │  GyanSutra/                     │
 │  Primary / LinkedIn Featured    │   │  (same build, base='/GyanSutra/')│
 └────────────────┬────────────────┘   └──────────────┬──────────────────┘
@@ -163,7 +163,7 @@ GyanSutra/
     ├── public/
     │   ├── icons/                   # PWA icons (192px, 512px, apple-touch, favicon)
     │   ├── linkedin/                # OG/social preview image
-    │   ├── 404.html                 # GitHub Pages SPA shim (redirects unknown routes)
+    │   ├── _headers                 # Cloudflare crawl/security response headers
     │   ├── icons.svg                # Sprite sheet for inline SVG icons
     │   └── manifest.json            # PWA web app manifest
     ├── src/
@@ -262,14 +262,14 @@ Gyan Sutra is deployed to **two free hosts simultaneously** from the same Git re
 
 | Host | URL | Base path | Use |
 |------|-----|-----------|-----|
-| Cloudflare Pages | `https://gyansutraapp.pages.dev/` | `/` | Primary / LinkedIn |
+| Cloudflare Pages | `https://gyansutraapp.com/` | `/` | Primary / canonical |
 | GitHub Pages | `https://santanu-sp.github.io/GyanSutra/` | `/GyanSutra/` | Secondary / free CDN |
 
 Both deployments connect to the **same Render backend** - no backend changes are needed.
 
 ---
 
-### Cloudflare Pages (existing - no changes needed)
+### Cloudflare Pages
 
 Cloudflare is already configured and will continue to build automatically on every push to `main`. It builds with the default `base='/'` because `VITE_BASE_PATH` is not set in its environment.
 
@@ -313,9 +313,7 @@ https://santanu-sp.github.io/GyanSutra/
 
 Vite's `base` config controls how asset URLs are emitted. The GitHub Actions workflow sets `VITE_BASE_PATH=/GyanSutra/` at build time so all asset paths are prefixed correctly for the GitHub Pages sub-path. Cloudflare builds without this variable (defaults to `/`).
 
-**React Router deep links on GitHub Pages** are handled by a two-step SPA shim:
-1. `public/404.html` - GitHub Pages serves this for any unmatched route. It saves the real path to `sessionStorage` and redirects to the app root.
-2. The restore script in `index.html` - runs before React boots, reads `sessionStorage`, and calls `history.replaceState()` with the original path. React Router then sees the correct URL.
+Cloudflare receives no top-level `404.html`, which enables its native 200-status SPA fallback. Indexable routes are also emitted as page-specific static HTML during `postbuild`, including canonical metadata and source text. The GitHub Actions workflow creates a GitHub Pages-only `404.html` after the build for unmatched secondary-host routes.
 
 ---
 
@@ -323,9 +321,9 @@ Vite's `base` config controls how asset URLs are emitted. The GitHub Actions wor
 
 ```bash
 # Test Cloudflare (primary)
-open https://gyansutraapp.pages.dev/
-open https://gyansutraapp.pages.dev/chapters/1          # Deep link
-open https://gyansutraapp.pages.dev/ramayana            # Deep link
+open https://gyansutraapp.com/
+open https://gyansutraapp.com/bhagavad-gita             # Deep link
+open https://gyansutraapp.com/ramayana                  # Deep link
 
 # Test GitHub Pages (secondary)
 open https://santanu-sp.github.io/GyanSutra/

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import useLanguage from '../i18n/useLanguage';
 import KANDA_NAMES from '../utils/kandaNames';
+import SEOHead from '../components/SEO/SEOHead';
 
 import './TextReader.css'; // Reusing the same styles
 
@@ -22,6 +23,11 @@ export default function Ramayana() {
   const { language, t } = useLanguage();
   return (
     <main className="text-reader">
+      <SEOHead
+        title="Valmiki Ramayana — Seven Kandas"
+        description="Read the Valmiki Ramayana across its seven kandas with Sanskrit and available translations."
+        canonical="/ramayana"
+      />
       <div className="text-reader__container">
         <Link to="/" className="text-reader__back">← {t('browseLibrary')}</Link>
         <header className="text-reader__header">

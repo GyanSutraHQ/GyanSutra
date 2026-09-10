@@ -4,10 +4,10 @@ import path from 'path';
 // This script generates a sitemap.xml for the Gyansutra app.
 // It statically maps known routes for the SPA.
 const DOMAIN = 'https://gyansutraapp.com';
+const LAST_MODIFIED = new Date().toISOString().slice(0, 10);
 
 const routes = [
   { url: '/', changefreq: 'daily', priority: 1.0 },
-  { url: '/search', changefreq: 'weekly', priority: 0.8 },
   { url: '/bhagavad-gita', changefreq: 'weekly', priority: 0.9 },
   { url: '/ramayana', changefreq: 'weekly', priority: 0.9 },
   { url: '/vishnu-purana', changefreq: 'monthly', priority: 0.9 },
@@ -32,6 +32,7 @@ const generateSitemap = () => {
     xml += `
   <url>
     <loc>${DOMAIN}${route.url}</loc>
+    <lastmod>${LAST_MODIFIED}</lastmod>
     <changefreq>${route.changefreq}</changefreq>
     <priority>${route.priority}</priority>
   </url>`;

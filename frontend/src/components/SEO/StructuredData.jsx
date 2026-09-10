@@ -1,8 +1,8 @@
 export function OrganizationSchema({ 
   name = "Gyan Sutra", 
   url = "https://gyansutraapp.com",
-  logo = "https://gyansutraapp.pages.dev/icons/logo.svg",
-  description = "Read the Bhagavad Gita and Valmiki Ramayana in Sanskrit and English."
+  logo = "https://gyansutraapp.com/icons/logo.svg",
+  description = "Read the Bhagavad Gita, Valmiki Ramayana, and complete Vishnu Purana."
 } = {}) {
   return {
     "@context": "https://schema.org",

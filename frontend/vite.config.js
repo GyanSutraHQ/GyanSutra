@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
 const webBase = process.env.VITE_BASE_PATH || '/';
-const siteUrl = (process.env.VITE_SITE_URL || 'https://gyansutraapp.pages.dev/').replace(/\/$/, '') + '/';
+const siteUrl = (process.env.VITE_SITE_URL || 'https://gyansutraapp.com/').replace(/\/$/, '') + '/';
 process.env.VITE_SITE_URL = siteUrl;
 
 export default defineConfig(({ mode }) => {

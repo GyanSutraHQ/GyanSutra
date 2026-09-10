@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet-async';
 
 export default function SEOHead({
-  title = "Bhagavad Gita and Ramayana",
-  description = "Read the Bhagavad Gita and Valmiki Ramayana in Sanskrit and English. Search verses, read commentary, and ask Sarathi for help.",
+  title = "Gita, Ramayana and Vishnu Purana",
+  description = "Read the Bhagavad Gita, Valmiki Ramayana, and complete Vishnu Purana with source-grounded translations, notes, audio, and Sarathi guidance.",
   canonical = "",
-  ogImage = "https://gyansutraapp.pages.dev/linkedin/gyan-sutra-linkedin-cover.png",
+  ogImage = "https://gyansutraapp.com/linkedin/gyan-sutra-linkedin-cover.png",
   noindex = false,
   schemaData = null
 }) {

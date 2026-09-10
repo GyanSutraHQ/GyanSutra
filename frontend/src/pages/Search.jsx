@@ -10,6 +10,7 @@ import SearchBar from '../components/SearchBar';
 import LoadingSpinner from '../components/LoadingSpinner';
 import AnimatedButton from '../components/AnimatedButton';
 import useLanguage from '../i18n/useLanguage';
+import SEOHead from '../components/SEO/SEOHead';
 
 import './Search.css';
 
@@ -72,6 +73,12 @@ export default function Search() {
 
   return (
     <main className="search-page">
+      <SEOHead
+        title="Search Scriptures"
+        description="Search within the Gyan Sutra scripture library."
+        canonical="/search"
+        noindex
+      />
       <header className="search-page__header">
         <h1 className="search-page__heading">{labels.title}</h1>
         <SearchBar autoFocus={!q} placeholder={labels.placeholder} />

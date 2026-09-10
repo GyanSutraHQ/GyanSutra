@@ -8,6 +8,7 @@
     "dev": "vite",
     "prebuild": "node scripts/generate-sitemap.js",
     "build": "vite build",
+    "postbuild": "node scripts/generate-static-pages.js",
     "build:android": "vite build --mode android",
     "android:sync": "npm run build:android && cap sync android",
     "android:open": "cap open android",
