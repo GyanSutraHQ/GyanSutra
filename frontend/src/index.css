@@ -88,6 +88,10 @@ h6 {
 
 p {
   color: var(--text-secondary);
+  overflow-wrap: normal;
+  text-wrap: pretty;
+  word-break: normal;
+  hyphens: none;
 }
 
 .devanagari {
@@ -1067,12 +1071,9 @@ p {
   }
 
   .gs-home__darshan-sanskrit {
-    display: -webkit-box;
-    overflow: hidden;
     font-size: 1.25rem;
     line-height: 1.6;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    text-wrap: balance;
   }
 
   .gs-home__darshan-meaning {
@@ -1081,12 +1082,8 @@ p {
   }
 
   .gs-home__darshan-translation {
-    display: -webkit-box;
-    overflow: hidden;
     font-size: 0.88rem;
     line-height: 1.48;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
   }
 
   .gs-home__darshan-actions {
@@ -1163,13 +1160,11 @@ p {
   .gs-home__darshan-sanskrit {
     font-size: 1.16rem;
     line-height: 1.55;
-    -webkit-line-clamp: 2;
   }
 
   .gs-home__darshan-translation {
     font-size: 0.84rem;
     line-height: 1.45;
-    -webkit-line-clamp: 2;
   }
 
   .gs-home__darshan-actions {

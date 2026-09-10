@@ -72,6 +72,17 @@ export function buildNarration({ sanskrit, translation, explanation, context, co
 
 const baseLanguage = (locale) => locale?.toLowerCase().replace(/_/g, '-').split('-')[0];
 
+function isIndianVoice(voice, locale) {
+  const requested = locale.toLowerCase().replace(/_/g, '-');
+  const available = String(voice.lang || '').toLowerCase().replace(/_/g, '-');
+  const name = `${voice.name || ''} ${voice.voiceURI || ''}`;
+
+  if (requested === 'en-in') {
+    return available === 'en-in' || (available === 'en' && /india|indian/i.test(name));
+  }
+  return available === requested || available === baseLanguage(requested);
+}
+
 export function rankedVoices(voices, locale, online = true) {
   const score = (voice) => {
     const name = `${voice.name} ${voice.voiceURI}`;
@@ -85,7 +96,7 @@ export function rankedVoices(voices, locale, online = true) {
     // Browser SpeechSynthesisVoice properties are not enumerable.
     name: voice.name, lang: voice.lang, voiceURI: voice.voiceURI,
     localService: voice.localService, default: voice.default, index,
-  })).filter((voice) => baseLanguage(voice.lang) === baseLanguage(locale)
+  })).filter((voice) => isIndianVoice(voice, locale)
     && (online || voice.localService !== false))
     .sort((a, b) => score(b) - score(a));
 }

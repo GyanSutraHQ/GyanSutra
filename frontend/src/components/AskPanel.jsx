@@ -7,6 +7,7 @@
  */
 
 import { useState, useRef } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { askQuestion } from '../services/api';
 import IlluminatedVerseCard from './IlluminatedVerseCard';
 import AnimatedButton from './AnimatedButton';
@@ -137,7 +138,7 @@ export default function AskPanel() {
               <span className="ask-panel__answer-icon">✦</span>
               {labels.answer}
             </h2>
-            <p className="ask-panel__answer-text">{result.answer}</p>
+            <div className="ask-panel__answer-text"><ReactMarkdown>{result.answer}</ReactMarkdown></div>
           </div>
 
           {result.citations?.length > 0 && (
@@ -176,7 +177,7 @@ export default function AskPanel() {
                 fill="currentColor" opacity="0.25" />
             </svg>
           </div>
-          <p className="ask-panel__refusal-text">{result.answer}</p>
+          <div className="ask-panel__refusal-text"><ReactMarkdown>{result.answer}</ReactMarkdown></div>
           <p className="ask-panel__refusal-hint">
             {labels.hint}
           </p>

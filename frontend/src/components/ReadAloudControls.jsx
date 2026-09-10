@@ -16,6 +16,7 @@ const COPY = {
     preparing: 'Preparing the reading…', playing: 'Reading aloud', error: 'Read aloud could not start on this device.',
     missingVoice: 'A reading voice for this language is not installed.', installVoice: 'Install a voice',
     translation: 'Translation', explanation: 'Explanation', context: 'Context', quality: 'Voice quality depends on the speech voices installed on this device.',
+    studio: 'Listening studio', indianOnly: 'Indian pronunciation only', ready: 'Ready to listen',
   },
   hi: {
     meaningIntro: 'अब इसका अर्थ सुनिए', explanationIntro: 'आइए इसे विस्तार से समझें', contextIntro: 'अब इसका प्रसंग सुनिए',
@@ -26,6 +27,7 @@ const COPY = {
     preparing: 'पाठ तैयार हो रहा है…', playing: 'पाठ सुनाया जा रहा है', error: 'इस डिवाइस पर वाचन शुरू नहीं हो सका।',
     missingVoice: 'इस भाषा की वाचन आवाज़ इंस्टॉल नहीं है।', installVoice: 'आवाज़ इंस्टॉल करें',
     translation: 'अनुवाद', explanation: 'व्याख्या', context: 'प्रसंग', quality: 'आवाज़ की गुणवत्ता इस डिवाइस पर इंस्टॉल की गई वाचन आवाज़ों पर निर्भर करती है।',
+    studio: 'श्रवण कक्ष', indianOnly: 'केवल भारतीय उच्चारण', ready: 'सुनने के लिए तैयार',
   },
   bn: {
     meaningIntro: 'এবার এর অর্থ শুনুন', explanationIntro: 'আসুন আরও বিস্তারিতভাবে বুঝি', contextIntro: 'এবার এর প্রসঙ্গ শুনুন',
@@ -36,6 +38,7 @@ const COPY = {
     preparing: 'পাঠ প্রস্তুত হচ্ছে…', playing: 'পাঠ শোনানো হচ্ছে', error: 'এই ডিভাইসে পাঠ শোনানো শুরু করা যায়নি।',
     missingVoice: 'এই ভাষার পাঠকণ্ঠ ইনস্টল করা নেই।', installVoice: 'কণ্ঠ ইনস্টল করুন',
     translation: 'অনুবাদ', explanation: 'ব্যাখ্যা', context: 'প্রসঙ্গ', quality: 'কণ্ঠের স্বাভাবিকতা এই ডিভাইসে ইনস্টল করা কণ্ঠগুলির উপর নির্ভর করে।',
+    studio: 'শ্রবণ কক্ষ', indianOnly: 'শুধু ভারতীয় উচ্চারণ', ready: 'শোনার জন্য প্রস্তুত',
   },
   mr: {
     meaningIntro: 'आता याचा अर्थ ऐकूया', explanationIntro: 'चला हे अधिक सविस्तर समजून घेऊया', contextIntro: 'आता याचा संदर्भ ऐकूया',
@@ -46,6 +49,7 @@ const COPY = {
     preparing: 'वाचन तयार होत आहे…', playing: 'वाचन सुरू आहे', error: 'या डिवाइसवर वाचन सुरू करता आले नाही.',
     missingVoice: 'या भाषेचा वाचन आवाज इंस्टॉल केलेला नाही.', installVoice: 'आवाज इंस्टॉल करा',
     translation: 'अनुवाद', explanation: 'स्पष्टीकरण', context: 'संदर्भ', quality: 'आवाजाची नैसर्गिकता या डिवाइसवर इंस्टॉल केलेल्या आवाजांवर अवलंबून असते.',
+    studio: 'श्रवण कक्ष', indianOnly: 'फक्त भारतीय उच्चार', ready: 'ऐकण्यासाठी तयार',
   },
   te: {
     meaningIntro: 'ఇప్పుడు దీని అర్థం వినండి', explanationIntro: 'దీన్ని మరింత వివరంగా తెలుసుకుందాం', contextIntro: 'ఇప్పుడు దీని సందర్భం వినండి',
@@ -56,6 +60,7 @@ const COPY = {
     preparing: 'పఠనం సిద్ధమవుతోంది…', playing: 'చదివి వినిపిస్తోంది', error: 'ఈ పరికరంలో చదివి వినిపించడం ప్రారంభించలేకపోయాం.',
     missingVoice: 'ఈ భాషకు సంబంధించిన పఠన స్వరం ఇన్‌స్టాల్ కాలేదు.', installVoice: 'స్వరాన్ని ఇన్‌స్టాల్ చేయండి',
     translation: 'అనువాదం', explanation: 'వివరణ', context: 'సందర్భం', quality: 'స్వరం సహజంగా వినిపించడం ఈ పరికరంలో ఇన్‌స్టాల్ చేసిన స్వరాలపై ఆధారపడి ఉంటుంది.',
+    studio: 'శ్రవణ కేంద్రం', indianOnly: 'భారతీయ ఉచ్చారణ మాత్రమే', ready: 'వినడానికి సిద్ధం',
   },
   ta: {
     meaningIntro: 'இப்போது இதன் பொருளைக் கேளுங்கள்', explanationIntro: 'இதை மேலும் விரிவாகப் புரிந்துகொள்வோம்', contextIntro: 'இப்போது இதன் சூழலைக் கேளுங்கள்',
@@ -66,6 +71,7 @@ const COPY = {
     preparing: 'வாசிப்பு தயாராகிறது…', playing: 'வாசித்துக் கொண்டிருக்கிறது', error: 'இந்தச் சாதனத்தில் வாசிப்பைத் தொடங்க முடியவில்லை.',
     missingVoice: 'இந்த மொழிக்கான வாசிப்புக் குரல் நிறுவப்படவில்லை.', installVoice: 'குரலை நிறுவவும்',
     translation: 'மொழிபெயர்ப்பு', explanation: 'விளக்கம்', context: 'சூழல்', quality: 'குரலின் இயல்பான தன்மை இந்தச் சாதனத்தில் நிறுவப்பட்டுள்ள குரல்களைப் பொறுத்தது.',
+    studio: 'கேட்பகுதி', indianOnly: 'இந்திய உச்சரிப்பு மட்டும்', ready: 'கேட்கத் தயார்',
   },
 };
 
@@ -242,28 +248,40 @@ export default function ReadAloudControls({
   };
 
   const active = status === 'playing' || status === 'preparing';
+  const progressValue = progress ? Math.round((progress.index / progress.total) * 100) : 0;
   const statusMessage = status === 'preparing'
     ? labels.preparing
     : status === 'playing' ? labels.playing : error;
 
   return (
     <section className="read-aloud" aria-label={labels.listen}>
+      <div className="read-aloud__header">
+        <div className="read-aloud__identity">
+          <span className="read-aloud__identity-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5 9v6h4l5 4V5L9 9H5Z" /><path d="M17 9a4 4 0 0 1 0 6M19.5 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>
+          </span>
+          <div><strong>{labels.studio || 'Listening studio'}</strong><small>{labels.indianOnly || 'Indian pronunciation only'}</small></div>
+        </div>
+      </div>
+
+      <fieldset className="read-aloud__target-fieldset" disabled={active}>
+        <legend>{labels.reading}</legend>
+        <div className="read-aloud__targets">
+          {narrationTargets.map((target) => (
+            <button
+              type="button"
+              key={target.id}
+              className={selectedTarget === target.id ? 'read-aloud__target read-aloud__target--selected' : 'read-aloud__target'}
+              onClick={() => setSelectedTarget(target.id)}
+              aria-pressed={selectedTarget === target.id}
+            >
+              {target.label}
+            </button>
+          ))}
+        </div>
+      </fieldset>
+
       <div className="read-aloud__primary-row">
-        <label className="read-aloud__field read-aloud__field--target">
-          <span>{labels.reading}</span>
-          <select value={selectedTarget} onChange={(event) => setSelectedTarget(event.target.value)} disabled={active}>
-            {narrationTargets.filter((target) => !target.guru).map((target) => (
-              <option key={target.id} value={target.id}>{target.label}</option>
-            ))}
-            {narrationTargets.some((target) => target.guru) && (
-              <optgroup label={labels.guruExplanations}>
-                {narrationTargets.filter((target) => target.guru).map((target) => (
-                  <option key={target.id} value={target.id}>{target.label}</option>
-                ))}
-              </optgroup>
-            )}
-          </select>
-        </label>
 
         <button
           type="button"
@@ -275,7 +293,7 @@ export default function ReadAloudControls({
           {active ? (
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1" /></svg>
           ) : (
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5Z" /><path d="M17 9a4 4 0 0 1 0 6M19.5 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z" /></svg>
           )}
           <span>{active ? labels.stop : labels.listen}</span>
         </button>
@@ -289,7 +307,7 @@ export default function ReadAloudControls({
 
         {matchingVoices.length > 0 && (
           <label className="read-aloud__field read-aloud__field--voice">
-            <span>{audioLabels.voice}</span>
+            <span>{contentLanguage === 'english' ? 'Indian English voice' : audioLabels.voice}</span>
             <select value={selectedVoice} onChange={(event) => setSelectedVoice(event.target.value)} disabled={active}>
               <option value="">{automaticLabel}</option>
               {matchingVoices.map((voice) => (
@@ -300,9 +318,20 @@ export default function ReadAloudControls({
         )}
       </div>
 
+      <div
+        className={`read-aloud__progress${active ? ' read-aloud__progress--active' : ''}`}
+        role="progressbar"
+        aria-label={statusMessage || labels.ready || 'Ready to listen'}
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow={progressValue}
+      >
+        <span style={{ width: `${progressValue}%` }} />
+      </div>
+
       <p className="read-aloud__status" aria-live="polite">
-        {statusMessage || helpText || labels.chooseSection}
-        {active && progress && ` · ${activeTarget} · ${progress.index}/${progress.total} · ${audioSource === 'neural' ? generatedLabel : audioLabels.device}`}
+        {active && activeTarget ? `${statusMessage} · ${activeTarget}` : statusMessage || helpText || labels.chooseSection}
+        {active && progress && ` · ${audioSource === 'neural' ? generatedLabel : audioLabels.device}`}
         {active && fallback && ` ${labels.fallback}`}
       </p>
 

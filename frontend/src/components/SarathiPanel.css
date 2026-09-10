@@ -411,6 +411,7 @@
 
 /* Markdown typography */
 .sarathi-msg__content p            { margin-top: 0; margin-bottom: 0.85em; }
+.sarathi-msg__content p            { max-width: 62ch; line-height: 1.72; text-wrap: pretty; }
 .sarathi-msg__content p:last-child { margin-bottom: 0; }
 .sarathi-msg__content strong       { font-weight: 600; color: var(--text-primary); }
 .sarathi-msg__content ul,

@@ -28,9 +28,9 @@ export default function VishnuPuranaPart() {
         <Link className="vp-back" to="/vishnu-purana">← All six parts</Link>
         <header className="vp-part-hero">
           <div className="vp-part-hero__mark" aria-hidden="true">{part.symbol}</div>
-          <p className="vp-kicker">Part {part.roman} · {part.theme}</p>
+          <p className="vp-kicker">{part.theme}</p>
           <h1>{part.title}</h1>
-          <p>{part.sectionCount} source sections in the dialogue of Parāśara and Maitreya.</p>
+          <p>Source passages from the dialogue of Parāśara and Maitreya.</p>
         </header>
 
         <section className="vp-trail" aria-label={`Sections in ${part.title}`}>
@@ -38,7 +38,7 @@ export default function VishnuPuranaPart() {
           {part.sections.map((section) => (
             <article className="vp-story-card" key={section.id}>
               <span className="vp-story-card__node" aria-hidden="true" />
-              <div className="vp-story-card__index">Section {String(section.sectionNumber).padStart(2, '0')}</div>
+              <div className="vp-story-card__index">Source passage</div>
               <h2>{section.title}</h2>
               <p>{section.synopsis}</p>
               <Link to={`/vishnu-purana/${part.number}/${section.sectionNumber}`}>

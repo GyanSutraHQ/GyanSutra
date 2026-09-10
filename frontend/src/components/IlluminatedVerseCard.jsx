@@ -32,9 +32,11 @@
 import { useNavigate } from 'react-router-dom';
 import AnimatedButton from './AnimatedButton';
 import ReadAloudControls from './ReadAloudControls';
+import ReadableText from './ReadableText';
 import useLanguage from '../i18n/useLanguage';
 import useLocalizedVerse, { GENERATED_LANGUAGES } from '../hooks/useLocalizedVerse';
 import { originalMeaning } from '../utils/originalMeanings';
+import { scriptureLines } from '../utils/readableText';
 import originalMeanings from '../data/originalMeanings.json';
 
 import './IlluminatedVerseCard.css';
@@ -56,6 +58,7 @@ const READING_COPY = {
     sourceCompiled: 'Named translations and commentaries retain their source attribution; this compiled digital record has not yet received independent critical-edition review.',
     editorialPending: 'This record still requires independent editorial verification.',
     matchedPending: 'The Sanskrit and English records were source-matched; independent editorial verification is still pending.',
+    readingHeadings: ['Opening', 'Meaning in context', 'Further understanding', 'Closing insight'],
   },
   hi: {
     transliteration: 'लिप्यंतरण',
@@ -73,6 +76,7 @@ const READING_COPY = {
     sourceCompiled: 'नामित अनुवादों और टीकाओं के स्रोत सुरक्षित रखे गए हैं; इस संकलित डिजिटल पाठ की स्वतंत्र समालोचनात्मक-संस्करण समीक्षा अभी शेष है।',
     editorialPending: 'इस प्रविष्टि का स्वतंत्र संपादकीय सत्यापन अभी शेष है।',
     matchedPending: 'संस्कृत और अंग्रेज़ी पाठ का स्रोत-मिलान हुआ है; स्वतंत्र संपादकीय सत्यापन अभी शेष है।',
+    readingHeadings: ['आरम्भ', 'प्रसंग का विस्तार', 'आगे की व्याख्या', 'समापन'],
   },
   bn: {
     transliteration: 'লিপ্যন্তর',
@@ -94,6 +98,7 @@ const READING_COPY = {
     machineTranslatedFrom: 'যন্ত্র-সহায়তায় অনূদিত; ভিত্তি:',
     machineReviewPending: 'এই ভাষান্তরটি উৎস পাঠ থেকে যন্ত্র-সহায়তায় তৈরি এবং এখনও মানব সম্পাদক দ্বারা যাচাই করা হয়নি।',
     sourceFallback: 'বাংলা অনুবাদ এখন পাওয়া যাচ্ছে না; নিচে উৎসের ইংরেজি অনুবাদ দেখানো হচ্ছে।',
+    readingHeadings: ['সূচনা', 'প্রসঙ্গের বিস্তার', 'আরও ব্যাখ্যা', 'সমাপ্তি'],
   },
   mr: {
     transliteration: 'लिप्यंतरण',
@@ -115,6 +120,7 @@ const READING_COPY = {
     machineTranslatedFrom: 'यंत्र-सहाय्यित अनुवाद; आधार:',
     machineReviewPending: 'हा भाषानुवाद स्रोत पाठावरून यंत्राच्या सहाय्याने तयार केला आहे आणि मानवी संपादकाने अद्याप पडताळलेला नाही.',
     sourceFallback: 'मराठी अनुवाद सध्या उपलब्ध नाही; खाली मूळ इंग्रजी अनुवाद दाखवला आहे.',
+    readingHeadings: ['प्रारंभ', 'संदर्भाचा विस्तार', 'पुढील स्पष्टीकरण', 'समारोप'],
   },
   te: {
     transliteration: 'లిప్యంతరీకరణ',
@@ -136,6 +142,7 @@ const READING_COPY = {
     machineTranslatedFrom: 'యంత్ర సహాయంతో అనువదించబడింది; ఆధారం:',
     machineReviewPending: 'ఈ భాషానువాదం మూల పాఠం నుంచి యంత్ర సహాయంతో రూపొందించబడింది; మానవ సంపాదకుడు ఇంకా ధృవీకరించలేదు.',
     sourceFallback: 'తెలుగు అనువాదం ప్రస్తుతం అందుబాటులో లేదు; దిగువన మూల ఆంగ్ల అనువాదం చూపబడుతోంది.',
+    readingHeadings: ['ప్రారంభం', 'సందర్భ విస్తరణ', 'మరింత వివరణ', 'ముగింపు'],
   },
   ta: {
     transliteration: 'ஒலிபெயர்ப்பு',
@@ -157,6 +164,7 @@ const READING_COPY = {
     machineTranslatedFrom: 'இயந்திர உதவியுடன் மொழிபெயர்க்கப்பட்டது; அடிப்படை:',
     machineReviewPending: 'இந்த மொழிபெயர்ப்பு மூலப் பாடத்திலிருந்து இயந்திர உதவியுடன் உருவாக்கப்பட்டது; மனித ஆசிரியரால் இன்னும் சரிபார்க்கப்படவில்லை.',
     sourceFallback: 'தமிழ் மொழிபெயர்ப்பு இப்போது கிடைக்கவில்லை; கீழே மூல ஆங்கில மொழிபெயர்ப்பு காட்டப்படுகிறது.',
+    readingHeadings: ['தொடக்கம்', 'சூழலின் விரிவு', 'மேலும் விளக்கம்', 'நிறைவு'],
   },
 };
 
@@ -201,68 +209,6 @@ function isSubstantiveText(text) {
   const value = String(text || '').trim();
   return value.length > 20 && !/did not comment on this (?:sloka|verse)/i.test(value);
 }
-
-// Format long source commentary into readable paragraphs. Some legacy source
-// records prepend vocabulary before a "Commentary" marker; the vocabulary is
-// deliberately removed here because it has its own, earlier reading section.
-const FormattedCommentary = ({ text, language, className = '', style = {} }) => {
-  if (!text) return null;
-  
-  let formattedText = text.trim();
-  const isEnglish = language === 'english' || (!language && /[a-z]/i.test(formattedText));
-  const usesDevanagari = ['hindi', 'marathi', 'sanskrit'].includes(language);
-  
-  const splitIntoParagraphs = (str, isHindi) => {
-    const sentenceRegex = isHindi ? /([^।!?]+[।!?]+)/g : /([^.!?]+[.!?]+)/g;
-    let sentences = str.match(sentenceRegex);
-    
-    if (!sentences || sentences.length === 0) {
-      sentences = [str];
-    } else {
-      const matchedLength = sentences.join('').length;
-      if (matchedLength < str.length) {
-        sentences.push(str.substring(matchedLength));
-      }
-    }
-
-    const paragraphs = [];
-    for (let i = 0; i < sentences.length; i += 3) {
-      let pText = sentences.slice(i, i + 3).join(' ').trim();
-      if (isHindi) {
-        pText = pText.replace(/(\S)\?\s+(?=[^\s])/g, '$1, ');
-      }
-      if (pText) paragraphs.push(pText);
-    }
-    return paragraphs;
-  };
-
-  const baseStyle = { lineHeight: 1.8, fontSize: '0.975rem', color: 'var(--text-primary)', ...style };
-
-  if (isEnglish) {
-    const match = formattedText.match(/^(.*?)(?:\.\s*|\s+)Commentary[:\s]+(.*)$/is);
-    if (match && match[2].length > 10) formattedText = match[2].trim();
-
-    const paragraphs = splitIntoParagraphs(formattedText, false);
-    return (
-      <div className={`formatted-commentary ${className}`} style={{...baseStyle, display: 'flex', flexDirection: 'column', gap: '1.25rem', whiteSpace: 'normal'}}>
-        {paragraphs.map((p, idx) => (
-          <p key={idx} style={{ margin: 0 }}>{p}</p>
-        ))}
-      </div>
-    );
-  } else {
-    formattedText = formattedText.replace(/।([^\s\n])/g, '। $1');
-    const paragraphs = splitIntoParagraphs(formattedText, true);
-    
-    return (
-      <div className={`formatted-commentary ${usesDevanagari ? 'devanagari' : ''} ${className}`} style={{...baseStyle, display: 'flex', flexDirection: 'column', gap: '1.25rem', whiteSpace: 'normal'}}>
-        {paragraphs.map((p, idx) => (
-          <p key={idx} style={{ margin: 0 }}>{p}</p>
-        ))}
-      </div>
-    );
-  }
-};
 
 // SVG corner flourish - flame and thread motif at low opacity
 const CornerFlourish = ({ position = 'top-right', size = 48 }) => (
@@ -437,7 +383,11 @@ export default function IlluminatedVerseCard({
       {/* Verse reference badge */}
       <div className="verse-card__ref">
         <span className="verse-card__ref-label">
-          {isVishnuPurana
+          {isFull
+            ? isVishnuPurana ? 'Vishnu Purana · Source passage'
+              : isRamayana ? 'Valmiki Ramayana · Source shloka'
+              : 'Bhagavad Gita · Source shloka'
+            : isVishnuPurana
             ? `Vishnu Purana · Part ${verse.partNumber || chapterNumber} · Section ${verse.sectionNumber || verseNumber}`
             : verse.book === 'ramayana' || verse.kanda
             ? `${verse.kanda || `${t('kanda')} ${verse.kandaNumber}`} · ${t('sarga')} ${verse.sarga} · ${t('shloka')} ${verse.shlokaNumber}`
@@ -445,7 +395,7 @@ export default function IlluminatedVerseCard({
         </span>
         {similarity !== undefined && (
           <span className="verse-card__similarity" title="Relevance score">
-            {Math.round(similarity * 100)}% {t('relevance')}
+            {similarity >= 0.8 ? 'Strong match' : similarity >= 0.55 ? 'Relevant match' : 'Related passage'}
           </span>
         )}
       </div>
@@ -470,7 +420,7 @@ export default function IlluminatedVerseCard({
       {/* Sanskrit - always the visual leader */}
       {sanskrit && (
         <div className="verse-card__sanskrit devanagari-hero">
-          {sanskrit}
+          {scriptureLines(sanskrit).map((line, index) => <span key={`${line}-${index}`}>{line}</span>)}
         </div>
       )}
 
@@ -492,9 +442,10 @@ export default function IlluminatedVerseCard({
               </span>
             )}
           </div>
-          <p className={`verse-card__translation ${usesDevanagari ? 'devanagari' : ''}`}>
-            {translationText || t('translationUnavailable')}
-          </p>
+          <ReadableText
+            text={translationText || t('translationUnavailable')}
+            className={`verse-card__translation ${usesDevanagari ? 'devanagari' : ''}`}
+          />
 
           {isFull && localizationMessage && (
             <p
@@ -508,14 +459,12 @@ export default function IlluminatedVerseCard({
 
           {isFull && alternateTranslations.length > 0 && (
             <details className="verse-card__disclosure verse-card__alternate-translations">
-              <summary>{labels.compareTranslations} ({alternateTranslations.length})</summary>
+              <summary>{labels.compareTranslations}</summary>
               <div className="verse-card__alternate-list">
                 {alternateTranslations.map((item, index) => (
                   <article className="verse-card__alternate" key={`${item.author}-${index}`}>
                     <h4>{item.author || labels.translation}</h4>
-                    <p className={usesDevanagari ? 'devanagari' : ''}>
-                      {stripReferencePrefix(item.translation)}
-                    </p>
+                    <ReadableText text={stripReferencePrefix(item.translation)} className={usesDevanagari ? 'devanagari' : ''} />
                   </article>
                 ))}
               </div>
@@ -549,16 +498,24 @@ export default function IlluminatedVerseCard({
                 </span>
               )}
             </div>
-            <p className={`verse-card__explanation ${usesDevanagari ? 'devanagari' : ''}`}>
-              {explanationText}
-            </p>
+            <ReadableText
+              text={explanationText}
+              className={`verse-card__explanation ${usesDevanagari ? 'devanagari' : ''}`}
+              subheadings
+              headings={labels.readingHeadings}
+            />
           </section>
         )}
 
         {isFull && isSubstantiveText(contextText) && (
           <section className="verse-card__section verse-card__context">
             <h3 className="verse-card__section-title">{labels.narrativeContext}</h3>
-            <FormattedCommentary text={contextText} language={contextLanguage} />
+            <ReadableText
+              text={contextText}
+              className={['hindi', 'marathi', 'sanskrit'].includes(contextLanguage) ? 'devanagari' : ''}
+              subheadings
+              headings={labels.readingHeadings}
+            />
           </section>
         )}
 
@@ -567,7 +524,7 @@ export default function IlluminatedVerseCard({
           <details className="verse-card__disclosure verse-card__commentaries">
             <summary>
               {labels.commentaries}
-              <span>{displayedCommentaries.length} {t('sourceCount')}</span>
+              <span>{t('sourceCount')}</span>
             </summary>
             <div className="verse-card__commentary-list">
               {displayedCommentaries.map((item, index) => (
@@ -580,10 +537,11 @@ export default function IlluminatedVerseCard({
                     <span>{item.author || labels.commentaries}</span>
                     {item.language && <small>{item.language}</small>}
                   </summary>
-                  <FormattedCommentary
+                  <ReadableText
                     text={item.explanation}
-                    language={item.language}
-                    className="commentary-text"
+                    className={`${['hindi', 'marathi', 'sanskrit'].includes(item.language) ? 'devanagari ' : ''}commentary-text`}
+                    subheadings
+                    headings={labels.readingHeadings}
                   />
                 </details>
               ))}

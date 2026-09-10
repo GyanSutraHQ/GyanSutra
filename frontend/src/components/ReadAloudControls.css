@@ -3,16 +3,102 @@
   z-index: 1;
   margin: var(--space-4) 0 var(--space-5);
   border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
-  border-radius: var(--radius-md);
-  background: color-mix(in srgb, var(--bg-surface) 92%, var(--accent) 8%);
-  padding: var(--space-3);
+  border-radius: calc(var(--radius-md) + 0.25rem);
+  background: linear-gradient(145deg, color-mix(in srgb, var(--bg-surface) 94%, var(--accent) 6%), var(--bg-surface));
+  padding: clamp(1rem, 3vw, 1.35rem);
+  box-shadow: 0 12px 35px color-mix(in srgb, var(--text-primary) 7%, transparent);
+}
+
+.read-aloud__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.read-aloud__identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.read-aloud__identity-icon {
+  display: grid;
+  width: 2.35rem;
+  height: 2.35rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+.read-aloud__identity-icon svg {
+  width: 1.2rem;
+  fill: currentColor;
+}
+
+.read-aloud__identity div {
+  display: grid;
+  gap: 0.08rem;
+}
+
+.read-aloud__identity strong {
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+}
+
+.read-aloud__identity small {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.read-aloud__target-fieldset {
+  min-width: 0;
+  margin: 0 0 var(--space-3);
+  border: 0;
+  padding: 0;
+}
+
+.read-aloud__target-fieldset legend {
+  margin-bottom: 0.35rem;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.read-aloud__targets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.read-aloud__target {
+  min-height: 2.25rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-surface);
+  padding: 0.35rem 0.8rem;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+.read-aloud__target--selected {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 13%, var(--bg-surface));
+  color: var(--accent);
+}
+
+.read-aloud__target:disabled {
+  cursor: default;
+  opacity: 0.65;
 }
 
 .read-aloud__primary-row {
   display: flex;
   align-items: end;
   flex-wrap: wrap;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .read-aloud__button,
@@ -45,7 +131,8 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  padding: 0 var(--space-4);
+  min-width: 7rem;
+  padding: 0 var(--space-5);
 }
 
 .read-aloud__button svg {
@@ -73,14 +160,9 @@
   font-size: var(--text-xs);
 }
 
-.read-aloud__field--target {
-  flex: 2 1 15rem;
-  min-width: min(15rem, 100%);
-}
-
 .read-aloud__field--voice {
-  flex: 1 1 12rem;
-  min-width: min(12rem, 100%);
+  flex: 1 1 14rem;
+  min-width: min(14rem, 100%);
 }
 
 .read-aloud__field select {
@@ -94,9 +176,24 @@
   font: inherit;
 }
 
-.read-aloud__field--target select {
-  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
-  font-weight: 600;
+.read-aloud__progress {
+  height: 3px;
+  margin-top: var(--space-3);
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border) 65%, transparent);
+}
+
+.read-aloud__progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+  transition: width 280ms ease;
+}
+
+.read-aloud__progress:not(.read-aloud__progress--active) span {
+  width: 0 !important;
 }
 
 .read-aloud__status {
@@ -114,6 +211,7 @@
 
 .read-aloud__button:focus-visible,
 .read-aloud__install:focus-visible,
+.read-aloud__target:focus-visible,
 .read-aloud__field select:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
@@ -126,10 +224,6 @@
 
   .read-aloud__field {
     flex: 0 1 5.5rem;
-  }
-
-  .read-aloud__field--target {
-    flex-basis: 100%;
   }
 
   .read-aloud__field--voice {

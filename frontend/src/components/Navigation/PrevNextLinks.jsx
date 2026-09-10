@@ -13,7 +13,7 @@ export default function PrevNextLinks({ prevTo, prevLabel, nextTo, nextLabel }) 
             <svg className="h-4 w-4 flex-shrink-0 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
-            <span className="truncate max-w-[120px] sm:max-w-[200px]">{prevLabel}</span>
+            <span className="max-w-[200px] text-balance">{prevLabel}</span>
           </Link>
         )}
       </div>
@@ -27,7 +27,7 @@ export default function PrevNextLinks({ prevTo, prevLabel, nextTo, nextLabel }) 
             <svg className="h-4 w-4 flex-shrink-0 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>
-            <span className="truncate max-w-[120px] sm:max-w-[200px]">{nextLabel}</span>
+            <span className="max-w-[200px] text-balance">{nextLabel}</span>
           </Link>
         )}
       </div>

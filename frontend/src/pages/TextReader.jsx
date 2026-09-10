@@ -231,9 +231,7 @@ export default function TextReader() {
                     </span>}
                     {language === 'en' && chapter.summary && (
                       <span className="text-reader__chapter-summary">
-                        {chapter.summary.length > 110
-                          ? `${chapter.summary.slice(0, 110)}…`
-                          : chapter.summary}
+                        {chapter.summary}
                       </span>
                     )}
                   </div>

@@ -109,11 +109,20 @@
 
 /* ── Sanskrit - the visual leader ────────────────────────────────────── */
 .verse-card__sanskrit {
+  display: grid;
+  gap: 0.35em;
   color: var(--text-primary);
   margin-bottom: var(--space-4);
   font-weight: 400;
   max-width: 100%;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  text-wrap: balance;
+  word-break: normal;
+  hyphens: none;
+}
+
+.verse-card__sanskrit > span {
+  display: block;
 }
 
 .verse-card--compact .verse-card__sanskrit {
@@ -184,7 +193,12 @@
   font-weight: 500;
   color: var(--text-primary);
   line-height: var(--leading-loose);
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+}
+
+.verse-card__translation p {
+  color: inherit;
+  font: inherit;
 }
 
 .verse-card__translation.devanagari {
@@ -212,6 +226,12 @@
   margin: 0;
   color: var(--text-secondary);
   line-height: var(--leading-loose);
+}
+
+.verse-card__explanation p,
+.verse-card__context .readable-text p,
+.verse-card__commentary-source .readable-text p {
+  color: inherit;
 }
 
 .verse-card__disclosure > summary {
@@ -314,6 +334,10 @@
 .verse-card__context p {
   color: var(--text-secondary);
   line-height: var(--leading-loose);
+}
+
+.verse-card__alternate .readable-text {
+  gap: var(--space-2);
 }
 
 .verse-card__commentaries > summary span {

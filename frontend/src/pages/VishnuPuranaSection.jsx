@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ReadAloudControls from '../components/ReadAloudControls';
+import ReadableText from '../components/ReadableText';
 import SEOHead from '../components/SEO/SEOHead';
 import { getVishnuPuranaSection } from '../services/api';
 
@@ -50,10 +51,10 @@ export default function VishnuPuranaSection() {
       <SEOHead title={`${section.title} — Vishnu Purana`} description={section.synopsis} canonical={`/vishnu-purana/${part.number}/${section.sectionNumber}`} />
       <div className="vp-reading-progress" style={{ '--progress': `${progress}%` }} aria-hidden="true" />
       <div className="vp-shell vp-shell--reading">
-        <Link className="vp-back" to={`/vishnu-purana/${part.number}`}>← Part {part.roman}: {part.title}</Link>
+        <Link className="vp-back" to={`/vishnu-purana/${part.number}`}>← {part.title}</Link>
 
         <header className="vp-reading-header">
-          <p className="vp-kicker">Vishnu Purana · Part {part.roman} · Section {section.sectionNumber}</p>
+          <p className="vp-kicker">Vishnu Purana · Source passage</p>
           <h1>{section.title}</h1>
           <p className="vp-reading-header__dialogue">Parāśara <span aria-hidden="true">→</span> Maitreya</p>
         </header>
@@ -90,19 +91,27 @@ export default function VishnuPuranaSection() {
               <p className="vp-kicker">Complete source text</p>
               <h2 id="vp-source-text-title">M. N. Dutt’s translation</h2>
             </div>
-            <span>1896 · Public domain</span>
+            <span>Public-domain edition</span>
           </div>
-          {section.paragraphs.map((paragraph, index) => (
-            <p key={`${section.id}-${index}`}>{paragraph}</p>
-          ))}
+          <ReadableText
+            paragraphs={section.paragraphs}
+            hideFootnoteMarkers
+            subheadings
+            className="vp-canonical__text"
+          />
         </article>
 
         {section.footnotes.length > 0 && (
           <details className="vp-footnotes">
-            <summary>Translator’s notes ({section.footnotes.length})</summary>
-            <ol>
-              {section.footnotes.map((note) => <li key={note.number} value={note.number}>{note.text}</li>)}
-            </ol>
+            <summary>Translator’s notes</summary>
+            <div className="vp-footnotes__list">
+              {section.footnotes.map((note) => (
+                <article key={note.number}>
+                  <h3>Translator’s note</h3>
+                  <ReadableText text={note.text} />
+                </article>
+              ))}
+            </div>
           </details>
         )}
 

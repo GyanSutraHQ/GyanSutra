@@ -129,10 +129,26 @@
 }
 
 .ask-panel__answer-text {
+  max-width: 62ch;
   font-family: var(--font-body);
   font-size: var(--text-base);
   color: var(--text-secondary);
   line-height: var(--leading-loose);
+}
+
+.ask-panel__answer-text p {
+  color: inherit;
+  font: inherit;
+  line-height: 1.72;
+  margin: 0 0 0.9rem;
+}
+
+.ask-panel__answer-text h3 {
+  margin: 1.35rem 0 0.55rem;
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 700;
 }
 
 .ask-panel__citations-heading {
@@ -179,6 +195,12 @@
   color: var(--text-secondary);
   max-width: 440px;
   line-height: var(--leading-loose);
+}
+
+.ask-panel__refusal-text p {
+  color: inherit;
+  font: inherit;
+  margin: 0 0 0.8rem;
 }
 
 .ask-panel__refusal-hint {

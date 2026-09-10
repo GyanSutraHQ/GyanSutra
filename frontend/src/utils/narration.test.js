@@ -68,3 +68,13 @@ test('voice selection preserves native prototype properties and source indices',
   assert.equal(deviceVoice(voices, 'sa-IN').lang, 'hi-IN');
   assert.equal(deviceVoice(voices, 'ta-IN'), undefined);
 });
+
+test('English narration offers Indian English voices only', () => {
+  const voices = [
+    { name: 'US English', lang: 'en-US', voiceURI: 'us' },
+    { name: 'British English', lang: 'en-GB', voiceURI: 'gb' },
+    { name: 'Indian English', lang: 'en-IN', voiceURI: 'in' },
+    { name: 'India legacy voice', lang: 'en', voiceURI: 'india-legacy' },
+  ];
+  assert.deepEqual(rankedVoices(voices, 'en-IN').map((voice) => voice.voiceURI), ['in', 'india-legacy']);
+});
