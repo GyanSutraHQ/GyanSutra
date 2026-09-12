@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { readingParagraphs } from '../utils/readableText';
+import { layoutReadingItems, readingParagraphs } from '../utils/readableText';
 import './ReadableText.css';
 
 const DEFAULT_HEADINGS = [
@@ -18,22 +18,35 @@ export default function ReadableText({
   sectionSize = 8,
   subheadings = false,
   headings = DEFAULT_HEADINGS,
+  layout = 'comfortable',
 }) {
   const items = useMemo(
     () => readingParagraphs(paragraphs || text, { hideFootnoteMarkers }),
     [hideFootnoteMarkers, paragraphs, text],
   );
-  const showHeadings = subheadings && items.length > sectionSize + 2;
+  const showHeadings = subheadings && layout !== 'points' && items.length > sectionSize + 2;
   const groups = [];
-
-  for (let index = 0; index < items.length; index += sectionSize) {
-    groups.push(items.slice(index, index + sectionSize));
-  }
 
   if (!items.length) return null;
 
+  if (layout === 'points') {
+    return (
+      <ul className={`readable-text readable-text--points ${className}`.trim()}>
+        {items.map((item, index) => (
+          <li className={paragraphClassName} key={`${item}-${index}`}>{item}</li>
+        ))}
+      </ul>
+    );
+  }
+
+  const displayItems = layoutReadingItems(items, layout);
+
+  for (let index = 0; index < displayItems.length; index += sectionSize) {
+    groups.push(displayItems.slice(index, index + sectionSize));
+  }
+
   return (
-    <div className={`readable-text ${className}`.trim()}>
+    <div className={`readable-text readable-text--${layout} ${className}`.trim()}>
       {groups.map((group, groupIndex) => (
         <div className="readable-text__group" key={`${group[0]}-${groupIndex}`}>
           {showHeadings && (() => {

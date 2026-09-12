@@ -29,10 +29,11 @@
  *   className   {string}  - additional class names
  */
 
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AnimatedButton from './AnimatedButton';
 import ReadAloudControls from './ReadAloudControls';
 import ReadableText from './ReadableText';
+import ReadingAssistant, { READING_LAYOUTS } from './ReadingAssistant';
 import useLanguage from '../i18n/useLanguage';
 import useLocalizedVerse, { GENERATED_LANGUAGES } from '../hooks/useLocalizedVerse';
 import { originalMeaning } from '../utils/originalMeanings';
@@ -249,6 +250,21 @@ export default function IlluminatedVerseCard({
   const labels = READING_COPY[language] || READING_COPY.en;
   const navigate = useNavigate();
   const isFull = variant === 'full';
+  const [readingLayout, setReadingLayout] = useState(() => {
+    try {
+      const saved = window.localStorage.getItem('gyansutra-reading-layout');
+      return READING_LAYOUTS.has(saved) ? saved : 'comfortable';
+    } catch {
+      return 'comfortable';
+    }
+  });
+  useEffect(() => {
+    try {
+      window.localStorage.setItem('gyansutra-reading-layout', readingLayout);
+    } catch {
+      // Reading preference persistence is optional (for example, in private browsing).
+    }
+  }, [readingLayout]);
   const originalContent = originalMeaning(verse, language, originalMeanings);
   const needsLocalization = GENERATED_LANGUAGES.has(language) && !originalContent;
   const localization = useLocalizedVerse(verse, language, { enabled: isFull && !originalContent });
@@ -400,6 +416,14 @@ export default function IlluminatedVerseCard({
         )}
       </div>
 
+      {isFull && !isVishnuPurana && (
+        <ReadingAssistant
+          language={language}
+          layout={readingLayout}
+          onLayoutChange={setReadingLayout}
+        />
+      )}
+
       {isFull && (
         <ReadAloudControls
           verseKey={id || `${chapterNumber}-${verseNumber}`}
@@ -445,6 +469,7 @@ export default function IlluminatedVerseCard({
           <ReadableText
             text={translationText || t('translationUnavailable')}
             className={`verse-card__translation ${usesDevanagari ? 'devanagari' : ''}`}
+            layout={readingLayout}
           />
 
           {isFull && localizationMessage && (
@@ -458,24 +483,24 @@ export default function IlluminatedVerseCard({
           )}
 
           {isFull && alternateTranslations.length > 0 && (
-            <details className="verse-card__disclosure verse-card__alternate-translations">
-              <summary>{labels.compareTranslations}</summary>
+            <section className="verse-card__section verse-card__alternate-translations">
+              <h3 className="verse-card__section-title">{labels.compareTranslations}</h3>
               <div className="verse-card__alternate-list">
                 {alternateTranslations.map((item, index) => (
                   <article className="verse-card__alternate" key={`${item.author}-${index}`}>
                     <h4>{item.author || labels.translation}</h4>
-                    <ReadableText text={stripReferencePrefix(item.translation)} className={usesDevanagari ? 'devanagari' : ''} />
+                    <ReadableText text={stripReferencePrefix(item.translation)} className={usesDevanagari ? 'devanagari' : ''} layout={readingLayout} />
                   </article>
                 ))}
               </div>
-            </details>
+            </section>
           )}
         </section>
 
         {/* Understand: supporting lexical and explanatory material. */}
         {isFull && vocabulary.length > 0 && (
-          <details className="verse-card__disclosure verse-card__word-meanings" open>
-            <summary>{labels.wordMeaning}</summary>
+          <section className="verse-card__section verse-card__word-meanings">
+            <h3 className="verse-card__section-title">{labels.wordMeaning}</h3>
             <dl className="verse-card__word-list">
               {vocabulary.map((item, index) => (
                 <div className="verse-card__word-item" key={`${item.word}-${index}`}>
@@ -484,7 +509,7 @@ export default function IlluminatedVerseCard({
                 </div>
               ))}
             </dl>
-          </details>
+          </section>
         )}
 
         {isFull && hasExplanation && (
@@ -503,6 +528,7 @@ export default function IlluminatedVerseCard({
               className={`verse-card__explanation ${usesDevanagari ? 'devanagari' : ''}`}
               subheadings
               headings={labels.readingHeadings}
+              layout={readingLayout}
             />
           </section>
         )}
@@ -515,43 +541,44 @@ export default function IlluminatedVerseCard({
               className={['hindi', 'marathi', 'sanskrit'].includes(contextLanguage) ? 'devanagari' : ''}
               subheadings
               headings={labels.readingHeadings}
+              layout={readingLayout}
             />
           </section>
         )}
 
-        {/* Study deeply: source-attributed interpretations stay optional. */}
+        {/* Study deeply: source-attributed interpretations remain visible. */}
         {isFull && displayedCommentaries.length > 0 && (
-          <details className="verse-card__disclosure verse-card__commentaries">
-            <summary>
-              {labels.commentaries}
-              <span>{t('sourceCount')}</span>
-            </summary>
+          <section className="verse-card__section verse-card__commentaries">
+            <div className="verse-card__section-heading">
+              <h3 className="verse-card__section-title">{labels.commentaries}</h3>
+              <span className="verse-card__attribution">{displayedCommentaries.length} {t('sourceCount')}</span>
+            </div>
             <div className="verse-card__commentary-list">
               {displayedCommentaries.map((item, index) => (
-                <details
+                <article
                   className="verse-card__commentary-source"
                   key={`${item.author}-${index}`}
-                  open={index === 0}
                 >
-                  <summary>
+                  <header className="verse-card__commentary-heading">
                     <span>{item.author || labels.commentaries}</span>
                     {item.language && <small>{item.language}</small>}
-                  </summary>
+                  </header>
                   <ReadableText
                     text={item.explanation}
                     className={`${['hindi', 'marathi', 'sanskrit'].includes(item.language) ? 'devanagari ' : ''}commentary-text`}
                     subheadings
                     headings={labels.readingHeadings}
+                    layout={readingLayout}
                   />
-                </details>
+                </article>
               ))}
             </div>
-          </details>
+          </section>
         )}
 
         {isFull && (
-          <details className="verse-card__disclosure verse-card__source-notes">
-            <summary>{labels.sources}</summary>
+          <section className="verse-card__section verse-card__source-notes">
+            <h3 className="verse-card__section-title">{labels.sources}</h3>
             <div className="verse-card__source-note-body">
               <p>{sourceDescription}</p>
               <p>{labels.sourceSeparation}</p>
@@ -566,36 +593,6 @@ export default function IlluminatedVerseCard({
                 <p className="verse-card__verification-note">{labels.sourceCompiled}</p>
               )}
             </div>
-          </details>
-        )}
-
-        {/* Ask only after the user has read the sourced material. */}
-        {isFull && (
-          <section className="verse-card__ask">
-            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '1.25rem', maxWidth: '400px' }}>
-              {t('askVerseHelp')}
-            </p>
-            <AnimatedButton
-              onClick={(e) => {
-                e.stopPropagation();
-                const sarathiPrompt = isVishnuPurana
-                  ? `Explain Vishnu Purana Part ${verse.partNumber || chapterNumber}, Section ${verse.sectionNumber || verseNumber}, using only the source text.`
-                  : verse.book === 'ramayana'
-                  ? `Explain ${verse.kanda || 'Kanda ' + verse.kandaNumber}, Sarga ${verse.sarga}, Shloka ${verse.shlokaNumber} in simple terms.`
-                  : `Explain Bhagavad Gita ${chapterNumber}.${verseNumber} in simple terms.`;
-                  
-                window.dispatchEvent(new CustomEvent('open-sarathi', { 
-                  detail: { prompt: sarathiPrompt } 
-                }));
-              }}
-              className="inline-flex items-center justify-center rounded border border-amber-500/20 bg-amber-500/10 px-6 py-3 text-sm font-medium text-[color:var(--text-primary)] transition hover:border-amber-400/60 hover:text-[color:var(--accent)]"
-              style={{ gap: '0.5rem', cursor: 'pointer' }}
-            >
-              <svg viewBox="0 0 20 20" fill="none" width="16" height="16" opacity="0.8">
-                <path d="M10 2C10 2 5 7 5 12C5 14.761 7.239 17 10 17C12.761 17 15 14.761 15 12C15 7 10 2 10 2Z" fill="currentColor" opacity="0.85"/>
-              </svg>
-              {t('askAboutVerse')}
-            </AnimatedButton>
           </section>
         )}
       </div>

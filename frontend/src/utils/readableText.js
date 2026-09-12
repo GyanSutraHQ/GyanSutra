@@ -57,6 +57,17 @@ export function readingParagraphs(input, options = {}) {
     .filter(Boolean);
 }
 
+// Layout changes presentation only: no sentence is paraphrased, removed, or reordered.
+export function layoutReadingItems(items, layout = 'comfortable') {
+  if (!Array.isArray(items) || layout === 'short' || layout === 'points') return items || [];
+
+  return items.reduce((result, item, index) => {
+    if (index % 2 === 0) result.push(item);
+    else result[result.length - 1] = `${result[result.length - 1]} ${item}`;
+    return result;
+  }, []);
+}
+
 export function scriptureLines(value) {
   return cleanReadingText(value)
     .replace(/\s*(?:॥|।|\|){0,2}\s*[०-९\d]+(?:[.।:|-][०-९\d]+)*\s*(?:॥|।|\|){0,2}\s*$/gmu, '')

@@ -264,22 +264,14 @@ export default function ReadAloudControls({
         </div>
       </div>
 
-      <fieldset className="read-aloud__target-fieldset" disabled={active}>
-        <legend>{labels.reading}</legend>
-        <div className="read-aloud__targets">
+      <label className="read-aloud__section-picker">
+        <span>{labels.reading}</span>
+        <select value={selectedTarget} onChange={(event) => setSelectedTarget(event.target.value)} disabled={active}>
           {narrationTargets.map((target) => (
-            <button
-              type="button"
-              key={target.id}
-              className={selectedTarget === target.id ? 'read-aloud__target read-aloud__target--selected' : 'read-aloud__target'}
-              onClick={() => setSelectedTarget(target.id)}
-              aria-pressed={selectedTarget === target.id}
-            >
-              {target.label}
-            </button>
+            <option key={target.id} value={target.id}>{target.label}</option>
           ))}
-        </div>
-      </fieldset>
+        </select>
+      </label>
 
       <div className="read-aloud__primary-row">
 

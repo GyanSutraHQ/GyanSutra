@@ -347,18 +347,16 @@
   font-weight: 500;
 }
 
-.verse-card__commentary-source > summary {
+.verse-card__commentary-heading {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  list-style: none;
   color: var(--accent);
-  cursor: pointer;
   font-size: var(--text-sm);
   font-weight: 600;
 }
 
-.verse-card__commentary-source > summary small {
+.verse-card__commentary-heading small {
   margin-left: auto;
   border: var(--hairline);
   border-radius: var(--radius-sm);
@@ -372,6 +370,11 @@
 
 .verse-card__commentary-source .commentary-text {
   margin-top: var(--space-4);
+}
+
+.verse-card__alternate-translations {
+  margin-top: var(--space-6);
+  padding-bottom: 0;
 }
 
 .verse-card__source-note-body {

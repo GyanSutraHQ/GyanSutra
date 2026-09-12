@@ -10,7 +10,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { useParams, Link, useSearchParams } from 'react-router-dom';
+import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { getChapter, getChapterVerses } from '../services/api';
 import IlluminatedVerseCard from '../components/IlluminatedVerseCard';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -35,6 +35,7 @@ const READER_COPY = {
 export default function ChapterReader() {
   const { language, t } = useLanguage();
   const labels = READER_COPY[language] || READER_COPY.en;
+  const navigate = useNavigate();
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const requestedVerse = Number(searchParams.get('verse'));
@@ -142,26 +143,20 @@ export default function ChapterReader() {
         </header>
       )}
 
-      {/* ── Compact chapter strip - quick jump to any chapter ─────── */}
+      {/* ── One compact chapter control replaces eighteen visual buttons. ── */}
       {!loading && (
-        <nav
-          className="chapter-strip"
-          aria-label={labels.jumpChapter}
-        >
-          {CHAPTERS.map((num, idx) => (
-            <Link
-              key={num}
-              to={`/chapters/chapter_${num}`}
-              style={{ '--stagger-idx': idx }}
-              className={`stagger-item hover-lift chapter-strip__tab${chapter?.number === num ? ' chapter-strip__tab--active' : ''}`}
-              aria-label={`${t('chapter')} ${num}`}
-              aria-current={chapter?.number === num ? 'page' : undefined}
-              id={`chapter-strip-tab-${num}`}
-            >
-              {num}
-            </Link>
-          ))}
-        </nav>
+        <div className="chapter-picker">
+          <label htmlFor="chapter-picker-select">{labels.jumpChapter}</label>
+          <select
+            id="chapter-picker-select"
+            value={chapter?.number || Number(String(id || '').replace('chapter_', '')) || 1}
+            onChange={(event) => navigate(`/chapters/chapter_${event.target.value}`)}
+          >
+            {CHAPTERS.map((num) => (
+              <option key={num} value={num}>{t('chapter')} {num}</option>
+            ))}
+          </select>
+        </div>
       )}
 
       {/* ── Progress bar ──────────────────────────────────────────── */}
@@ -277,33 +272,6 @@ export default function ChapterReader() {
         </div>
       )}
 
-      {/* Floating Side Navigation */}
-      {!loading && verses.length > 0 && (
-        <>
-          <AnimatedButton
-            className="floating-nav-btn floating-nav-btn--prev"
-            onClick={handlePrev}
-            disabled={currentIndex === 0}
-            aria-label={`${labels.previous} ${t('verse')}`}
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-          </AnimatedButton>
-          <AnimatedButton
-            className="floating-nav-btn floating-nav-btn--next"
-            onClick={handleNext}
-            disabled={isLastVerse}
-            aria-label={`${labels.next} ${t('verse')}`}
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </AnimatedButton>
-        </>
-      )}
     </main>
   );
 }

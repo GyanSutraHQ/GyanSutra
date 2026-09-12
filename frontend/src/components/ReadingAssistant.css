@@ -1,0 +1,87 @@
+.reading-assistant {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: var(--space-4);
+  margin: 0 0 var(--space-6);
+  border: 1px solid color-mix(in srgb, var(--accent) 32%, var(--border));
+  border-radius: calc(var(--radius-md) + 0.25rem);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 9%, var(--bg-surface)), var(--bg-surface));
+  padding: var(--space-4);
+}
+
+.reading-assistant__mark {
+  display: grid;
+  width: 2.35rem;
+  height: 2.35rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+.reading-assistant__body {
+  display: grid;
+  flex: 1;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.reading-assistant__intro {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.reading-assistant h2,
+.reading-assistant p { margin: 0; }
+
+.reading-assistant h2 {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 700;
+}
+
+.reading-assistant p {
+  margin-top: 0.2rem;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.55;
+}
+
+.reading-assistant__note {
+  flex: 0 0 auto;
+  color: var(--accent);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+}
+
+.reading-assistant__field {
+  display: grid;
+  grid-template-columns: auto minmax(11rem, 15rem);
+  align-items: center;
+  justify-content: start;
+  gap: var(--space-3);
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+.reading-assistant__field select {
+  min-height: 2.65rem;
+  border: var(--hairline);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  padding: 0 var(--space-3);
+  color: var(--text-primary);
+  font: inherit;
+}
+
+@media (max-width: 640px) {
+  .reading-assistant__intro { display: block; }
+  .reading-assistant__note { display: inline-block; margin-top: var(--space-2); }
+  .reading-assistant__field { grid-template-columns: 1fr; gap: 0.3rem; }
+  .reading-assistant__field select { width: 100%; }
+}

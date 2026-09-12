@@ -29,6 +29,28 @@
   hyphens: none;
 }
 
+.readable-text--short p {
+  max-width: 48ch;
+  margin-bottom: 0.25rem;
+}
+
+.readable-text--points {
+  gap: 0.85rem;
+  max-width: 62ch;
+  margin: 0;
+  padding-left: 1.35rem;
+}
+
+.readable-text--points li {
+  padding-left: 0.3rem;
+  color: inherit;
+  line-height: 1.72;
+}
+
+.readable-text--points li::marker {
+  color: var(--accent);
+}
+
 @media (max-width: 640px) {
   .readable-text p {
     max-width: 100%;
