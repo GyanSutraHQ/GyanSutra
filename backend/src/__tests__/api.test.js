@@ -99,6 +99,18 @@ describe('Gyan Sutra API', () => {
     expect(response.body).toEqual({ error: 'Origin is not allowed by CORS.' });
   });
 
+  test.each([
+    'https://gyansutraapp.com',
+    'https://www.gyansutraapp.com',
+  ])('allows the production website origin %s', async (origin) => {
+    const response = await request(app)
+      .get('/health')
+      .set('Origin', origin)
+      .expect(200);
+
+    expect(response.headers['access-control-allow-origin']).toBe(origin);
+  });
+
   test('returns a clear 400 response for malformed JSON', async () => {
     const response = await request(app)
       .post('/api/ask')

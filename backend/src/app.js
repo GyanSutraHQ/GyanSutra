@@ -40,6 +40,10 @@ if (process.env.NODE_ENV !== 'test') {
 
 // ── CORS ──────────────────────────────────────────────────────────────────────
 const defaultOrigins = [
+  // Both custom-domain forms are live. A browser treats `www` and the apex
+  // hostname as distinct origins, so each must be explicitly allowed.
+  'https://gyansutraapp.com',
+  'https://www.gyansutraapp.com',
   'https://gyansutraapp.pages.dev',
   'https://santanu-sp.github.io',
   'https://localhost', // Capacitor Android's bundled web origin
