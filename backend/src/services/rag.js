@@ -13,6 +13,7 @@ const { OpenAI } = require('openai');
 const { embedText } = require('./embedding');
 const { findNearestVerses, collections, getDoc } = require('./firestore');
 const { SingleFlight, TTLCache, withTimeout } = require('./cache');
+const { classifySarathiGuardrail } = require('./sarathiGuardrails');
 const {
   buildRetrievalQuery,
   isDirectTextRequest,
@@ -751,6 +752,27 @@ async function executeRag(question, history = [], contextIds = [], language = 'e
 
 async function askRag(question, history = [], contextIds = [], language = 'en') {
   const safeLanguage = RESPONSE_LANGUAGES[language] ? language : 'en';
+  // Handle social and clearly non-corpus utility requests locally. This must
+  // precede cache/retrieval so these messages never consume embedding, database,
+  // or model-provider capacity.
+  const guardrail = classifySarathiGuardrail(question, safeLanguage);
+  if (guardrail) {
+    return {
+      answered: true,
+      inContext: false,
+      answer: guardrail.answer,
+      citations: [],
+      topSimilarity: 0,
+      cached: false,
+      degraded: false,
+      reason: `guardrail_${guardrail.type}`,
+      _diagnostics: {
+        timings: { totalMs: 0 },
+        guardrail: guardrail.type,
+        generationAttempts: [],
+      },
+    };
+  }
   const cacheable = CACHE_ENABLED && history.length === 0 && sanitizeContextIds(contextIds).length === 0;
   const cacheKey = stableHash([
     PROMPT_VERSION,

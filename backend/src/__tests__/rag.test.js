@@ -103,6 +103,36 @@ describe('bounded grounded RAG', () => {
     );
   });
 
+  test.each([
+    ['how are you', 'guardrail_conversational'],
+    ['who are you?', 'guardrail_conversational'],
+    ['what is python', 'guardrail_out_of_scope'],
+    ["what is today's day", 'guardrail_out_of_scope'],
+  ])('answers %s locally without retrieval or model calls', async (question, reason) => {
+    const { askRag } = loadRag({ GEMINI_API_KEY: 'test-key' });
+    const result = await askRag(question);
+
+    expect(result).toMatchObject({
+      answered: true,
+      inContext: false,
+      degraded: false,
+      reason,
+      citations: [],
+    });
+    expect(mockEmbedText).not.toHaveBeenCalled();
+    expect(mockFindNearestVerses).not.toHaveBeenCalled();
+    expect(mockGetDoc).not.toHaveBeenCalled();
+    expect(mockCompletionCreate).not.toHaveBeenCalled();
+  });
+
+  test('does not reject a plausible scripture question that uses a broad form', async () => {
+    const { askRag } = loadRag();
+    const result = await askRag('What is dharma?');
+
+    expect(result.reason).not.toMatch(/^guardrail_/);
+    expect(mockEmbedText).toHaveBeenCalledWith('What is dharma?', { inputType: 'query' });
+  });
+
   test('serves a direct verse request without embedding, KNN, or model calls', async () => {
     mockGetDoc.mockResolvedValue(verse);
     const { askRag } = loadRag({ GEMINI_API_KEY: 'test-key' });
