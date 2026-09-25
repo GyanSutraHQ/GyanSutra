@@ -4,23 +4,22 @@ import path from 'path';
 // This script generates a sitemap.xml for the Gyansutra app.
 // It statically maps known routes for the SPA.
 const DOMAIN = 'https://gyansutraapp.com';
-const LAST_MODIFIED = new Date().toISOString().slice(0, 10);
 
 const routes = [
-  { url: '/', changefreq: 'daily', priority: 1.0 },
-  { url: '/bhagavad-gita', changefreq: 'weekly', priority: 0.9 },
-  { url: '/ramayana', changefreq: 'weekly', priority: 0.9 },
-  { url: '/vishnu-purana', changefreq: 'monthly', priority: 0.9 },
-  // Note: Dynamic routes like /verses/:id or /chapters/:id can be added 
-  // by querying the backend API or parsing static data, but for a fast,
-  // autonomous pass without logic changes, we'll map the core layouts.
+  { url: '/' },
+  { url: '/bhagavad-gita' },
+  { url: '/ramayana' },
+  { url: '/vishnu-purana' },
+  // Verse and chapter readers use client-fetched content. The fully static
+  // Vishnu Purana routes below are included because the build emits complete,
+  // crawlable HTML for each one.
 ];
 
 [22, 16, 18, 24, 38, 8].forEach((sectionCount, index) => {
   const part = index + 1;
-  routes.push({ url: `/vishnu-purana/${part}`, changefreq: 'monthly', priority: 0.8 });
+  routes.push({ url: `/vishnu-purana/${part}` });
   for (let section = 1; section <= sectionCount; section += 1) {
-    routes.push({ url: `/vishnu-purana/${part}/${section}`, changefreq: 'yearly', priority: 0.7 });
+    routes.push({ url: `/vishnu-purana/${part}/${section}` });
   }
 });
 
@@ -32,9 +31,6 @@ const generateSitemap = () => {
     xml += `
   <url>
     <loc>${DOMAIN}${route.url}</loc>
-    <lastmod>${LAST_MODIFIED}</lastmod>
-    <changefreq>${route.changefreq}</changefreq>
-    <priority>${route.priority}</priority>
   </url>`;
   });
 

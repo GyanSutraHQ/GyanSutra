@@ -1,6 +1,15 @@
 /search
   X-Robots-Tag: noindex, follow
 
+# The production site is served only from https://gyansutraapp.com. These
+# alternate Cloudflare hostnames are retained for delivery, but must never
+# compete with the canonical site in search results.
+https://www.gyansutraapp.com/*
+  X-Robots-Tag: noindex, follow
+
+https://gyansutraapp.pages.dev/*
+  X-Robots-Tag: noindex, follow
+
 /sw.js
   Cache-Control: no-cache
 
