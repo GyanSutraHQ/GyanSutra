@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { SEO_TOPICS } from '../src/data/seoTopics.js';
 
 // This script generates a sitemap.xml for the Gyansutra app.
 // It statically maps known routes for the SPA.
@@ -22,6 +23,8 @@ const routes = [
     routes.push({ url: `/vishnu-purana/${part}/${section}` });
   }
 });
+
+SEO_TOPICS.forEach(({ slug }) => routes.push({ url: `/topics/${slug}` }));
 
 const generateSitemap = () => {
   let xml = `<?xml version="1.0" encoding="UTF-8"?>

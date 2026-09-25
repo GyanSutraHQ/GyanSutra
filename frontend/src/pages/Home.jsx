@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { getDailyVerse } from '../services/api';
 import useLanguage from '../i18n/useLanguage';
 import useLocalizedVerse, { GENERATED_LANGUAGES } from '../hooks/useLocalizedVerse';
+import { SEO_TOPICS } from '../data/seoTopics';
 
 export default function Home() {
   const { language, t } = useLanguage();
@@ -157,6 +158,26 @@ export default function Home() {
           <p className="gs-home__upcoming">
             {t('inPreparation')}
           </p>
+        </section>
+
+        <section className="gs-home__library gs-home__topic-library" aria-labelledby="topic-library-title">
+          <div className="gs-home__section-heading">
+            <div>
+              <p className="gs-home__eyebrow">Study guides</p>
+              <h2 id="topic-library-title">Explore a teaching in depth</h2>
+            </div>
+            <p>Clear introductions to recurring questions in the Bhagavad Gita, with links back to the source passages.</p>
+          </div>
+          <div className="gs-home__cards-grid">
+            {SEO_TOPICS.map((topic) => (
+              <Link key={topic.slug} to={`/topics/${topic.slug}`} className="gs-home__source-card gs-home__topic-card">
+                <div className="gs-home__source-topline"><span>Study guide</span></div>
+                <h3>{topic.h1}</h3>
+                <p>{topic.description}</p>
+                <span className="gs-home__source-action">Read the guide <span aria-hidden="true">→</span></span>
+              </Link>
+            ))}
+          </div>
         </section>
       </section>
     </main>

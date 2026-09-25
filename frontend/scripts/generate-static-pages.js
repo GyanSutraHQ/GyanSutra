@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { SEO_TOPICS, SEO_TOPIC_BY_SLUG } from '../src/data/seoTopics.js';
 
 const DIST_DIR = path.resolve(process.cwd(), 'dist');
 const TEMPLATE_PATH = path.join(DIST_DIR, 'index.html');
@@ -12,7 +13,17 @@ if (!fs.existsSync(TEMPLATE_PATH)) {
   throw new Error('dist/index.html is missing. Run this script after Vite builds.');
 }
 
-const template = fs.readFileSync(TEMPLATE_PATH, 'utf8');
+const rawTemplate = fs.readFileSync(TEMPLATE_PATH, 'utf8');
+// The generator may be run more than once against the same dist directory.
+// Restore the Vite root placeholder when a prior run has already inserted a
+// crawlable snapshot, so every route starts from the same application shell.
+const template = rawTemplate.replace(
+  /<div id="root"><main class="seo-snapshot"[\s\S]*?<\/main><\/div>/,
+  '<div id="root"></div>',
+);
+if (!template.includes('<div id="root"></div>')) {
+  throw new Error('Could not find the Vite root placeholder in dist/index.html.');
+}
 const corpus = JSON.parse(fs.readFileSync(CORPUS_PATH, 'utf8'));
 
 function escapeHtml(value) {
@@ -92,8 +103,29 @@ page({
   route: '/',
   title: 'Gita, Ramayana and Vishnu Purana',
   description: 'Read the Bhagavad Gita, Valmiki Ramayana, and complete Vishnu Purana with source-grounded translations, notes, audio, and Sarathi guidance.',
-  content: `<section><h2>Scripture library</h2><ul><li>${anchor('/bhagavad-gita', 'Bhagavad Gita')}</li><li>${anchor('/ramayana', 'Valmiki Ramayana')}</li><li>${anchor('/vishnu-purana', 'The complete Vishnu Purana')}</li></ul></section>`,
+  content: `<section><h2>Scripture library</h2><ul><li>${anchor('/bhagavad-gita', 'Bhagavad Gita')}</li><li>${anchor('/ramayana', 'Valmiki Ramayana')}</li><li>${anchor('/vishnu-purana', 'The complete Vishnu Purana')}</li></ul></section><section><h2>Bhagavad Gita study guides</h2><ul>${SEO_TOPICS.map((topic) => `<li>${anchor(`/topics/${topic.slug}`, topic.h1)} — ${escapeHtml(topic.description)}</li>`).join('')}</ul></section>`,
 });
+
+for (const topic of SEO_TOPICS) {
+  const route = `/topics/${topic.slug}`;
+  const content = `<article><p>${anchor('/bhagavad-gita', 'Bhagavad Gita')}</p>${topic.sections.map((section) => `<section><h2>${escapeHtml(section.heading)}</h2><p>${escapeHtml(section.body)}</p></section>`).join('')}<section><h2>Read the source passages</h2><p>These passages provide the textual basis for this guide.</p><ul>${topic.sources.map((source) => `<li>${anchor(source.path, source.label)}</li>`).join('')}</ul></section><section><h2>Related guides</h2><ul>${topic.related.map((relatedSlug) => { const related = SEO_TOPIC_BY_SLUG[relatedSlug]; return `<li>${anchor(`/topics/${relatedSlug}`, related.h1)}</li>`; }).join('')}</ul></section></article>`;
+  page({
+    route,
+    title: topic.title,
+    description: topic.description,
+    content,
+    type: 'article',
+    schema: {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: topic.title,
+      description: topic.description,
+      mainEntityOfPage: `${CANONICAL_ORIGIN}${route}`,
+      isAccessibleForFree: true,
+      about: ['Bhagavad Gita', 'Hindu philosophy'],
+    },
+  });
+}
 
 page({
   route: '/bhagavad-gita',

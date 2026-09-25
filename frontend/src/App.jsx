@@ -54,6 +54,7 @@ const routeImports = {
   vishnuPurana: () => import('./pages/VishnuPurana'),
   vishnuPuranaPart: () => import('./pages/VishnuPuranaPart'),
   vishnuPuranaSection: () => import('./pages/VishnuPuranaSection'),
+  topic: () => import('./pages/Topic'),
 };
 
 const ChapterReader = lazyWithRetry(routeImports.chapterReader);
@@ -66,6 +67,7 @@ const Ask           = lazyWithRetry(routeImports.ask);
 const VishnuPurana  = lazyWithRetry(routeImports.vishnuPurana);
 const VishnuPuranaPart = lazyWithRetry(routeImports.vishnuPuranaPart);
 const VishnuPuranaSection = lazyWithRetry(routeImports.vishnuPuranaSection);
+const Topic = lazyWithRetry(routeImports.topic);
 
 // Quiet route loading state for the rare case where an idle preload has not finished.
 function PageLoader() {
@@ -390,6 +392,7 @@ export default function App() {
                 <Route path="/vishnu-purana" element={<PageTransition><VishnuPurana /></PageTransition>} />
                 <Route path="/vishnu-purana/:partNumber" element={<PageTransition><VishnuPuranaPart /></PageTransition>} />
                 <Route path="/vishnu-purana/:partNumber/:sectionNumber" element={<PageTransition><VishnuPuranaSection /></PageTransition>} />
+                <Route path="/topics/:slug" element={<PageTransition><Topic /></PageTransition>} />
                 <Route path="/faq" element={<PageTransition><FAQ /></PageTransition>} />
                 <Route path="/ask" element={<PageTransition><Ask /></PageTransition>} />
                 <Route path="/:source_id" element={<PageTransition><TextReader /></PageTransition>} />
