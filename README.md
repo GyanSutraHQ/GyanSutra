@@ -103,13 +103,13 @@ or unavailable:
 - Exact verse requests bypass embeddings and vector search.
 - Low-confidence retrieval does not spend model credits.
 - First-turn answers, embeddings, and retrieval results use bounded exact caches.
-- Only two model attempts are allowed by default, across independent providers.
+- Model attempts are bounded across independent providers.
 - Per-model timeouts, an overall deadline, a concurrency cap, and temporary
   provider circuit breakers prevent quota cascades.
 - Generated verse references are validated against retrieved source IDs. Invalid
-  model citations are replaced with a safe extractive response.
-- When generation fails, Sarathi returns the retrieved translations and citations
-  instead of exposing a provider error.
+  model citations are replaced with a source explanation when one is available.
+- When generation fails and no source explanation is available, Sarathi asks the
+  user to retry instead of presenting a list of verses as an explanation.
 
 The defaults are documented in `backend/.env.example`. Increment
 `RAG_CORPUS_VERSION` whenever scripture data or stored embeddings are re-ingested.

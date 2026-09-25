@@ -12,6 +12,8 @@ import { askQuestion } from '../services/api';
 import IlluminatedVerseCard from './IlluminatedVerseCard';
 import AnimatedButton from './AnimatedButton';
 import useLanguage from '../i18n/useLanguage';
+import useSpeechInput from '../hooks/useSpeechInput';
+import { copyText } from '../utils/copyText';
 
 import './AskPanel.css';
 
@@ -43,7 +45,27 @@ export default function AskPanel() {
   const [question, setQuestion] = useState('');
   const [state, setState] = useState('idle'); // 'idle' | 'loading' | 'answered' | 'refused' | 'error'
   const [result, setResult] = useState(null);
+  const [copied, setCopied] = useState(false);
+  const [toolError, setToolError] = useState('');
   const inputRef = useRef(null);
+  const speech = useSpeechInput({
+    language,
+    onTranscript: (transcript) => {
+      setQuestion((current) => [current.trim(), transcript].filter(Boolean).join(' ').slice(0, 500));
+      inputRef.current?.focus();
+    },
+  });
+
+  async function handleCopy() {
+    try {
+      await copyText(result.answer);
+      setCopied(true);
+      setToolError('');
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setToolError('Could not copy this answer.');
+    }
+  }
 
   const canSubmit = question.trim().length >= 5 && state !== 'loading';
 
@@ -95,9 +117,17 @@ export default function AskPanel() {
             }}
           />
           <div className="ask-panel__form-footer">
-            <span className="ask-panel__char-count text-muted">
-              {question.length}/500
-            </span>
+            <div className="ask-panel__input-tools">
+              {speech.supported && (
+                <button type="button" className={`ask-panel__mic${speech.listening ? ' ask-panel__mic--active' : ''}`}
+                  onClick={speech.toggle} disabled={state === 'loading'}
+                  aria-label={speech.listening ? 'Stop dictation' : 'Dictate question'}
+                  aria-pressed={speech.listening} title={speech.listening ? 'Stop dictation' : 'Dictate question'}>
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3" stroke="currentColor" strokeWidth="1.7"/><path d="M6 11a6 6 0 0012 0M12 17v4m-4 0h8" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/></svg>
+                </button>
+              )}
+              <span className="ask-panel__char-count text-muted">{speech.listening ? 'Listening…' : `${question.length}/500`}</span>
+            </div>
             <AnimatedButton
               type="submit"
               className="ask-panel__submit"
@@ -107,6 +137,7 @@ export default function AskPanel() {
               {state === 'loading' ? t('working') : t('ask')}
             </AnimatedButton>
           </div>
+          {(speech.error || toolError) && <p className="ask-panel__tool-error" role="alert">{speech.error || toolError}</p>}
         </div>
       </form>
 
@@ -139,6 +170,7 @@ export default function AskPanel() {
               {labels.answer}
             </h2>
             <div className="ask-panel__answer-text"><ReactMarkdown>{result.answer}</ReactMarkdown></div>
+            <button type="button" className="ask-panel__copy" onClick={handleCopy}>{copied ? 'Copied' : 'Copy all'}</button>
           </div>
 
           {result.citations?.length > 0 && (

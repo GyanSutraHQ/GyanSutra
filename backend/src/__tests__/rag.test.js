@@ -67,13 +67,14 @@ describe('bounded grounded RAG', () => {
     const result = await askRag('What does the Gita teach about duty?');
 
     expect(result).toMatchObject({
-      answered: true,
+      answered: false,
       inContext: true,
       degraded: true,
       reason: 'NO_AI_PROVIDER',
     });
     expect(result.citations.map((citation) => citation.id)).toEqual(['bhagavad-gita_2_47']);
-    expect(result.answer).toContain('passages most relevant to your question');
+    expect(result.answer).toContain('cannot give a reliable explanation right now');
+    expect(result.answer).not.toContain('You have a right to action');
     expect(mockCompletionCreate).not.toHaveBeenCalled();
   });
 
@@ -81,8 +82,22 @@ describe('bounded grounded RAG', () => {
     const { askRag } = loadRag();
     const result = await askRag('Explain duty', [], [], 'bn');
 
-    expect(result.answer).toContain('সবচেয়ে প্রাসঙ্গিক অংশগুলি');
+    expect(result.answer).toContain('নির্ভরযোগ্য ব্যাখ্যা দিতে পারছি না');
     expect(result.answer).not.toContain('ব্যাখ্যা পরিষেবা');
+  });
+
+  test('uses source explanation when generation is unavailable', async () => {
+    mockFindNearestVerses.mockResolvedValue([{
+      ...verse,
+      explanationEnglish: 'This verse distinguishes responsible effort from attachment to the result.',
+    }]);
+    const { askRag } = loadRag();
+    const result = await askRag('Explain Gita duty');
+
+    expect(result.answer).toContain('distinguishes responsible effort');
+    expect(result.answered).toBe(true);
+    expect(result.answer).toContain('[S1]');
+    expect(result.answer).not.toContain('Key Verse');
   });
 
   test('does not spend model credits when retrieval has no strong evidence', async () => {
@@ -105,6 +120,8 @@ describe('bounded grounded RAG', () => {
 
   test.each([
     ['how are you', 'guardrail_conversational'],
+    ['How are you\n\nSarathi', 'guardrail_conversational'],
+    ['Question: How are you?', 'guardrail_conversational'],
     ['who are you?', 'guardrail_conversational'],
     ['what is python', 'guardrail_out_of_scope'],
     ["what is today's day", 'guardrail_out_of_scope'],
@@ -197,6 +214,7 @@ describe('bounded grounded RAG', () => {
       degraded: false,
       reason: 'generated',
     });
+    expect(result.answer).not.toMatch(/[📖🕉🌿]/u);
     expect(result._diagnostics).toMatchObject({
       provider: 'gemini',
       model: 'gemini-3.5-flash',
@@ -206,6 +224,8 @@ describe('bounded grounded RAG', () => {
       max_tokens: 1200,
       reasoning_effort: 'minimal',
     });
+    expect(mockCompletionCreate.mock.calls[0][0].messages[0].content)
+      .toContain('Explain what the cited passage means');
   });
 
   test('rejects unsupported verse numbers returned by a model', async () => {
@@ -223,11 +243,12 @@ describe('bounded grounded RAG', () => {
     const result = await askRag('What does the Gita teach about duty?');
 
     expect(result).toMatchObject({
+      answered: false,
       degraded: true,
       reason: 'grounding_validation_failed',
     });
     expect(result.answer).not.toContain('18 Verse 66');
-    expect(result.answer).toContain('passages most relevant to your question');
+    expect(result.answer).toContain('cannot give a reliable explanation right now');
     consoleSpy.mockRestore();
   });
 

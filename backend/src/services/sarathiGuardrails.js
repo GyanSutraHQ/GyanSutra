@@ -7,7 +7,7 @@ const { normalizeQuestion } = require('./ragUtils');
 // such as "What is dharma?" before the scripture corpus can answer them.
 const GREETING = /^(?:hi|hello|hey|namaste|namaskar|good (?:morning|afternoon|evening))(?:\s+(?:sarathi|saarthi))?[!?.]*$/i;
 const IDENTITY = /^(?:who|what) (?:are|is) (?:you|sarathi|saarthi)(?:\?)*$/i;
-const WELLBEING = /^(?:how are you|how(?:'s| is) it going|are you (?:okay|well))(?:\?)*$/i;
+const WELLBEING = /^(?:how are you|how(?:'s| is) it going|are you (?:okay|well))(?:\s+(?:sarathi|saarthi))?[!?.]*$/i;
 const THANKS = /^(?:thanks|thank you|thankyou|dhanyavad|shukriya)(?:\s+(?:sarathi|saarthi))?[!?.]*$/i;
 
 const GENERAL_UTILITY = [
@@ -41,7 +41,7 @@ function copyFor(language) {
 }
 
 function classifySarathiGuardrail(question, language = 'en') {
-  const normalized = normalizeQuestion(question);
+  const normalized = normalizeQuestion(question).replace(/^question:\s*/, '').replace(/\s+/g, ' ').trim();
   if (!normalized) return null;
 
   const copy = copyFor(language);

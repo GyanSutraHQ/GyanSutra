@@ -22,6 +22,8 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
 import AnimatedButton from './AnimatedButton';
 import useLanguage from '../i18n/useLanguage';
+import useSpeechInput from '../hooks/useSpeechInput';
+import { copyText } from '../utils/copyText';
 
 import './SarathiPanel.css';
 
@@ -115,6 +117,26 @@ export default function SarathiPanel({
   const [isMinimizing, setIsMinimizing]  = useState(false);
   const [isDragging, setIsDragging]      = useState(false);
   const [dynamicHeight, setDynamicHeight] = useState(null);    // dvh number during drag; null = use snap
+  const [copiedId, setCopiedId] = useState(null);
+  const [copyError, setCopyError] = useState(false);
+  const speech = useSpeechInput({
+    language,
+    onTranscript: (transcript) => {
+      setQuestion((current) => [current.trim(), transcript].filter(Boolean).join(' ').slice(0, 500));
+      textareaRef.current?.focus();
+    },
+  });
+
+  async function handleCopy(message) {
+    try {
+      await copyText(message.content);
+      setCopiedId(message.id);
+      setCopyError(false);
+      window.setTimeout(() => setCopiedId((current) => current === message.id ? null : current), 2000);
+    } catch {
+      setCopyError(true);
+    }
+  }
 
   // Keep ref in sync
   const setPanelSize = (s) => { panelSizeRef.current = s; _setPanelSize(s); };
@@ -350,6 +372,11 @@ export default function SarathiPanel({
                     </div>
                   )}
                 </div>
+                {message.role === 'sarathi' && message.id !== 'welcome' && (
+                  <button type="button" className="sarathi-msg__copy" onClick={() => handleCopy(message)}>
+                    {copiedId === message.id ? 'Copied' : 'Copy all'}
+                  </button>
+                )}
               </div>
             ))}
 
@@ -418,9 +445,17 @@ export default function SarathiPanel({
               }}
             />
             <div className="sarathi-panel__form-footer">
-              <p className="sarathi-panel__grounded-note">
-                {t('groundedNote')}
-              </p>
+              <div className="sarathi-panel__input-tools">
+                {speech.supported && (
+                  <button type="button" className={`sarathi-panel__mic${speech.listening ? ' sarathi-panel__mic--active' : ''}`}
+                    onClick={speech.toggle} disabled={isLoading}
+                    aria-label={speech.listening ? 'Stop dictation' : 'Dictate question'}
+                    aria-pressed={speech.listening} title={speech.listening ? 'Stop dictation' : 'Dictate question'}>
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3" stroke="currentColor" strokeWidth="1.7"/><path d="M6 11a6 6 0 0012 0M12 17v4m-4 0h8" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/></svg>
+                  </button>
+                )}
+                <p className="sarathi-panel__grounded-note">{speech.listening ? 'Listening…' : t('groundedNote')}</p>
+              </div>
               <AnimatedButton
                 type="submit"
                 className="active-press sarathi-panel__submit"
@@ -430,6 +465,7 @@ export default function SarathiPanel({
                 {isLoading ? t('working') : t('ask')}
               </AnimatedButton>
             </div>
+            {(speech.error || copyError) && <p className="sarathi-panel__tool-error" role="alert">{speech.error || 'Could not copy this answer.'}</p>}
           </div>
         </form>
       </aside>
