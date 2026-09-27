@@ -55,7 +55,20 @@ export default function VishnuPuranaSection() {
 
         <header className="vp-reading-header">
           <p className="vp-kicker">Vishnu Purana · Source passage</p>
-          <h1>{section.title}</h1>
+          <div className="vp-reading-header__title-row">
+            <h1>{section.title}</h1>
+            <ReadAloudControls
+              verseKey={section.id}
+              book="vishnu-purana"
+              chapterNumber={part.number}
+              verseNumber={section.sectionNumber}
+              translation={completeText}
+              language="en"
+              contentLanguage="english"
+              targetLabels={{ translation: 'Complete source text' }}
+              compactTarget="translation"
+            />
+          </div>
           <p className="vp-reading-header__dialogue">Parāśara <span aria-hidden="true">→</span> Maitreya</p>
         </header>
 
@@ -64,26 +77,6 @@ export default function VishnuPuranaSection() {
           <p>{section.synopsis}</p>
           <small>Adapted only by removing line breaks from the 1896 edition’s contents; it is not a replacement for the text below.</small>
         </aside>
-
-        <section className="vp-listen-block" aria-labelledby="vp-listen-title">
-          <div>
-            <p className="vp-kicker">Listen your way</p>
-            <h2 id="vp-listen-title">Choose one layer</h2>
-            <p>The complete text and short reading guide play independently. Nothing is repeated first.</p>
-          </div>
-          <ReadAloudControls
-            verseKey={section.id}
-            book="vishnu-purana"
-            chapterNumber={part.number}
-            verseNumber={section.sectionNumber}
-            translation={completeText}
-            explanation={section.synopsis}
-            language="en"
-            contentLanguage="english"
-            targetLabels={{ translation: 'Complete source text', explanation: 'Short reading guide' }}
-            helpText="Select exactly what you want to hear; each option starts directly."
-          />
-        </section>
 
         <article className="vp-canonical" aria-labelledby="vp-source-text-title">
           <div className="vp-canonical__heading">

@@ -9,6 +9,53 @@
   box-shadow: 0 12px 35px color-mix(in srgb, var(--text-primary) 7%, transparent);
 }
 
+.read-aloud--compact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+}
+
+.read-aloud__icon-button {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: var(--hairline);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 8%, var(--bg-surface));
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.read-aloud__icon-button svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+.read-aloud__icon-button--active {
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+.read-aloud__icon-button:disabled { cursor: wait; opacity: 0.55; }
+
+.read-aloud__icon-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.read-aloud__compact-status {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
 .read-aloud__header {
   display: flex;
   align-items: center;

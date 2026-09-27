@@ -107,6 +107,7 @@ export default function ReadAloudControls({
   disabled = false,
   targetLabels = {},
   helpText = '',
+  compactTarget = '',
 }) {
   const labels = COPY[language] || COPY.en;
   const audioLabels = RECITATION_COPY[language] || RECITATION_COPY.en;
@@ -188,6 +189,12 @@ export default function ReadAloudControls({
     }
   }, [narrationTargets, selectedTarget]);
 
+  useEffect(() => {
+    if (compactTarget && narrationTargets.some((target) => target.id === compactTarget)) {
+      setSelectedTarget(compactTarget);
+    }
+  }, [compactTarget, narrationTargets]);
+
   const listen = async () => {
     if (sessionRef.current) {
       sessionRef.current.stop();
@@ -252,6 +259,30 @@ export default function ReadAloudControls({
   const statusMessage = status === 'preparing'
     ? labels.preparing
     : status === 'playing' ? labels.playing : error;
+
+  if (compactTarget) {
+    const target = narrationTargets.find((item) => item.id === compactTarget);
+    if (!target) return null;
+    const buttonLabel = active ? labels.stop : `${labels.listen}: ${target.label}`;
+    return (
+      <span className="read-aloud read-aloud--compact">
+        <button
+          type="button"
+          className={`read-aloud__icon-button${active ? ' read-aloud__icon-button--active' : ''}`}
+          onClick={listen}
+          disabled={disabled && !active}
+          aria-label={buttonLabel}
+          title={buttonLabel}
+          aria-pressed={active}
+        >
+          {active
+            ? <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1" /></svg>
+            : <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5Z" /><path d="M17 9a4 4 0 0 1 0 6M19.5 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>}
+        </button>
+        {statusMessage && <span className="read-aloud__compact-status" role="status">{statusMessage}</span>}
+      </span>
+    );
+  }
 
   return (
     <section className="read-aloud" aria-label={labels.listen}>

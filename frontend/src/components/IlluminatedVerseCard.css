@@ -180,6 +180,18 @@
   margin-bottom: 0;
 }
 
+.verse-card__section-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: auto;
+}
+
+@media (max-width: 520px) {
+  .verse-card__section-heading { align-items: center; }
+  .verse-card__section-tools { width: 100%; margin-left: 0; }
+}
+
 .verse-card__attribution {
   color: var(--text-muted);
   font-size: var(--text-xs);

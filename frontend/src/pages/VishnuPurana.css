@@ -125,6 +125,8 @@
 .vp-reading-progress { position: fixed; top: var(--header-height, 72px); left: 0; z-index: 45; width: var(--progress); height: 2px; background: var(--accent); transition: width 80ms linear; }
 .vp-reading-header { padding: 2rem 0 3rem; text-align: center; }
 .vp-reading-header h1 { max-width: 780px; margin-inline: auto; font-size: clamp(2.2rem, 6vw, 4.7rem); }
+.vp-reading-header__title-row { display: flex; align-items: center; justify-content: center; gap: .65rem; }
+.vp-reading-header__title-row h1 { margin: 0; }
 .vp-reading-header__dialogue { display: inline-flex; align-items: center; gap: .75rem; margin-top: 1.5rem; color: var(--text-muted); font-size: .85rem; }
 
 .vp-story-lens { padding: clamp(1.5rem, 4vw, 2.5rem); border: 1px solid color-mix(in srgb, var(--accent) 38%, var(--border)); border-radius: 1.25rem; background: color-mix(in srgb, var(--accent) 6%, var(--bg-surface)); }

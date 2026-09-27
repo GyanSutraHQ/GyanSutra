@@ -10,7 +10,7 @@
  * Sarathi state lives here - SarathiPanel is presentation only.
  */
 
-import { useState, useEffect, useLayoutEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, useLayoutEffect, useCallback, lazy, Suspense } from 'react';
 import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import { askQuestion } from './services/api';
 import Home from './pages/Home';
@@ -174,17 +174,6 @@ export default function App() {
   }, [language, t]);
 
   useEffect(() => {
-    const handleOpenSarathi = (e) => {
-      if (e.detail?.prompt) {
-        setQuestion(e.detail.prompt);
-      }
-      setIsSarathiOpen(true);
-    };
-    window.addEventListener('open-sarathi', handleOpenSarathi);
-    return () => window.removeEventListener('open-sarathi', handleOpenSarathi);
-  }, []);
-
-  useEffect(() => {
     setIsSarathiOpen(false);
   }, [location.pathname]);
 
@@ -237,7 +226,11 @@ export default function App() {
 
   async function handleAsk(event) {
     event.preventDefault();
-    const trimmed = question.trim();
+    await submitQuestion(question);
+  }
+
+  const submitQuestion = useCallback(async (rawQuestion) => {
+    const trimmed = rawQuestion.trim();
     if (!trimmed || isLoading) return;
 
     const userMessage = { id: `${Date.now()}-user`, role: 'user', content: trimmed };
@@ -285,7 +278,19 @@ export default function App() {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, [isLoading, language, messages, t]);
+
+  useEffect(() => {
+    const handleOpenSarathi = (e) => {
+      if (e.detail?.prompt) {
+        setQuestion(e.detail.prompt);
+        if (e.detail?.submit) void submitQuestion(e.detail.prompt);
+      }
+      setIsSarathiOpen(true);
+    };
+    window.addEventListener('open-sarathi', handleOpenSarathi);
+    return () => window.removeEventListener('open-sarathi', handleOpenSarathi);
+  }, [submitQuestion]);
 
   const isGitaRoute = location.pathname.startsWith('/bhagavad-gita')
     || location.pathname.startsWith('/chapters')

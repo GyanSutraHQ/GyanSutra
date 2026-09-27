@@ -29,11 +29,10 @@
  *   className   {string}  - additional class names
  */
 
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReadAloudControls from './ReadAloudControls';
 import ReadableText from './ReadableText';
-import ReadingAssistant, { READING_LAYOUTS } from './ReadingAssistant';
+import ReadingAssistant from './ReadingAssistant';
 import useLanguage from '../i18n/useLanguage';
 import useLocalizedVerse, { GENERATED_LANGUAGES } from '../hooks/useLocalizedVerse';
 import { originalMeaning } from '../utils/originalMeanings';
@@ -250,21 +249,6 @@ export default function IlluminatedVerseCard({
   const labels = READING_COPY[language] || READING_COPY.en;
   const navigate = useNavigate();
   const isFull = variant === 'full';
-  const [readingLayout, setReadingLayout] = useState(() => {
-    try {
-      const saved = window.localStorage.getItem('gyansutra-reading-layout');
-      return READING_LAYOUTS.has(saved) ? saved : 'comfortable';
-    } catch {
-      return 'comfortable';
-    }
-  });
-  useEffect(() => {
-    try {
-      window.localStorage.setItem('gyansutra-reading-layout', readingLayout);
-    } catch {
-      // Reading preference persistence is optional (for example, in private browsing).
-    }
-  }, [readingLayout]);
   const originalContent = originalMeaning(verse, language, originalMeanings);
   const needsLocalization = GENERATED_LANGUAGES.has(language) && !originalContent;
   const localization = useLocalizedVerse(verse, language, { enabled: isFull && !originalContent });
@@ -362,6 +346,31 @@ export default function IlluminatedVerseCard({
       ? 'Sanskrit: Valmiki Ramayana Dataset · English translation: M. N. Dutt via the Itihāsa corpus'
       : 'Sanskrit and supporting text: Valmiki Ramayana Dataset')
     : (sourceText || 'Bhagavad Gita');
+  const verseReference = isVishnuPurana
+    ? `Vishnu Purana, Part ${verse.partNumber || chapterNumber}, Section ${verse.sectionNumber || verseNumber}`
+    : isRamayana
+      ? `${verse.kanda || `Kanda ${verse.kandaNumber}`}, Sarga ${verse.sarga}, Shloka ${verse.shlokaNumber}`
+      : `Bhagavad Gita, Chapter ${chapterNumber}, Verse ${verseNumber}`;
+  const SectionTools = ({ title, target }) => isFull ? (
+    <div className="verse-card__section-tools">
+      <ReadingAssistant language={language} sectionTitle={title} reference={verseReference} />
+      <ReadAloudControls
+        verseKey={id || `${chapterNumber}-${verseNumber}`}
+        book={isRamayana ? 'ramayana' : isVishnuPurana ? 'vishnu-purana' : verse.source_id || verse.book || (id?.startsWith('bhagavad-gita_') ? 'bhagavad-gita' : undefined)}
+        chapterNumber={chapterNumber}
+        verseNumber={verseNumber}
+        sanskrit={sanskrit}
+        translation={translationText}
+        explanation={originalContent ? '' : explanationText}
+        context={contextText}
+        commentaries={displayedCommentaries}
+        language={language}
+        contentLanguage={contentLanguage}
+        disabled={needsLocalization && localization.status === 'loading'}
+        compactTarget={target}
+      />
+    </div>
+  ) : null;
 
   const handleClick = () => {
     if (onClick) {
@@ -409,37 +418,13 @@ export default function IlluminatedVerseCard({
             ? `${verse.kanda || `${t('kanda')} ${verse.kandaNumber}`} · ${t('sarga')} ${verse.sarga} · ${t('shloka')} ${verse.shlokaNumber}`
             : `${t('chapter')} ${chapterNumber} · ${t('verse')} ${verseNumber}`}
         </span>
+        {isFull && sanskrit && <SectionTools title={labels.verse || 'Shloka'} target="verse" />}
         {similarity !== undefined && (
           <span className="verse-card__similarity" title="Relevance score">
             {similarity >= 0.8 ? 'Strong match' : similarity >= 0.55 ? 'Relevant match' : 'Related passage'}
           </span>
         )}
       </div>
-
-      {isFull && !isVishnuPurana && (
-        <ReadingAssistant
-          language={language}
-          layout={readingLayout}
-          onLayoutChange={setReadingLayout}
-        />
-      )}
-
-      {isFull && (
-        <ReadAloudControls
-          verseKey={id || `${chapterNumber}-${verseNumber}`}
-          book={isRamayana ? 'ramayana' : isVishnuPurana ? 'vishnu-purana' : verse.source_id || verse.book || (id?.startsWith('bhagavad-gita_') ? 'bhagavad-gita' : undefined)}
-          chapterNumber={chapterNumber}
-          verseNumber={verseNumber}
-          sanskrit={sanskrit}
-          translation={translationText}
-          explanation={originalContent ? '' : explanationText}
-          context={contextText}
-          commentaries={displayedCommentaries}
-          language={language}
-          contentLanguage={contentLanguage}
-          disabled={needsLocalization && localization.status === 'loading'}
-        />
-      )}
 
       {/* Sanskrit - always the visual leader */}
       {sanskrit && (
@@ -450,7 +435,10 @@ export default function IlluminatedVerseCard({
 
       {isFull && transliteration && (
         <section className="verse-card__section verse-card__transliteration-section">
-          <h3 className="verse-card__section-title">{labels.transliteration}</h3>
+          <div className="verse-card__section-heading">
+            <h3 className="verse-card__section-title">{labels.transliteration}</h3>
+            <SectionTools title={labels.transliteration} target="verse" />
+          </div>
           <p className="verse-card__transliteration">{transliteration}</p>
         </section>
       )}
@@ -465,11 +453,11 @@ export default function IlluminatedVerseCard({
                 {translationAttribution}
               </span>
             )}
+            <SectionTools title={labels.translation} target="translation" />
           </div>
           <ReadableText
             text={translationText || t('translationUnavailable')}
             className={`verse-card__translation ${usesDevanagari ? 'devanagari' : ''}`}
-            layout={readingLayout}
           />
 
           {isFull && localizationMessage && (
@@ -484,12 +472,15 @@ export default function IlluminatedVerseCard({
 
           {isFull && alternateTranslations.length > 0 && (
             <section className="verse-card__section verse-card__alternate-translations">
-              <h3 className="verse-card__section-title">{labels.compareTranslations}</h3>
+              <div className="verse-card__section-heading">
+                <h3 className="verse-card__section-title">{labels.compareTranslations}</h3>
+                <SectionTools title={labels.compareTranslations} target="translation" />
+              </div>
               <div className="verse-card__alternate-list">
                 {alternateTranslations.map((item, index) => (
                   <article className="verse-card__alternate" key={`${item.author}-${index}`}>
                     <h4>{item.author || labels.translation}</h4>
-                    <ReadableText text={stripReferencePrefix(item.translation)} className={usesDevanagari ? 'devanagari' : ''} layout={readingLayout} />
+                    <ReadableText text={stripReferencePrefix(item.translation)} className={usesDevanagari ? 'devanagari' : ''} />
                   </article>
                 ))}
               </div>
@@ -500,7 +491,10 @@ export default function IlluminatedVerseCard({
         {/* Understand: supporting lexical and explanatory material. */}
         {isFull && vocabulary.length > 0 && (
           <section className="verse-card__section verse-card__word-meanings">
-            <h3 className="verse-card__section-title">{labels.wordMeaning}</h3>
+            <div className="verse-card__section-heading">
+              <h3 className="verse-card__section-title">{labels.wordMeaning}</h3>
+              <SectionTools title={labels.wordMeaning} target="translation" />
+            </div>
             <dl className="verse-card__word-list">
               {vocabulary.map((item, index) => (
                 <div className="verse-card__word-item" key={`${item.word}-${index}`}>
@@ -522,26 +516,28 @@ export default function IlluminatedVerseCard({
                   {localizedContent.explanationIsExcerpt ? ` · ${labels.translatedExcerpt}` : ''}
                 </span>
               )}
+              <SectionTools title={labels.explanation} target="explanation" />
             </div>
             <ReadableText
               text={explanationText}
               className={`verse-card__explanation ${usesDevanagari ? 'devanagari' : ''}`}
               subheadings
               headings={labels.readingHeadings}
-              layout={readingLayout}
             />
           </section>
         )}
 
         {isFull && isSubstantiveText(contextText) && (
           <section className="verse-card__section verse-card__context">
-            <h3 className="verse-card__section-title">{labels.narrativeContext}</h3>
+            <div className="verse-card__section-heading">
+              <h3 className="verse-card__section-title">{labels.narrativeContext}</h3>
+              <SectionTools title={labels.narrativeContext} target="context" />
+            </div>
             <ReadableText
               text={contextText}
               className={['hindi', 'marathi', 'sanskrit'].includes(contextLanguage) ? 'devanagari' : ''}
               subheadings
               headings={labels.readingHeadings}
-              layout={readingLayout}
             />
           </section>
         )}
@@ -552,6 +548,7 @@ export default function IlluminatedVerseCard({
             <div className="verse-card__section-heading">
               <h3 className="verse-card__section-title">{labels.commentaries}</h3>
               <span className="verse-card__attribution">{displayedCommentaries.length} {t('sourceCount')}</span>
+              <SectionTools title={labels.commentaries} target="commentary-0" />
             </div>
             <div className="verse-card__commentary-list">
               {displayedCommentaries.map((item, index) => (
@@ -568,7 +565,6 @@ export default function IlluminatedVerseCard({
                     className={`${['hindi', 'marathi', 'sanskrit'].includes(item.language) ? 'devanagari ' : ''}commentary-text`}
                     subheadings
                     headings={labels.readingHeadings}
-                    layout={readingLayout}
                   />
                 </article>
               ))}
