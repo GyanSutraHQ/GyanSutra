@@ -6,7 +6,8 @@ const { normalizeQuestion } = require('./ragUtils');
 // topic classifier: broad filtering would incorrectly reject valid questions
 // such as "What is dharma?" before the scripture corpus can answer them.
 const GREETING = /^(?:hi|hello|hey|namaste|namaskar|good (?:morning|afternoon|evening))(?:\s+(?:sarathi|saarthi))?[!?.]*$/i;
-const IDENTITY = /^(?:who|what) (?:are|is) (?:you|sarathi|saarthi)(?:\?)*$/i;
+const IDENTITY = /^(?:who|what) (?:are|is) (?:you|sarathi|saarthi)(?:[,:]?\s+(?:sarathi|saarthi))?[!?.]*$/i;
+const SELF_INTRODUCTION = /^(?:tell me about yourself|introduce yourself|what can you do)(?:[,:]?\s+(?:sarathi|saarthi))?[!?.]*$/i;
 const WELLBEING = /^(?:how are you|how(?:'s| is) it going|are you (?:okay|well))(?:\s+(?:sarathi|saarthi))?[!?.]*$/i;
 const THANKS = /^(?:thanks|thank you|thankyou|dhanyavad|shukriya)(?:\s+(?:sarathi|saarthi))?[!?.]*$/i;
 
@@ -23,6 +24,7 @@ const COPY = {
   en: {
     greeting: 'Namaste — I’m Sarathi, Gyan Sutra’s guide to the Bhagavad Gita, Valmiki Ramayana, and Vishnu Purana. Ask me about a teaching, character, theme, or verse.',
     identity: 'I’m Sarathi, Gyan Sutra’s scripture guide. I can help you explore the Bhagavad Gita, Valmiki Ramayana, and Vishnu Purana with source-backed answers.',
+    capabilities: 'I can explain a verse, explore a character or theme, compare related passages, and help you find a starting point in the Bhagavad Gita, Valmiki Ramayana, or Vishnu Purana. My answers stay grounded in this library’s sources.',
     wellbeing: 'Namaste! I’m here and ready to help you explore the Bhagavad Gita, Valmiki Ramayana, or Vishnu Purana.',
     thanks: 'You’re welcome. Ask whenever you would like to explore a teaching, character, theme, or verse.',
     outOfScope: 'I’m focused on the Bhagavad Gita, Valmiki Ramayana, and Vishnu Purana, so I won’t guess at general current-information or programming questions. Ask me about a teaching, character, theme, or verse instead.',
@@ -30,6 +32,7 @@ const COPY = {
   hi: {
     greeting: 'नमस्ते — मैं सारथि हूँ। मैं भगवद्गीता, वाल्मीकि रामायण और विष्णु पुराण के विषयों में स्रोत-आधारित सहायता कर सकता हूँ।',
     identity: 'मैं ज्ञान सूत्र का सारथि हूँ। मैं भगवद्गीता, वाल्मीकि रामायण और विष्णु पुराण को स्रोतों के आधार पर समझने में सहायता करता हूँ।',
+    capabilities: 'मैं भगवद्गीता, वाल्मीकि रामायण और विष्णु पुराण के श्लोक, पात्र और विषयों को इस पुस्तकालय के स्रोतों के आधार पर समझाने में सहायता कर सकता हूँ।',
     wellbeing: 'नमस्ते! मैं भगवद्गीता, वाल्मीकि रामायण या विष्णु पुराण के विषयों में आपकी सहायता के लिए तैयार हूँ।',
     thanks: 'आपका स्वागत है। आप किसी शिक्षा, पात्र, विषय या श्लोक के बारे में पूछ सकते हैं।',
     outOfScope: 'मैं भगवद्गीता, वाल्मीकि रामायण और विष्णु पुराण पर केंद्रित हूँ, इसलिए सामान्य वर्तमान जानकारी या प्रोग्रामिंग के प्रश्नों का अनुमान से उत्तर नहीं दूँगा।',
@@ -41,12 +44,18 @@ function copyFor(language) {
 }
 
 function classifySarathiGuardrail(question, language = 'en') {
-  const normalized = normalizeQuestion(question).replace(/^question:\s*/, '').replace(/\s+/g, ' ').trim();
+  const normalized = normalizeQuestion(question)
+    // Users often paste prompts copied from a Q&A view. These labels are not
+    // part of the question and must not send a simple social message to RAG.
+    .replace(/^(?:(?:question|user|q)\s*[.:)\]-]*\s*)+/i, '')
+    .replace(/\s+/g, ' ')
+    .trim();
   if (!normalized) return null;
 
   const copy = copyFor(language);
   if (GREETING.test(normalized)) return { type: 'conversational', answer: copy.greeting };
   if (IDENTITY.test(normalized)) return { type: 'conversational', answer: copy.identity };
+  if (SELF_INTRODUCTION.test(normalized)) return { type: 'conversational', answer: copy.capabilities };
   if (WELLBEING.test(normalized)) return { type: 'conversational', answer: copy.wellbeing };
   if (THANKS.test(normalized)) return { type: 'conversational', answer: copy.thanks };
   if (GENERAL_UTILITY.some((pattern) => pattern.test(normalized))) {

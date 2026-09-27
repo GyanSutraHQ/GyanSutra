@@ -123,6 +123,10 @@ describe('bounded grounded RAG', () => {
     ['How are you\n\nSarathi', 'guardrail_conversational'],
     ['Question: How are you?', 'guardrail_conversational'],
     ['who are you?', 'guardrail_conversational'],
+    ['Q. Who are you?', 'guardrail_conversational'],
+    ['User: who are you, Sarathi?', 'guardrail_conversational'],
+    ['Tell me about yourself', 'guardrail_conversational'],
+    ['What can you do, Sarathi?', 'guardrail_conversational'],
     ['what is python', 'guardrail_out_of_scope'],
     ["what is today's day", 'guardrail_out_of_scope'],
   ])('answers %s locally without retrieval or model calls', async (question, reason) => {
