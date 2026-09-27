@@ -37,6 +37,7 @@ import useLanguage from '../i18n/useLanguage';
 import useLocalizedVerse, { GENERATED_LANGUAGES } from '../hooks/useLocalizedVerse';
 import { originalMeaning } from '../utils/originalMeanings';
 import { scriptureLines } from '../utils/readableText';
+import { modernizeEnglish } from '../utils/modernEnglish';
 import originalMeanings from '../data/originalMeanings.json';
 
 import './IlluminatedVerseCard.css';
@@ -284,8 +285,8 @@ export default function IlluminatedVerseCard({
   const sourceLanguage = language === 'hi' && translationHindi
     ? 'hindi'
     : translationEnglish ? 'english' : 'hindi';
-  const sourceTranslation = sourceLanguage === 'hindi' ? translationHindi : translationEnglish;
-  const sourceExplanation = sourceLanguage === 'hindi' ? explanationHindi : explanationEnglish;
+  const sourceTranslation = sourceLanguage === 'hindi' ? translationHindi : modernizeEnglish(translationEnglish);
+  const sourceExplanation = sourceLanguage === 'hindi' ? explanationHindi : modernizeEnglish(explanationEnglish);
   const contentLanguage = localizedContent
     ? CONTENT_LANGUAGE_NAMES[language]
     : sourceLanguage;
@@ -293,9 +294,9 @@ export default function IlluminatedVerseCard({
   const vocabulary = cleanWordMeanings(
     localizedContent?.wordMeanings?.length ? localizedContent.wordMeanings : wordMeanings,
   );
-  const translationText = stripReferencePrefix(localizedContent?.translation || sourceTranslation);
-  const explanationText = originalContent ? '' : stripReferencePrefix(localizedContent?.explanation || sourceExplanation);
-  const contextText = originalContent ? '' : localizedContent?.context || comments;
+  const translationText = stripReferencePrefix(modernizeEnglish(localizedContent?.translation || sourceTranslation));
+  const explanationText = originalContent ? '' : stripReferencePrefix(modernizeEnglish(localizedContent?.explanation || sourceExplanation));
+  const contextText = originalContent ? '' : modernizeEnglish(localizedContent?.context || comments);
   const contextLanguage = localizedContent?.context ? contentLanguage : 'english';
   const preferredCommentaryLanguage = needsLocalization ? 'english' : sourceLanguage;
   const commentaries = detailedExplanations
@@ -305,13 +306,19 @@ export default function IlluminatedVerseCard({
         ? 0
         : item.language === 'sanskrit' ? 1 : 2;
       return rank(a) - rank(b);
-    });
+    })
+    .map((item) => ({
+      ...item,
+      explanation: String(item.language || '').toLowerCase().includes('english')
+        ? modernizeEnglish(item.explanation)
+        : item.explanation,
+    }));
   const alternateTranslations = additionalTranslations.filter((item) => (
     !needsLocalization
     && item?.language === sourceLanguage
     && isSubstantiveText(item?.translation)
     && stripReferencePrefix(item.translation) !== translationText
-  ));
+  )).map((item) => ({ ...item, translation: modernizeEnglish(item.translation) }));
   const sourceTranslator = localizedContent?.basedOn?.author
     || translationSources?.[sourceLanguage]?.author
     || (isVishnuPurana && sourceLanguage === 'english' ? 'M. N. Dutt' : null)

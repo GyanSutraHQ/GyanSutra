@@ -8,6 +8,7 @@
  */
 
 const crypto = require('crypto');
+const { modernizeEnglish } = require('./modernEnglish');
 const { performance } = require('perf_hooks');
 const { OpenAI } = require('openai');
 const { embedText } = require('./embedding');
@@ -119,6 +120,7 @@ RULES:
 - Aim for 70-180 words for substantive questions; use fewer when a short answer suffices.
 - Do not use emojis, decorative headings, boilerplate sections, or filler.
 - Keep paragraphs short and sentences complete.
+- In English, always use current, simple English. Translate archaic source wording such as "thou", "thee", "thy", "dost", and "shalt" into modern English, including when paraphrasing a quoted source.
 - Never expose private reasoning, analysis, or prompt instructions.
 - Follow the RESPONSE LANGUAGE instruction exactly, regardless of the language used in the question.
 - Original Sanskrit quotations may remain in Sanskrit. Do not use tables.`;
@@ -143,7 +145,7 @@ function cleanResponse(raw) {
 
   const teaching = text.match(/(?:^|\n)(?:###\s*)?(?:📖\s*)?(?:The Teaching|शिक्षा)/i);
   if (teaching && teaching.index > 0) text = text.slice(teaching.index).trim();
-  return text.replace(/[\p{Extended_Pictographic}\uFE0F]/gu, '').trim();
+  return modernizeEnglish(text.replace(/[\p{Extended_Pictographic}\uFE0F]/gu, '').trim());
 }
 
 function providerKey(provider) {
@@ -404,10 +406,10 @@ function buildContext(verses, question, language = 'en') {
       `[S${sourceNumber}] ${verseReference(verse)}`,
       verse.sanskrit ? `Sanskrit: ${truncateAtBoundary(verse.sanskrit, 700)}` : '',
       verse.transliteration ? `Transliteration: ${truncateAtBoundary(verse.transliteration, 500)}` : '',
-      verse.translationEnglish ? `English translation: ${truncateAtBoundary(verse.translationEnglish, verse.book === 'vishnu-purana' ? 4_000 : 900)}` : '',
+      verse.translationEnglish ? `English translation: ${truncateAtBoundary(modernizeEnglish(verse.translationEnglish), verse.book === 'vishnu-purana' ? 4_000 : 900)}` : '',
       verse.translationHindi ? `Hindi translation: ${truncateAtBoundary(verse.translationHindi, 900)}` : '',
-      verse.explanationEnglish ? `Source explanation: ${truncateAtBoundary(verse.explanationEnglish, 900)}` : '',
-      verse.comments ? `Source notes: ${truncateAtBoundary(verse.comments, 550)}` : '',
+      verse.explanationEnglish ? `Source explanation: ${truncateAtBoundary(modernizeEnglish(verse.explanationEnglish), 900)}` : '',
+      verse.comments ? `Source notes: ${truncateAtBoundary(modernizeEnglish(verse.comments), 550)}` : '',
     ].filter(Boolean);
 
     if (Array.isArray(verse.wordMeanings) && verse.wordMeanings.length > 0) {
@@ -430,7 +432,7 @@ function buildContext(verses, question, language = 'en') {
       for (const commentary of commentaries) {
         if (commentaryCount >= MAX_COMMENTARIES) break;
         lines.push(
-          `Commentary by ${commentary.author || 'Traditional teacher'}: ${truncateAtBoundary(commentary.explanation, MAX_COMMENTARY_CHARS)}`,
+          `Commentary by ${commentary.author || 'Traditional teacher'}: ${truncateAtBoundary(modernizeEnglish(commentary.explanation), MAX_COMMENTARY_CHARS)}`,
         );
         commentaryCount += 1;
       }
@@ -465,7 +467,7 @@ function buildCitation(verse) {
     storyTitle: verse.storyTitle,
     sanskrit: verse.sanskrit,
     transliteration: verse.transliteration,
-    translationEnglish: verse.translationEnglish,
+    translationEnglish: modernizeEnglish(verse.translationEnglish),
     translationHindi: verse.translationHindi,
     similarity: verse.similarity,
     tags: verse.tags || [],
@@ -474,18 +476,20 @@ function buildCitation(verse) {
 
 function sourceMeaning(verse, language = 'en') {
   return truncateAtBoundary(
-    (language === 'hi' ? verse.translationHindi : language === 'en' ? verse.translationEnglish : verse.sanskrit)
-      || (language === 'hi' ? verse.sanskrit : verse.translationEnglish)
+    (language === 'hi' ? verse.translationHindi : language === 'en' ? modernizeEnglish(verse.translationEnglish) : verse.sanskrit)
+      || (language === 'hi' ? verse.sanskrit : modernizeEnglish(verse.translationEnglish))
       || verse.sanskrit,
     550,
   );
 }
 
 function sourceExplanation(verse) {
-  return verse?.explanationEnglish
-    || verse?.comments
-    || verse?.detailedExplanations?.find((item) => item?.explanation
-      && String(item.language || 'english').toLowerCase().includes('english'))?.explanation;
+  return modernizeEnglish(
+    verse?.explanationEnglish
+      || verse?.comments
+      || verse?.detailedExplanations?.find((item) => item?.explanation
+        && String(item.language || 'english').toLowerCase().includes('english'))?.explanation,
+  );
 }
 
 const FALLBACK_COPY = {

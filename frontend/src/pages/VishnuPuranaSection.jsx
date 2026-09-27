@@ -5,6 +5,7 @@ import ReadAloudControls from '../components/ReadAloudControls';
 import ReadableText from '../components/ReadableText';
 import SEOHead from '../components/SEO/SEOHead';
 import { getVishnuPuranaSection } from '../services/api';
+import { modernizeEnglish } from '../utils/modernEnglish';
 
 import './VishnuPurana.css';
 
@@ -38,7 +39,7 @@ export default function VishnuPuranaSection() {
     };
   }, []);
 
-  const completeText = useMemo(() => data?.section.paragraphs.join('\n\n') || '', [data]);
+  const completeText = useMemo(() => modernizeEnglish(data?.section.paragraphs.join('\n\n') || ''), [data]);
 
   if (error) return <main className="vp-page"><div className="vp-shell"><Link className="vp-back" to="/vishnu-purana">← Vishnu Purana</Link><p className="vp-status vp-status--error">{error}</p></div></main>;
   if (!data) return <main className="vp-page"><LoadingSpinner size="medium" text="Opening the complete source text…" /></main>;
@@ -87,7 +88,7 @@ export default function VishnuPuranaSection() {
             <span>Public-domain edition</span>
           </div>
           <ReadableText
-            paragraphs={section.paragraphs}
+            paragraphs={section.paragraphs.map(modernizeEnglish)}
             hideFootnoteMarkers
             subheadings
             className="vp-canonical__text"

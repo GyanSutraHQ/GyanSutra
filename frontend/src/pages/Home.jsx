@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { getDailyVerse } from '../services/api';
 import useLanguage from '../i18n/useLanguage';
 import useLocalizedVerse, { GENERATED_LANGUAGES } from '../hooks/useLocalizedVerse';
+import { modernizeEnglish } from '../utils/modernEnglish';
 import { SEO_TOPICS } from '../data/seoTopics';
 
 export default function Home() {
@@ -29,14 +30,14 @@ export default function Home() {
     { id: 'ramayana', title: language === 'en' ? 'Valmiki Ramayana' : t('ramayana'), devanagari: 'राम', count: t('kandas7'), description: t('ramayanaDescription') },
     { id: 'vishnu-purana', title: 'Vishnu Purana', devanagari: 'विष्णु', count: '6 parts · 126 sections', description: 'A complete journey through creation, cosmology, dharma, royal lineages, Krishna’s life, and liberation.' },
   ];
-  const dailyMeaning = GENERATED_LANGUAGES.has(language)
+  const dailyMeaning = modernizeEnglish(GENERATED_LANGUAGES.has(language)
     ? (dailyLocalization.content?.translation
       || dailyVerse?.translationEnglish
       || dailyVerse?.translationHindi
       || t('translationUnavailable'))
     : language === 'hi'
       ? (dailyVerse?.translationHindi || dailyVerse?.translationEnglish || t('translationUnavailable'))
-      : (dailyVerse?.translationEnglish || dailyVerse?.translationHindi || t('translationUnavailable'));
+      : (dailyVerse?.translationEnglish || dailyVerse?.translationHindi || t('translationUnavailable')));
 
   return (
     <main className="gs-home-page">
