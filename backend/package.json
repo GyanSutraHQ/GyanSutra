@@ -2,6 +2,7 @@
   "name": "gyansutra-backend",
   "version": "1.0.0",
   "description": "Gyan Sutra API - RAG backend for Indian scripture knowledge platform",
+  "license": "MIT",
   "main": "src/server.js",
   "engines": {
     "node": ">=22.0.0"

@@ -1,10 +1,35 @@
-# ── macOS ──────────────────────────────────────────────────────
+# ── Operating-system files ─────────────────────────────────────
 .DS_Store
 **/.DS_Store
+Thumbs.db
 
-# ── Build output ───────────────────────────────────────────────
+# ── Dependencies and build output ──────────────────────────────
+**/node_modules/
 frontend/dist/
 frontend/dist-ssr/
+frontend/android/.gradle/
+frontend/android/.idea/
+frontend/android/build/
+frontend/android/capacitor-cordova-android-plugins/
+frontend/android/local.properties
+
+# ── Environment files and local credentials ────────────────────
+**/.env
+**/.env.*
+!**/.env.example
+**/serviceAccount.json
+**/serviceAccountKey.json
+
+# ── Logs, caches, and local Python environments ────────────────
+*.log
+**/__pycache__/
+*.py[cod]
+**/.venv/
+
+# ── Editor settings ────────────────────────────────────────────
+.vscode/*
+!.vscode/extensions.json
+**/.idea/
 
 # ── Raw ingestion datasets (too large for git) ─────────────────
 backend/data/raw/
