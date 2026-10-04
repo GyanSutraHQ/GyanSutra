@@ -1,54 +1,91 @@
-name: Quality checks
+name: Maintainer CI
 
 on:
   pull_request:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
 
+# A newer commit on the same branch supersedes an older run. This keeps pull
+# request feedback current without consuming unnecessary organization minutes.
+concurrency:
+  group: maintainer-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   backend:
-    name: Backend checks
+    name: Backend contract and API
     runs-on: ubuntu-latest
+    timeout-minutes: 12
     defaults:
       run:
         working-directory: backend
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
           cache: npm
           cache-dependency-path: backend/package-lock.json
-      - name: Install dependencies
+
+      - name: Install locked dependencies
         run: npm ci
-      - name: Run tests
+
+      - name: Verify scripture data contract
+        run: npm run verify:data
+
+      - name: Run API, RAG, cache, narration, and localization tests
         run: npm test
 
+      # This gate catches newly introduced critical production vulnerabilities.
+      # Non-critical advisories remain visible for maintainer triage.
+      - name: Reject critical production dependency vulnerabilities
+        run: npm audit --omit=dev --audit-level=critical
+
   frontend:
-    name: Frontend checks
+    name: Frontend quality and production build
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     defaults:
       run:
         working-directory: frontend
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
           cache: npm
           cache-dependency-path: frontend/package-lock.json
-      - name: Install dependencies
+
+      - name: Install locked dependencies
         run: npm ci
-      - name: Run tests
+
+      - name: Run reader, narration, and recitation tests
         run: npm test
-      - name: Lint
+
+      - name: Lint source files
         run: npm run lint
-      - name: Build
+
+      - name: Build PWA and static SEO pages
         run: npm run build
+
+      - name: Reject critical production dependency vulnerabilities
+        run: npm audit --omit=dev --audit-level=critical
+
+      - name: Upload review build
+        if: success() && github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build-${{ github.event.pull_request.number }}
+          path: frontend/dist
+          if-no-files-found: error
+          retention-days: 7
