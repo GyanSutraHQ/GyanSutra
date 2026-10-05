@@ -49,7 +49,10 @@ provenance are unchanged.
 Embeddings retain the model, query/passage prefixes, whitespace normalization,
 512-token slicing, mean pooling, normalization, quantization, and 384 dimensions.
 Tests compare against captured JavaScript vectors for English, Sanskrit,
-query/passages, and long text. No vector re-ingestion or index migration is
+query/passages, and long text. CI additionally compares against the preserved
+JavaScript adapter on the same CPU because quantized kernels vary across
+architectures. Node is installed only for this migration test reference;
+the Python deployment has no Node dependency. No vector re-ingestion or index migration is
 required solely for this conversion.
 
 ## Performance and deployment

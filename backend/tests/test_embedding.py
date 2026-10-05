@@ -1,5 +1,8 @@
 import asyncio
 import json
+import os
+import platform
+from pathlib import Path
 
 import numpy as np
 
@@ -8,7 +11,17 @@ from gyansutra.embedding import LocalScriptureEmbeddings, embed_text
 
 
 async def test_local_vectors_match_original_javascript_model(monkeypatch):
-    cases = json.loads((ROOT / "tests/fixtures/legacy_embeddings.json").read_text())
+    # Quantized kernels vary by CPU. CI captures the legacy adapter on the
+    # same runner; offline fixtures cover the validated ARM and x86 runtimes.
+    fixture = (
+        "legacy_embeddings_linux.json"
+        if platform.machine() == "x86_64"
+        else "legacy_embeddings.json"
+    )
+    reference = Path(
+        os.getenv("LEGACY_EMBEDDING_REFERENCE", str(ROOT / "tests/fixtures" / fixture))
+    )
+    cases = json.loads(reference.read_text())
     embeddings = LocalScriptureEmbeddings()
     try:
         vectors = await asyncio.gather(

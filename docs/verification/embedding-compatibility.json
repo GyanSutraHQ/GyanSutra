@@ -1,0 +1,50 @@
+[
+  {
+    "case": 0,
+    "pythonVsJavascriptCosine": 1.0000002707482738,
+    "maxAbsoluteDelta": 1.1920928955078125e-7,
+    "linuxVsMacJavascriptCosine": 0.9976434851851401
+  },
+  {
+    "case": 1,
+    "pythonVsJavascriptCosine": 1.0000002707482738,
+    "maxAbsoluteDelta": 1.1920928955078125e-7,
+    "linuxVsMacJavascriptCosine": 0.9976434851851401
+  },
+  {
+    "case": 2,
+    "pythonVsJavascriptCosine": 1.0000000092481252,
+    "maxAbsoluteDelta": 2.9802322387695312e-8,
+    "linuxVsMacJavascriptCosine": 0.997848593856677
+  },
+  {
+    "case": 3,
+    "pythonVsJavascriptCosine": 1.0000000092481252,
+    "maxAbsoluteDelta": 2.9802322387695312e-8,
+    "linuxVsMacJavascriptCosine": 0.997848593856677
+  },
+  {
+    "case": 4,
+    "pythonVsJavascriptCosine": 0.9999999452768342,
+    "maxAbsoluteDelta": 5.960464477539063e-8,
+    "linuxVsMacJavascriptCosine": 0.9890380121174287
+  },
+  {
+    "case": 5,
+    "pythonVsJavascriptCosine": 0.9999999452768342,
+    "maxAbsoluteDelta": 5.960464477539063e-8,
+    "linuxVsMacJavascriptCosine": 0.9890380121174287
+  },
+  {
+    "case": 6,
+    "pythonVsJavascriptCosine": 0.9999998898723339,
+    "maxAbsoluteDelta": 1.341104507446289e-7,
+    "linuxVsMacJavascriptCosine": 0.9987548413256139
+  },
+  {
+    "case": 7,
+    "pythonVsJavascriptCosine": 0.9999998898723339,
+    "maxAbsoluteDelta": 1.341104507446289e-7,
+    "linuxVsMacJavascriptCosine": 0.9987548413256139
+  }
+]

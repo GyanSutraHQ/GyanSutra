@@ -26,6 +26,23 @@ transport as well as the HTTP clients.
 
 ## Load comparison
 
+### Embedding compatibility on the deployment architecture
+
+A Linux x86 diagnostic compared all eight inputs against the original
+`@huggingface/transformers` 4.3.0 adapter using ONNX Runtime 1.30.0 on the same
+CPU. The largest component difference was 0.0000001342, and cosine similarity
+was effectively 1 for every case. This confirms equivalent migration output on
+Linux as well as the Mac. Quantized ONNX output differs between ARM and x86;
+the initial CI failure compared Linux with a Mac fixture. CI now generates a
+same-CPU legacy reference before running the strict embedding comparison. Offline
+fixtures retain the separately validated ARM and x86 outputs. The Node adapter
+is a frozen test reference only and is absent from the Python deployment.
+
+Detailed comparisons are preserved in
+[embedding compatibility results](verification/embedding-compatibility.json).
+
+### HTTP workloads
+
 The preserved Node implementation and the Python implementation ran sequentially
 on the same Mac against the same live Firestore project. Each used a single
 process, the same model/cache settings, and fresh per-process rate limits. Models
