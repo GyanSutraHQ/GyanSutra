@@ -46,3 +46,9 @@ Verification on 2026-10-05: 45 frontend tests, 74 backend tests, frontend lint, 
 The browser check discovered that the deployed chapter API returned 133 Vishnu Purana records alongside 47 Gita verses. The reader now excludes other scriptures and deduplicates/sorts canonical Gita records; the Python endpoint also filters its results. The reader displayed the correct 47-verse count against the existing deployed API. This frontend compatibility fix takes effect on frontend deployment even before the Python API is released.
 
 Screen-reader certification, full human editorial review, and pronunciation review are not claimed. The source-audit report records the unresolved editorial work explicitly. Frontend deployment uses the existing main-branch Cloudflare Pages and GitHub Pages workflows; Python/Render deployment remains a separate service operation.
+
+## Release verification
+
+Commit `75a2435` was pushed to `main`. [Maintainer CI](https://github.com/GyanSutraHQ/GyanSutra/actions/runs/37322895384) passed both backend and frontend jobs; [GitHub Pages deployment](https://github.com/GyanSutraHQ/GyanSutra/actions/runs/37322895484) and the Cloudflare Pages check succeeded. The custom domain served the new `index-legacy-9JF-l0ak.js` bundle. Chrome subsequently loaded the deployed Chapter 10 reader at verse 31, showing the new reading controls, source disclosure, and correct 42-verse count. A transient Chrome network failure preceded the successful observation. The Chapter 1 reader bundle served by the custom domain also matches the locally tested build byte-for-byte.
+
+Audible playback quality remains unconfirmed by the user; entering a playback state alone does not establish audible output. Corpus-wide human editorial verification remains pending, with concrete discrepancies preserved in the audit report. These are the outstanding review items, rather than completed certifications.
