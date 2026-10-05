@@ -68,7 +68,7 @@ sh backend/narration/run-mac.sh \
 
 # Open samples/listen.html on the SSD and listen to the actual voices.
 # Import completed non-demo clips into the website / Android static assets.
-node backend/narration/import-audio.mjs \
+node frontend/scripts/import-narration-audio.mjs \
   '/Volumes/SP Extreme SSD/GyanSutraAudio/samples' --aac --prune
 
 # Build and copy the updated audio into the Android project.
@@ -91,12 +91,12 @@ Svara speech is not a guarantee of authentic chanting, metre or Vedic svaras.
 For the complete Sanskrit Gita queue:
 
 ```sh
-node backend/narration/prepare-queue.mjs --all-gita \
+node frontend/scripts/prepare-narration-queue.mjs --all-gita \
   --output='/Volumes/SP Extreme SSD/GyanSutraAudio/gita-queue.json'
 sh backend/narration/run-mac.sh \
   --queue '/Volumes/SP Extreme SSD/GyanSutraAudio/gita-queue.json' \
   --output '/Volumes/SP Extreme SSD/GyanSutraAudio/gita'
-node backend/narration/import-audio.mjs '/Volumes/SP Extreme SSD/GyanSutraAudio/gita' --aac --prune
+node frontend/scripts/import-narration-audio.mjs '/Volumes/SP Extreme SSD/GyanSutraAudio/gita' --aac --prune
 ```
 
 This uses the app's actual `buildNarration` function, so punctuation, pauses and

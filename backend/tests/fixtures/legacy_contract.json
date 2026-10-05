@@ -1,0 +1,324 @@
+[
+  {
+    "question": "Gita 2.47",
+    "references": [
+      {
+        "type": "gita",
+        "id": "bhagavad-gita_2_47",
+        "chapterNumber": 2,
+        "verseNumber": 47
+      }
+    ],
+    "followUp": false,
+    "direct": false,
+    "guardrail": null,
+    "guardrailHindi": null
+  },
+  {
+    "question": "भगवद्गीता २.४७",
+    "references": [
+      {
+        "type": "gita",
+        "id": "bhagavad-gita_2_47",
+        "chapterNumber": 2,
+        "verseNumber": 47
+      }
+    ],
+    "followUp": false,
+    "direct": false,
+    "guardrail": null,
+    "guardrailHindi": null
+  },
+  {
+    "question": "Compare Gita 2.47 and 18.66",
+    "references": [
+      {
+        "type": "gita",
+        "id": "bhagavad-gita_2_47",
+        "chapterNumber": 2,
+        "verseNumber": 47
+      },
+      {
+        "type": "gita",
+        "id": "bhagavad-gita_18_66",
+        "chapterNumber": 18,
+        "verseNumber": 66
+      }
+    ],
+    "followUp": false,
+    "direct": false,
+    "guardrail": null,
+    "guardrailHindi": null
+  },
+  {
+    "question": "chapter 13 verse 35",
+    "references": [
+      {
+        "type": "gita",
+        "id": "bhagavad-gita_13_35",
+        "chapterNumber": 13,
+        "verseNumber": 35
+      }
+    ],
+    "followUp": false,
+    "direct": false,
+    "guardrail": null,
+    "guardrailHindi": null
+  },
+  {
+    "question": "Explain Gita 2.999",
+    "references": [
+      {
+        "type": "gita",
+        "id": "bhagavad-gita_2_999",
+        "chapterNumber": 2,
+        "verseNumber": 999
+      }
+    ],
+    "followUp": false,
+    "direct": false,
+    "guardrail": null,
+    "guardrailHindi": null
+  },
+  {
+    "question": "Ramayana 5.1.2",
+    "references": [
+      {
+        "type": "ramayana",
+        "id": "valmiki-ramayana_5_1_2",
+        "kandaNumber": 5,
+        "sarga": 1,
+        "shlokaNumber": 2
+      }
+    ],
+    "followUp": false,
+    "direct": false,
+    "guardrail": null,
+    "guardrailHindi": null
+  },
+  {
+    "question": "kanda 2 sarga 4 shloka 6",
+    "references": [
+      {
+        "type": "ramayana",
+        "id": "valmiki-ramayana_2_4_6",
+        "kandaNumber": 2,
+        "sarga": 4,
+        "shlokaNumber": 6
+      }
+    ],
+    "followUp": false,
+    "direct": false,
+    "guardrail": null,
+    "guardrailHindi": null
+  },
+  {
+    "question": "Sundara Kanda sarga 1 shloka 3",
+    "references": [
+      {
+        "type": "ramayana",
+        "id": "valmiki-ramayana_5_1_3",
+        "kandaNumber": 5,
+        "sarga": 1,
+        "shlokaNumber": 3
+      }
+    ],
+    "followUp": false,
+    "direct": false,
+    "guardrail": null,
+    "guardrailHindi": null
+  },
+  {
+    "question": "Vishnu Purana Part 5 Section 3",
+    "references": [
+      {
+        "type": "vishnu-purana",
+        "id": "vishnu-purana_5_3",
+        "partNumber": 5,
+        "sectionNumber": 3
+      }
+    ],
+    "followUp": false,
+    "direct": false,
+    "guardrail": null,
+    "guardrailHindi": null
+  },
+  {
+    "question": "Vishnu Purana Part 1 Section 2 and Part 5 Section 3",
+    "references": [
+      {
+        "type": "vishnu-purana",
+        "id": "vishnu-purana_1_2",
+        "partNumber": 1,
+        "sectionNumber": 2
+      },
+      {
+        "type": "vishnu-purana",
+        "id": "vishnu-purana_5_3",
+        "partNumber": 5,
+        "sectionNumber": 3
+      }
+    ],
+    "followUp": false,
+    "direct": false,
+    "guardrail": null,
+    "guardrailHindi": null
+  },
+  {
+    "question": "What is dharma?",
+    "references": [],
+    "followUp": false,
+    "direct": false,
+    "guardrail": null,
+    "guardrailHindi": null
+  },
+  {
+    "question": "Explain that more",
+    "references": [],
+    "followUp": true,
+    "direct": false,
+    "guardrail": null,
+    "guardrailHindi": null
+  },
+  {
+    "question": "Show Gita 2.47",
+    "references": [
+      {
+        "type": "gita",
+        "id": "bhagavad-gita_2_47",
+        "chapterNumber": 2,
+        "verseNumber": 47
+      }
+    ],
+    "followUp": false,
+    "direct": true,
+    "guardrail": null,
+    "guardrailHindi": null
+  },
+  {
+    "question": "How are you\n\nSarathi",
+    "references": [],
+    "followUp": true,
+    "direct": false,
+    "guardrail": {
+      "type": "conversational",
+      "answer": "Namaste! I’m here and ready to help you explore the Bhagavad Gita, Valmiki Ramayana, or Vishnu Purana."
+    },
+    "guardrailHindi": {
+      "type": "conversational",
+      "answer": "नमस्ते! मैं भगवद्गीता, वाल्मीकि रामायण या विष्णु पुराण के विषयों में आपकी सहायता के लिए तैयार हूँ।"
+    }
+  },
+  {
+    "question": "Question: How are you?",
+    "references": [],
+    "followUp": true,
+    "direct": false,
+    "guardrail": {
+      "type": "conversational",
+      "answer": "Namaste! I’m here and ready to help you explore the Bhagavad Gita, Valmiki Ramayana, or Vishnu Purana."
+    },
+    "guardrailHindi": {
+      "type": "conversational",
+      "answer": "नमस्ते! मैं भगवद्गीता, वाल्मीकि रामायण या विष्णु पुराण के विषयों में आपकी सहायता के लिए तैयार हूँ।"
+    }
+  },
+  {
+    "question": "Q. Who are you?",
+    "references": [],
+    "followUp": false,
+    "direct": false,
+    "guardrail": {
+      "type": "conversational",
+      "answer": "I’m Sarathi, Gyan Sutra’s scripture guide. I can help you explore the Bhagavad Gita, Valmiki Ramayana, and Vishnu Purana with source-backed answers."
+    },
+    "guardrailHindi": {
+      "type": "conversational",
+      "answer": "मैं ज्ञान सूत्र का सारथि हूँ। मैं भगवद्गीता, वाल्मीकि रामायण और विष्णु पुराण को स्रोतों के आधार पर समझने में सहायता करता हूँ।"
+    }
+  },
+  {
+    "question": "User: who are you, Sarathi?",
+    "references": [],
+    "followUp": false,
+    "direct": false,
+    "guardrail": {
+      "type": "conversational",
+      "answer": "I’m Sarathi, Gyan Sutra’s scripture guide. I can help you explore the Bhagavad Gita, Valmiki Ramayana, and Vishnu Purana with source-backed answers."
+    },
+    "guardrailHindi": {
+      "type": "conversational",
+      "answer": "मैं ज्ञान सूत्र का सारथि हूँ। मैं भगवद्गीता, वाल्मीकि रामायण और विष्णु पुराण को स्रोतों के आधार पर समझने में सहायता करता हूँ।"
+    }
+  },
+  {
+    "question": "What can you do, Sarathi?",
+    "references": [],
+    "followUp": false,
+    "direct": false,
+    "guardrail": {
+      "type": "conversational",
+      "answer": "I can explain a verse, explore a character or theme, compare related passages, and help you find a starting point in the Bhagavad Gita, Valmiki Ramayana, or Vishnu Purana. My answers stay grounded in this library’s sources."
+    },
+    "guardrailHindi": {
+      "type": "conversational",
+      "answer": "मैं भगवद्गीता, वाल्मीकि रामायण और विष्णु पुराण के श्लोक, पात्र और विषयों को इस पुस्तकालय के स्रोतों के आधार पर समझाने में सहायता कर सकता हूँ।"
+    }
+  },
+  {
+    "question": "what is python",
+    "references": [],
+    "followUp": false,
+    "direct": false,
+    "guardrail": {
+      "type": "out_of_scope",
+      "answer": "I’m focused on the Bhagavad Gita, Valmiki Ramayana, and Vishnu Purana, so I won’t guess at general current-information or programming questions. Ask me about a teaching, character, theme, or verse instead."
+    },
+    "guardrailHindi": {
+      "type": "out_of_scope",
+      "answer": "मैं भगवद्गीता, वाल्मीकि रामायण और विष्णु पुराण पर केंद्रित हूँ, इसलिए सामान्य वर्तमान जानकारी या प्रोग्रामिंग के प्रश्नों का अनुमान से उत्तर नहीं दूँगा।"
+    }
+  },
+  {
+    "question": "what is today's day",
+    "references": [],
+    "followUp": false,
+    "direct": false,
+    "guardrail": {
+      "type": "out_of_scope",
+      "answer": "I’m focused on the Bhagavad Gita, Valmiki Ramayana, and Vishnu Purana, so I won’t guess at general current-information or programming questions. Ask me about a teaching, character, theme, or verse instead."
+    },
+    "guardrailHindi": {
+      "type": "out_of_scope",
+      "answer": "मैं भगवद्गीता, वाल्मीकि रामायण और विष्णु पुराण पर केंद्रित हूँ, इसलिए सामान्य वर्तमान जानकारी या प्रोग्रामिंग के प्रश्नों का अनुमान से उत्तर नहीं दूँगा।"
+    }
+  },
+  {
+    "question": "thank you",
+    "references": [],
+    "followUp": false,
+    "direct": false,
+    "guardrail": {
+      "type": "conversational",
+      "answer": "You’re welcome. Ask whenever you would like to explore a teaching, character, theme, or verse."
+    },
+    "guardrailHindi": {
+      "type": "conversational",
+      "answer": "आपका स्वागत है। आप किसी शिक्षा, पात्र, विषय या श्लोक के बारे में पूछ सकते हैं।"
+    }
+  },
+  {
+    "question": "namaste",
+    "references": [],
+    "followUp": false,
+    "direct": false,
+    "guardrail": {
+      "type": "conversational",
+      "answer": "Namaste — I’m Sarathi, Gyan Sutra’s guide to the Bhagavad Gita, Valmiki Ramayana, and Vishnu Purana. Ask me about a teaching, character, theme, or verse."
+    },
+    "guardrailHindi": {
+      "type": "conversational",
+      "answer": "नमस्ते — मैं सारथि हूँ। मैं भगवद्गीता, वाल्मीकि रामायण और विष्णु पुराण के विषयों में स्रोत-आधारित सहायता कर सकता हूँ।"
+    }
+  }
+]

@@ -25,6 +25,10 @@ frontend/android/local.properties
 **/__pycache__/
 *.py[cod]
 **/.venv/
+**/.pytest_cache/
+**/.ruff_cache/
+# Local inference runtime session artifact.
+backend/:memory:.ses
 
 # ── Editor settings ────────────────────────────────────────────
 .vscode/*

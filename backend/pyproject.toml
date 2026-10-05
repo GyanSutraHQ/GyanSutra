@@ -1,0 +1,33 @@
+[project]
+name = "gyansutra-backend"
+version = "2.0.0"
+description = "FastAPI scripture API and bounded LangChain RAG"
+requires-python = ">=3.12,<3.15"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn[standard]>=0.34,<1",
+  "httpx>=0.28,<1",
+  "google-cloud-firestore>=2.20,<3",
+  "langchain-core>=1,<2",
+  "langchain-openai>=1,<2",
+  "numpy>=2,<3",
+  "onnxruntime>=1.23,<2",
+  "tokenizers>=0.22,<1",
+  "cachetools>=6,<8",
+  "python-dotenv>=1,<2",
+  "regex>=2025.9",
+]
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "pytest-asyncio>=1,<2", "ruff>=0.14,<1", "pip-audit>=2.9,<3"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

@@ -27,26 +27,31 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Set up Python dependency manager
+        uses: astral-sh/setup-uv@v7
         with:
-          node-version-file: .nvmrc
-          cache: npm
-          cache-dependency-path: backend/package-lock.json
+          version: "0.12.23"
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
 
       - name: Install locked dependencies
-        run: npm ci
+        run: uv sync --frozen
 
       - name: Verify scripture data contract
-        run: npm run verify:data
+        run: uv run python -m scripts.verify_data
 
       - name: Run API, RAG, cache, narration, and localization tests
-        run: npm test
+        run: uv run pytest
 
-      # This gate catches newly introduced critical production vulnerabilities.
-      # Non-critical advisories remain visible for maintainer triage.
-      - name: Reject critical production dependency vulnerabilities
-        run: npm audit --omit=dev --audit-level=critical
+      - name: Lint and verify exported production dependencies
+        run: |
+          uv run ruff check gyansutra scripts tests
+          uv run ruff format --check gyansutra scripts tests
+          uv export --frozen --no-dev --no-header --format requirements-txt --output-file /tmp/gyansutra-requirements.txt
+          diff requirements.txt /tmp/gyansutra-requirements.txt
+
+      - name: Audit production dependencies
+        run: uv run pip-audit -r requirements.txt --disable-pip
 
   frontend:
     name: Frontend quality and production build

@@ -2,7 +2,7 @@
 
 Gyan Sutra is a multilingual scripture-reading platform for the Bhagavad Gita,
 Valmiki Ramayana, and Vishnu Purana. It combines a React progressive web app
-and Android shell with a Node.js API for scripture retrieval, semantic search,
+and Android shell with a Python FastAPI service for scripture retrieval, semantic search,
 and the retrieval-grounded Sarathi guide.
 
 This guide is written for maintainers and organization members. It explains the
@@ -18,11 +18,11 @@ Browser / Android shell
 frontend/  React + Vite PWA + Capacitor
         │ HTTPS /api/*
         ▼
-backend/   Express API, validation, RAG, local embedding runtime
+backend/   Python FastAPI, LangChain RAG, local ONNX embeddings
         │
         ├── Firestore: chapters, verses, vector search, optional QA log
         ├── Local ONNX model: Xenova/gte-small embeddings
-        └── AI providers: Gemini → Groq → OpenRouter, with grounded fallback
+        └── AI providers: Gemini → xAI Grok → OpenRouter, with grounded fallback
 ```
 
 The web app is deployed to Cloudflare Pages and GitHub Pages. The API is
@@ -36,15 +36,16 @@ model files at startup.
 | --- | --- | --- |
 | `frontend/src/` | React pages, components, hooks, API client, localization, and reading/narration utilities | Keep UI behavior in focused components; use `services/api.js` for backend calls. |
 | `frontend/public/` | PWA manifest, icons, crawler assets, narration notices, and static social images | Files here are copied into every web build. |
-| `frontend/scripts/` | Sitemap and static SEO page generation | `npm run build` runs these automatically before and after Vite. |
+| `frontend/scripts/` | SEO generation and narration asset tools | `npm run build` runs these automatically before and after Vite. |
 | `frontend/android/` | Capacitor Android wrapper and native speech bridge | Do not edit generated web assets under `app/src/main/assets/public/`. |
-| `backend/src/routes/` | HTTP endpoint validation and response shaping | Keep routes thin; use services for infrastructure and domain logic. |
-| `backend/src/services/` | Firestore, embeddings, caching, RAG, translations, and guardrails | Preserve the bounded timeouts, cache limits, and citation validation. |
-| `backend/src/data/` | Source registry used by API routes | Add a source here when adding a supported scripture. |
+| `backend/gyansutra/app.py` | FastAPI routes, validation, and response shaping | Preserve frontend API contracts. |
+| `backend/gyansutra/` | Async Firestore, embeddings, caching, LangChain RAG, translations, guardrails, narration proxy | Preserve bounded timeouts, cache limits, and citation validation. |
+| `backend/data/ai-policy.json` | Source registry, original prompts, guardrail copy, and chapter metadata | Preserve multilingual behavior. |
+| `backend/tests/` | Pytest API and GenAI compatibility tests | Includes legacy routing and embedding fixtures. |
 | `backend/data/` | Versioned Gita and Vishnu Purana source material | Treat these as content contracts; CI verifies their structure. |
 | `backend/scripts/` | Corpus preparation and Firestore ingestion tools | Ingestion writes external data; review a dry run before production execution. |
 | `backend/models/` | Checked-in local embedding model | Required at runtime; do not remove it to reduce repository size. |
-| `backend/narration/` | Optional Python narration worker, queue tools, licenses, and provenance | It is optional for normal web reading; follow its own README for setup. |
+| `backend/narration/` | Optional Python narration worker, licenses, and provenance | It is optional for normal web reading; follow its own README for setup. |
 | `docs/` | Operational documentation | Keep deployment and search-console instructions current. |
 | `.github/workflows/` | CI and GitHub Pages deployment | Changes here affect every contributor and deployment. |
 
@@ -53,7 +54,7 @@ model files at startup.
 ### Reading and search
 
 1. React routes call `frontend/src/services/api.js`.
-2. Express validates the request in `backend/src/routes/`.
+2. FastAPI validates the request in `backend/gyansutra/app.py`.
 3. Firestore returns a chapter, verse, or vector-search result. Embeddings are
    never returned to the browser.
 4. The frontend renders source text, translations, accessibility controls, and
@@ -63,7 +64,7 @@ model files at startup.
 
 1. The API validates a question, short conversation history, language, and
    prior citation IDs.
-2. `rag.js` applies local guardrails, resolves exact references when possible,
+2. `gyansutra/rag.py` applies local guardrails, resolves exact references when possible,
    embeds eligible queries, and retrieves a small set of scripture passages.
 3. A provider is used only when the evidence clears the similarity threshold.
    The answer is checked against the retrieved citations before it is returned.
@@ -75,7 +76,7 @@ model files at startup.
 ```text
 Versioned Gita / Vishnu Purana data
         │
-        ├── backend/scripts/ingest*.js
+        ├── python -m scripts.ingest gita / vishnu
         ▼
 Firestore chapters + verses + 384-dimension embeddings
         │
@@ -83,11 +84,11 @@ Firestore chapters + verses + 384-dimension embeddings
 
 Ignored raw Ramayana datasets
         │
-        └── ingest_ramayana.js → Firestore
+        └── python -m scripts.ingest ramayana → Firestore
 ```
 
 `backend/data/gita.json` contains 701 verses. `vishnu-purana.json` contains
-six parts and 126 sections. `npm run verify:data` checks those invariants before
+six parts and 126 sections. `uv run python -m scripts.verify_data` checks those invariants before
 backend tests run in CI. Raw Ramayana source datasets remain ignored under
 `backend/data/raw/`; never add downloaded archives, PDFs, or nested source
 repositories to Git.
@@ -96,7 +97,8 @@ repositories to Git.
 
 ### Prerequisites
 
-- Node.js 22 or newer (`.nvmrc` pins the supported major version)
+- Python 3.12 and [uv](https://docs.astral.sh/uv/) for the backend
+- Node.js 22 or newer for the frontend (`.nvmrc` pins the supported major version)
 - A Firestore project in Native mode for API-backed reading/search
 - A Google AI Studio API key for live Sarathi generation
 
@@ -104,7 +106,7 @@ repositories to Git.
 
 ```bash
 cp backend/.env.example backend/.env
-cd backend && npm ci
+cd backend && uv sync --frozen
 
 cd ../frontend
 cp .env.example .env
@@ -114,7 +116,7 @@ npm ci
 Run the API and frontend from separate terminals:
 
 ```bash
-cd backend && npm run dev
+cd backend && uv run uvicorn gyansutra.app:app --reload --port 3001
 cd frontend && npm run dev
 ```
 
@@ -137,8 +139,10 @@ Run these before requesting review:
 
 ```bash
 cd backend
-npm run verify:data
-npm test
+uv run python -m scripts.verify_data
+uv run pytest
+uv run ruff check gyansutra scripts tests
+uv run ruff format --check gyansutra scripts tests
 
 cd ../frontend
 npm test
@@ -155,7 +159,7 @@ manual dispatches. It performs the following independent gates:
 | Backend API suite | Request validation, CORS, search, recommendations, RAG grounding, cache behavior, narration, and localization |
 | Frontend tests | Narration ordering/fallbacks, cached audio, readable text, modernized English, and recording provenance |
 | Frontend lint and production build | Source quality, PWA generation, sitemap generation, and 142 static SEO pages |
-| Critical dependency audit | Newly introduced critical production dependency advisories |
+| Dependency audits | Python production advisories and critical frontend production advisories |
 
 For pull requests, CI also retains the generated `frontend/dist` build for
 seven days as a review artifact. Download it from the run’s **Artifacts**
@@ -190,9 +194,13 @@ non-functional review gate.
 
 ### API or RAG changes
 
+The GenAI services use LangChain chat chains, embeddings, retrievers, and
+output parsers. See [GenAI architecture](docs/langchain-genai.md) for component
+boundaries, behavioral guarantees, and migration verification.
+
 - Validate inputs at the route boundary and keep error responses safe for
   browsers.
-- Add or update a Jest test in `backend/src/__tests__/` for each behavior
+- Add or update a Pytest test in `backend/tests/` for each behavior
   change.
 - Do not weaken citation validation, provider deadlines, concurrency limits, or
   cache bounds without documenting why and testing the fallback path.
@@ -201,7 +209,7 @@ non-functional review gate.
 ### Scripture-data changes
 
 - Preserve Unicode, source attribution, and stable chapter/verse coordinates.
-- Run `npm run verify:data` before committing.
+- Run `uv run python -m scripts.verify_data` before committing.
 - Re-ingest Firestore after changing source data, then increment
   `RAG_CORPUS_VERSION` so cached retrieval and answer entries are not reused.
 - Add narrative/source notes in `backend/data/` or `docs/` when a new edition
@@ -209,11 +217,11 @@ non-functional review gate.
 
 ### Dependencies and security
 
-- Use `npm ci` for reproducible installs and commit both package manifests and
-  lockfiles together.
-- Review `npm audit --omit=dev` before dependency releases. CI blocks critical
-  production advisories; non-critical advisories still require maintainer
-  triage.
+- Use `uv sync --frozen` for the backend and `npm ci` for the frontend. Commit
+  manifests and lockfiles together. Export production Python dependencies with
+  `uv export --frozen --no-dev --no-header --format requirements-txt --output-file requirements.txt`.
+- Review backend `uv run pip-audit -r requirements.txt --disable-pip` and frontend
+  `npm audit --omit=dev` before dependency releases.
 - Do not run forced audit fixes unless a maintainer has reviewed the resulting
   application/API compatibility changes.
 
@@ -223,9 +231,10 @@ After Firestore credentials are configured, corpus commands are:
 
 ```bash
 cd backend
-npm run ingest
-npm run ingest:vishnu
-node scripts/ingest_ramayana.js
+uv run python -m scripts.ingest gita --dry-run --skip-embed
+uv run python -m scripts.ingest vishnu --dry-run --skip-embed
+uv run python -m scripts.ingest ramayana --kanda 1 --dry-run --skip-embed
+# After reviewing, omit --dry-run and --skip-embed to write vectors.
 ```
 
 The Android project lives in `frontend/android`. Build and synchronize it from

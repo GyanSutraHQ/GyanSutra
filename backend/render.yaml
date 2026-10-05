@@ -1,11 +1,14 @@
 services:
   - type: web
     name: gyansutra-api
-    runtime: node
-    buildCommand: npm install
-    startCommand: node src/server.js
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m gyansutra
     healthCheckPath: /health
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.15
       - key: NODE_ENV
         value: production
       - key: PORT
@@ -14,7 +17,7 @@ services:
         sync: false   # Set manually in Render dashboard - never committed
       - key: OPENROUTER_API_KEY
         sync: false
-      - key: GROQ_API_KEY
+      - key: XAI_API_KEY
         sync: false
       - key: FIREBASE_PROJECT_ID
         sync: false
@@ -23,13 +26,13 @@ services:
       - key: ALLOWED_ORIGINS
         sync: false   # Set to your Cloudflare Pages URL e.g. https://gyansutra.pages.dev
       - key: GEMINI_GENERATION_MODELS
-        value: gemini-3.5-flash,gemini-3.1-flash-lite
-      - key: GROQ_MODELS
-        value: openai/gpt-oss-20b
+        value: gemini-3.8-flash,gemini-3.1-flash-lite
+      - key: GROK_MODELS
+        value: grok-4.7
       - key: RAG_PROVIDER_ORDER
-        value: gemini,groq,openrouter
+        value: gemini,grok,openrouter
       - key: GEMINI_REASONING_EFFORT
-        value: minimal
+        value: low
       - key: RAG_SIMILARITY_THRESHOLD
         value: "0.55"
       - key: RAG_TOP_K
