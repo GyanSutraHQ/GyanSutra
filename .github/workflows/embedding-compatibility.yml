@@ -24,7 +24,7 @@ jobs:
         run: |
           mkdir -p /tmp/embedding-reference
           cd /tmp/embedding-reference
-          npm install --no-save @huggingface/transformers@4.2.0
+          npm install --no-save @huggingface/transformers@4.3.0
           cat > reference.mjs <<'JS'
           import fs from 'node:fs';
           import { pipeline, env } from '@huggingface/transformers';
