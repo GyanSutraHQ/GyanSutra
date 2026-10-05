@@ -50,8 +50,8 @@ jobs:
         working-directory: frontend
         env:
           VITE_BASE_PATH: /GyanSutra/
-          VITE_SITE_URL: https://santanu-sp.github.io/GyanSutra
-          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL || 'https://gyansutra.onrender.com' }}
+          VITE_SITE_URL: https://gyansutrahq.github.io/GyanSutra
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL || 'https://gyansutra-backend-0yo7.onrender.com' }}
         run: npm run build
 
       # ── 5. GitHub Pages-only SPA fallback ─────────────────────────────────

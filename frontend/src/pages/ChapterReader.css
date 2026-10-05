@@ -309,3 +309,47 @@
     min-height: 44px;
   }
 }
+
+/* Shared Gita / Ramayana reading shell. */
+.chapter-reader { --text-muted: var(--text-secondary); width: min(100% - 3rem, 820px); max-width: 820px; padding-top: clamp(1.5rem, 5vw, 3.5rem); }
+.chapter-reader__header { margin-bottom: 1.5rem; }
+.chapter-reader__title-block { gap: 0.65rem; }
+.chapter-reader__title { font-size: clamp(1.8rem, 5vw, 2.65rem); line-height: 1.45; text-wrap: balance; }
+.chapter-reader__chapter-num { color: var(--text-secondary); }
+.chapter-reader__title-en { font-size: 1.2rem; font-style: normal; }
+.chapter-reader__summary { max-width: 65ch; font-size: 1rem; font-style: normal; line-height: 1.8; }
+.chapter-reader__header .gold-rule:last-child { display: none; }
+.chapter-picker { padding: 0.85rem 0; }
+.chapter-picker label { font-size: 0.8rem; text-transform: none; letter-spacing: 0; }
+.chapter-reader__position { margin: 1.15rem 0; }
+.chapter-reader__position p { margin: 0 0 0.65rem; font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+.chapter-reader__position strong { color: var(--text-primary); }
+.chapter-reader__progress { height: 4px; margin-bottom: 0; background: color-mix(in srgb, var(--text-primary) 10%, var(--bg)); border-radius: 999px; }
+.chapter-reader__progress-bar { background: var(--gold-thread); }
+#reader-passage { scroll-margin-top: 6rem; }
+.chapter-reader__nav { position: sticky; bottom: max(0.75rem, env(safe-area-inset-bottom, 0px)); z-index: 12; margin-top: 1.25rem; padding: 0.75rem; border: var(--hairline); border-radius: 1rem; background: var(--bg-surface); box-shadow: var(--shadow-md); }
+.chapter-reader__nav-btn { color: var(--text-primary); background: var(--bg-surface); min-height: 48px; padding: 0.65rem 1rem; font-size: 0.85rem; }
+.chapter-reader__nav-btn--next:not(:disabled), [data-theme="dark"] .chapter-reader__nav-btn--next:not(:disabled) { background: var(--text-primary); color: var(--bg-surface); border-color: var(--text-primary); }
+.chapter-reader__nav-btn:disabled { opacity: 0.55; }
+.chapter-reader__verse-select { min-height: 48px; max-width: 13rem; color: var(--text-primary); }
+.chapter-reader__chapter-links-grid { gap: 0.5rem; }
+.chapter-reader__chapter-link { display: inline-flex; align-items: center; min-height: 44px; }
+.chapter-reader :is(button, select, a):focus-visible { outline: 2px solid var(--text-primary); outline-offset: 4px; }
+.chapter-reader__empty { padding: 2rem 0; }
+@media (max-width: 767px) {
+  .chapter-reader { width: 100%; padding-inline: max(0.75rem, env(safe-area-inset-left, 0px)) max(0.75rem, env(safe-area-inset-right, 0px)); }
+  .chapter-reader__nav { gap: 0.4rem; padding: 0.5rem; }
+  .chapter-reader__nav { bottom: calc(76px + env(safe-area-inset-bottom, 0px) + 0.5rem); }
+  .chapter-reader__nav-btn { padding-inline: 0.7rem; flex: 1; }
+  .chapter-reader__verse-select { max-width: 7.5rem; font-size: 0.8rem; }
+  .chapter-reader__verse-total { display: none; }
+  .chapter-reader__nav-btn span { font-size: 0.75rem; }
+}
+@media (max-width: 380px) {
+  .chapter-reader__nav { flex-wrap: wrap; }
+  .chapter-reader__jump-wrap { order: -1; flex-basis: 100%; justify-content: center; }
+  .chapter-reader__verse-select { max-width: 100%; width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chapter-reader__progress-bar { transition: none; }
+}

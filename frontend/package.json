@@ -5,7 +5,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test": "npm run test:narration",
+    "test": "npm run test:narration && npm run test:reader",
+    "test:reader": "node --test src/utils/reader.test.js src/components/readerRendering.test.js",
     "test:narration": "node --test src/utils/narration.test.js src/utils/readableText.test.js src/utils/recitations.test.js src/utils/modernEnglish.test.js src/services/narrationPlayer.test.js src/services/recitationAudio.test.js",
     "dev": "vite",
     "prebuild": "node scripts/generate-sitemap.js",

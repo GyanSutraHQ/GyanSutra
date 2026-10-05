@@ -19,11 +19,15 @@ export default function VerseDetail() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    let active = true;
     setLoading(true);
+    setError(null);
+    setVerse(null);
     getVerse(id)
-      .then(setVerse)
-      .catch((e) => setError(e.message))
-      .finally(() => setLoading(false));
+      .then((value) => { if (active) setVerse(value); })
+      .catch((e) => { if (active) setError(e.message); })
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
   }, [id]);
 
   if (error) return (
@@ -34,19 +38,24 @@ export default function VerseDetail() {
   );
 
   const chapterId = verse ? `chapter_${verse.chapterNumber}` : null;
+  const isRamayana = verse?.book === 'ramayana' || Boolean(verse?.kanda);
+  const readerUrl = isRamayana
+    ? `/ramayana/${verse.kandaNumber || verse.chapterNumber}?sarga=${verse.sarga}&verse=${verse.shlokaNumber}`
+    : `/chapters/${chapterId}?verse=${verse?.verseNumber}`;
 
   return (
-    <main className="verse-detail page-turn-enter">
+    <main className="verse-detail">
+      <h1 className="sr-only">{isRamayana ? t('ramayana') : t('gita')} · {t('verse')} {verse?.shlokaNumber || verse?.verseNumber}</h1>
       <nav className="verse-detail__breadcrumb" aria-label="Breadcrumb">
         <Link to="/" id="breadcrumb-home">Gyan Sutra</Link>
         {verse && (
           <>
             <span className="verse-detail__breadcrumb-sep">›</span>
-            <Link to={`/chapters/${chapterId}`} id="breadcrumb-chapter">
-              {t('chapter')} {verse.chapterNumber}
+            <Link to={readerUrl} id="breadcrumb-chapter">
+              {isRamayana ? `${t('kanda')} ${verse.kandaNumber || verse.chapterNumber} · ${t('sarga')} ${verse.sarga}` : `${t('chapter')} ${verse.chapterNumber}`}
             </Link>
             <span className="verse-detail__breadcrumb-sep">›</span>
-            <span>{t('verse')} {verse.verseNumber}</span>
+            <span>{isRamayana ? t('shloka') : t('verse')} {verse.shlokaNumber || verse.verseNumber}</span>
           </>
         )}
       </nav>

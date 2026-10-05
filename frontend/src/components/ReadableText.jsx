@@ -19,6 +19,7 @@ export default function ReadableText({
   subheadings = false,
   headings = DEFAULT_HEADINGS,
   layout = 'comfortable',
+  lang,
 }) {
   const items = useMemo(
     () => readingParagraphs(paragraphs || text, { hideFootnoteMarkers }),
@@ -31,7 +32,7 @@ export default function ReadableText({
 
   if (layout === 'points') {
     return (
-      <ul className={`readable-text readable-text--points ${className}`.trim()}>
+      <ul lang={lang} className={`readable-text readable-text--points ${className}`.trim()}>
         {items.map((item, index) => (
           <li className={paragraphClassName} key={`${item}-${index}`}>{item}</li>
         ))}
@@ -46,7 +47,7 @@ export default function ReadableText({
   }
 
   return (
-    <div className={`readable-text readable-text--${layout} ${className}`.trim()}>
+    <div lang={lang} className={`readable-text readable-text--${layout} ${className}`.trim()}>
       {groups.map((group, groupIndex) => (
         <div className="readable-text__group" key={`${group[0]}-${groupIndex}`}>
           {showHeadings && (() => {

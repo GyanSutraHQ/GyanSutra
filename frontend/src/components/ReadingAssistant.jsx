@@ -1,7 +1,9 @@
 import './ReadingAssistant.css';
+import { assistantPrompt } from '../utils/reader';
+import { LANGUAGES } from '../i18n/languageConfig';
 
 const COPY = {
-  en: { label: 'Transform with Sarathi', simplify: 'Simplify', summary: 'Summarize', points: 'Key points' },
+  en: { label: 'Help me understand · Sarathi AI', simplify: 'Explain simply', summary: 'Summarize', points: 'Key points' },
   hi: { label: 'सारथि से रूपांतरित करें', simplify: 'सरल करें', summary: 'सारांश', points: 'मुख्य बिंदु' },
   bn: { label: 'সারথির সাহায্যে রূপান্তর', simplify: 'সহজ করুন', summary: 'সারাংশ', points: 'মূল বিষয়' },
   mr: { label: 'सारथीसह रूपांतरित करा', simplify: 'सोपे करा', summary: 'सारांश', points: 'मुख्य मुद्दे' },
@@ -15,7 +17,7 @@ const INSTRUCTIONS = {
   points: 'list the key ideas as brief bullet points',
 };
 
-export default function ReadingAssistant({ language = 'en', sectionTitle, reference }) {
+export default function ReadingAssistant({ language = 'en', sectionTitle, reference, text = '', verseId }) {
   const labels = COPY[language] || COPY.en;
 
   const transform = (event) => {
@@ -24,8 +26,9 @@ export default function ReadingAssistant({ language = 'en', sectionTitle, refere
     event.target.value = '';
     window.dispatchEvent(new CustomEvent('open-sarathi', {
       detail: {
-        prompt: `For ${reference}, ${INSTRUCTIONS[action]} for the ${sectionTitle} shown on this page. Stay faithful to the source and give the answer directly without repeating the passage.`,
+        prompt: assistantPrompt({ reference, sectionTitle, text, instruction: INSTRUCTIONS[action], language: LANGUAGES.find((item) => item.code === language)?.name || language }),
         submit: true,
+        contextIds: verseId ? [verseId] : [],
       },
     }));
   };

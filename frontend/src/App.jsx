@@ -10,7 +10,7 @@
  * Sarathi state lives here - SarathiPanel is presentation only.
  */
 
-import { useState, useEffect, useLayoutEffect, useCallback, lazy, Suspense } from 'react';
+import { useState, useEffect, useLayoutEffect, useCallback, useRef, lazy, Suspense } from 'react';
 import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import { askQuestion } from './services/api';
 import Home from './pages/Home';
@@ -26,6 +26,7 @@ import { recoverFromChunkError } from './utils/chunkRecovery';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import AppControls from './components/AppControls';
 import useLanguage from './i18n/useLanguage';
+import { isReaderQueryNavigation } from './utils/reader';
 
 import './app.css';
 
@@ -188,7 +189,11 @@ export default function App() {
 
   // Always begin a new route at the top. Repeat this after the route renders
   // so browser restoration and lazy-loaded content cannot leave it midway down.
+  const scrollPathRef = useRef(null);
   useLayoutEffect(() => {
+    const preserveReadingPosition = isReaderQueryNavigation(scrollPathRef.current, location.pathname);
+    scrollPathRef.current = location.pathname;
+    if (preserveReadingPosition) return;
     const resetScrollPosition = () => {
       window.scrollTo(0, 0);
 
@@ -204,7 +209,7 @@ export default function App() {
     resetScrollPosition();
     const animationFrame = window.requestAnimationFrame(resetScrollPosition);
     return () => window.cancelAnimationFrame(animationFrame);
-  }, [location.key]);
+  }, [location.key, location.pathname]);
 
   useEffect(() => {
     const warmRouteChunks = () => {
@@ -229,7 +234,7 @@ export default function App() {
     await submitQuestion(question);
   }
 
-  const submitQuestion = useCallback(async (rawQuestion) => {
+  const submitQuestion = useCallback(async (rawQuestion, readingContextIds) => {
     const trimmed = rawQuestion.trim();
     if (!trimmed || isLoading) return;
 
@@ -248,7 +253,7 @@ export default function App() {
       // Preserve the previous source IDs separately from prose. Referential
       // follow-ups such as "explain the second one" can then reuse the exact
       // evidence without another ambiguous vector search.
-      const contextIds = [...messages]
+      const contextIds = readingContextIds || [...messages]
         .reverse()
         .find(m => m.role === 'sarathi' && m.citations?.length)
         ?.citations
@@ -284,7 +289,7 @@ export default function App() {
     const handleOpenSarathi = (e) => {
       if (e.detail?.prompt) {
         setQuestion(e.detail.prompt);
-        if (e.detail?.submit) void submitQuestion(e.detail.prompt);
+        if (e.detail?.submit) void submitQuestion(e.detail.prompt, e.detail.contextIds);
       }
       setIsSarathiOpen(true);
     };

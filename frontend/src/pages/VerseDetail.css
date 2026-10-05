@@ -1,5 +1,7 @@
 .verse-detail {
-  max-width: var(--max-width-prose);
+  --text-muted: var(--text-secondary);
+  width: min(100% - 1.5rem, 820px);
+  max-width: 820px;
   margin: 0 auto;
   padding-bottom: var(--space-16);
 }

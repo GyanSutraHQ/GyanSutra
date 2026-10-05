@@ -440,3 +440,76 @@
     grid-template-columns: minmax(5rem, 0.65fr) 1.35fr;
   }
 }
+
+/* Reading edition: a quiet page, with deeper study available on demand. */
+.verse-card--full {
+  --text-muted: var(--text-secondary);
+  --reader-scale: 1;
+  border-radius: 1.25rem;
+  padding: clamp(1.25rem, 5vw, 3rem);
+  box-shadow: var(--shadow-sm);
+}
+.verse-card--full::before { display: none; }
+.verse-card--full .verse-card__flourish { opacity: 0.07; }
+.verse-card--full .verse-card__ref-label { color: var(--text-secondary); letter-spacing: 0.08em; }
+.verse-card--full .verse-card__sanskrit {
+  margin: 1.5rem 0;
+  padding: 1.5rem 0 1.5rem 1.25rem;
+  border-left: 3px solid var(--gold-thread);
+  font-size: calc(clamp(1.35rem, 3vw, 1.75rem) * var(--reader-scale));
+  line-height: 1.9;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+.verse-card--full .verse-card__section-title {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+.verse-card--full .verse-card__translation {
+  font-weight: 400;
+  font-size: calc(1.18rem * var(--reader-scale));
+  line-height: 1.85;
+}
+.verse-card--full .readable-text:not(.verse-card__translation),
+.verse-card--full .verse-card__transliteration { font-size: calc(1rem * var(--reader-scale)); }
+.verse-card--full .readable-text p { line-height: 1.85; overflow-wrap: anywhere; }
+.verse-card--full .verse-card__section-heading { align-items: center; margin-bottom: 1.15rem; }
+.verse-card--full .verse-card__attribution { font-size: 0.8rem; letter-spacing: 0; }
+.verse-card--full .verse-card__disclosure { padding: 0.5rem 0; }
+.verse-card--full .verse-card__disclosure > summary { min-height: 48px; line-height: 1.5; }
+.verse-card--full .verse-card__disclosure > .readable-text,
+.verse-card--full .verse-card__transliteration { margin-top: 1rem; margin-bottom: 1rem; }
+.verse-card__reading-guide { margin: 0.75rem 0 1rem; font-size: 0.85rem; line-height: 1.65; }
+.verse-card__provenance-note { margin: 0 0 1rem; color: var(--text-secondary); font-size: 0.85rem; line-height: 1.65; }
+.verse-card__listen { margin-bottom: 1.25rem; }
+.verse-card__assistant-row { margin-top: 1.5rem; }
+.verse-card__explanation + .reading-assistant,
+.commentary-text + .reading-assistant { margin-top: 1rem; }
+.verse-card__reference-link { color: var(--text-primary); text-decoration: underline; text-underline-offset: 0.2em; }
+.verse-card--full .verse-card__verification-note { color: var(--text-secondary); }
+.verse-card--full .verse-card__word-item dt { font-size: calc(1rem * var(--reader-scale)); }
+.verse-card--full .verse-card__word-item :is(dt, dd) { overflow-wrap: anywhere; }
+.verse-card--full .verse-card__word-item dd { font-size: calc(0.95rem * var(--reader-scale)); }
+.verse-card--full .verse-card__word-item dd { margin: 0; color: var(--text-secondary); }
+.verse-card--full .verse-card__commentary-source > summary { min-height: 44px; flex-wrap: wrap; }
+.verse-card--full .verse-card__commentary-heading small { font-size: 0.75rem; }
+
+.reader-preferences { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem 1rem; padding: 0.75rem 0; border-block: var(--hairline-faint); font-size: 0.8rem; color: var(--text-secondary); }
+.reader-preferences__label { margin-right: auto; }
+.reader-preferences__sizes { display: inline-flex; border: var(--hairline); border-radius: 0.65rem; overflow: hidden; }
+.reader-preferences__sizes button { min-width: 44px; min-height: 44px; background: transparent; border: 0; color: var(--text-primary); }
+.reader-preferences__sizes button[aria-pressed="true"] { background: var(--text-primary); color: var(--bg-surface); }
+.reader-preferences__original { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; cursor: pointer; }
+.reader-preferences__original input { width: 18px; height: 18px; accent-color: var(--text-primary); }
+.verse-card--full :is(button, select, input, summary, a):focus-visible { outline: 2px solid var(--text-primary); outline-offset: 4px; border-radius: 0.25rem; }
+
+@media (max-width: 480px) {
+  .reader-preferences__label { flex-basis: 100%; }
+  .verse-card--full .verse-card__sanskrit { padding-left: 0.85rem; }
+  .verse-card--full .verse-card__section-heading { align-items: flex-start; flex-direction: column; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .verse-card, .verse-card__disclosure > summary::after { transition: none; }
+}

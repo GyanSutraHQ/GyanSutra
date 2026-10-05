@@ -169,6 +169,13 @@ def create_app(store=None, embeddings=None, generation=None, http_client=None):
         verses = await store.query(
             "verses", [("chapterNumber", "==", value["number"])], order="verseNumber"
         )
+        prefix = f"bhagavad-gita_{value['number']}_"
+        verses = [
+            v
+            for v in verses
+            if v.get("id", "").startswith(prefix)
+            and v.get("source_id", "bhagavad-gita") == "bhagavad-gita"
+        ]
         return {"chapterNumber": value["number"], "verses": [public(v) for v in verses]}
 
     @app.get("/api/verses/daily")

@@ -62,6 +62,11 @@ export default defineConfig(({ mode }) => {
     ].filter(Boolean),
     server: {
       port: 5173,
+      // Optional same-origin proxy for verifying a local reader against a
+      // deployed public API. Production builds and CORS settings are unchanged.
+      proxy: process.env.VITE_DEV_API_PROXY ? {
+        '/api': { target: process.env.VITE_DEV_API_PROXY, changeOrigin: true },
+      } : undefined,
     },
     build: {
       rollupOptions: {

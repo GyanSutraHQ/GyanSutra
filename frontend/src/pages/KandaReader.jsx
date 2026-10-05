@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useSearchParams } from 'react-router-dom';
 import IlluminatedVerseCard from '../components/IlluminatedVerseCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { getRamayanaSarga } from '../services/api';
-import AnimatedButton from '../components/AnimatedButton';
 import useLanguage from '../i18n/useLanguage';
 import KANDA_NAMES from '../utils/kandaNames';
+import { readerArrow, sargaNumber, verseIndex } from '../utils/reader';
+import { RETRY_COPY, READER_INTRO_COPY } from '../utils/readerCopy';
 
 import './ChapterReader.css';
 
@@ -32,84 +33,91 @@ export default function KandaReader() {
   const { language, t } = useLanguage();
   const labels = KANDA_COPY[language] || KANDA_COPY.en;
   const { kandaNum } = useParams();
-  const kandaId = parseInt(kandaNum, 10);
+  const kandaId = Number(kandaNum);
   const kanda = KANDAS.find(k => k.id === kandaId);
   
-  const [currentSarga, setCurrentSarga] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentSarga = sargaNumber(searchParams.get('sarga'), kanda?.sargas || 1);
+  const requestedVerse = searchParams.get('verse');
   const [verses, setVerses] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [animClass, setAnimClass] = useState('');
+  const [retry, setRetry] = useState(0);
+  const currentIndex = verseIndex(verses, requestedVerse, 'shlokaNumber');
+  const changeSarga = useCallback((number, verse = '1') => {
+    setSearchParams((params) => { params.set('sarga', number); params.set('verse', verse); return params; }, { replace: true });
+  }, [setSearchParams]);
 
   useEffect(() => {
     if (!kanda) return;
+    let active = true;
     
     setLoading(true);
     setError(null);
-    setCurrentIndex(0);
+    setVerses([]);
     
     getRamayanaSarga(kandaId, currentSarga)
       .then(data => {
-        setVerses(data.verses || []);
+        if (!active) return;
+        setVerses(Array.isArray(data?.verses) ? data.verses : []);
         setError(null);
         setLoading(false);
       })
       .catch(err => {
+        if (!active) return;
         setError(err.message);
         setLoading(false);
       });
-  }, [kandaId, currentSarga, kanda]);
+    return () => { active = false; };
+  }, [kandaId, currentSarga, kanda, retry]);
 
   const goTo = useCallback((newIndex) => {
-    setAnimClass('page-turn-exit');
-    setTimeout(() => {
-      setCurrentIndex(newIndex);
-      setAnimClass('page-turn-enter');
-      setTimeout(() => setAnimClass(''), 350);
-    }, 200);
-  }, []);
+    if (loading || !verses[newIndex]) return;
+    setSearchParams((params) => { params.set('verse', verses[newIndex].shlokaNumber); return params; }, { replace: true });
+    document.getElementById('reader-passage')?.scrollIntoView({ block: 'start' });
+  }, [loading, verses, setSearchParams]);
 
   const handlePrev = () => { 
+    if (loading) return;
     if (currentIndex > 0) {
       goTo(currentIndex - 1);
     } else if (currentSarga > 1) {
-      setCurrentSarga(prev => prev - 1);
+      changeSarga(currentSarga - 1, 'last');
     }
   };
   
   const handleNext = () => {
+    if (loading) return;
     if (currentIndex < verses.length - 1) {
       goTo(currentIndex + 1);
     } else if (kanda && currentSarga < kanda.sargas) {
-      setCurrentSarga(prev => prev + 1);
+      changeSarga(currentSarga + 1);
     }
   };
 
   // Keyboard Navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
-      const activeEl = document.activeElement;
-      if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.tagName === 'SELECT' || activeEl.isContentEditable)) {
-        return;
-      }
-      if (e.key === 'ArrowLeft') {
+      const direction = readerArrow(e, Boolean(document.querySelector('.sarathi-panel--open')));
+      if (!direction || loading || error || !verses.length) return;
+      e.preventDefault();
+      if (direction === -1) {
         if (currentIndex > 0) {
           goTo(currentIndex - 1);
         } else if (currentSarga > 1) {
-          setCurrentSarga(prev => prev - 1);
+          changeSarga(currentSarga - 1, 'last');
         }
-      } else if (e.key === 'ArrowRight') {
+      } else if (direction === 1) {
         if (currentIndex < verses.length - 1) {
           goTo(currentIndex + 1);
         } else if (kanda && currentSarga < kanda.sargas) {
-          setCurrentSarga(prev => prev + 1);
+          changeSarga(currentSarga + 1);
         }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, currentSarga, verses, kanda, goTo]);
+  }, [currentIndex, currentSarga, verses, kanda, goTo, changeSarga, loading, error]);
 
   const currentVerse = verses[currentIndex];
 
@@ -127,13 +135,15 @@ export default function KandaReader() {
           ← {labels.all}
         </Link>
         <div className="chapter-reader__title-block">
+          <span className="chapter-reader__chapter-num">{t('ramayana')} · {t('kanda')} {kanda.id}</span>
           <h1 className="chapter-reader__title devanagari">{KANDA_NAMES[language]?.[kanda.id - 1] || kanda.name}</h1>
-          <div className="flex items-center gap-4 mt-4">
+          <p className="chapter-reader__summary">{(READER_INTRO_COPY[language] || READER_INTRO_COPY.en).ramayana}</p>
+          <div className="chapter-picker">
             <label htmlFor="sarga-select" className="text-[color:var(--text-secondary)] text-sm uppercase tracking-widest">{t('sarga')}</label>
             <select 
               id="sarga-select"
               value={currentSarga}
-              onChange={(e) => setCurrentSarga(parseInt(e.target.value, 10))}
+              onChange={(e) => changeSarga(Number(e.target.value))}
               className="min-h-11 bg-transparent border border-amber-500/20 text-[color:var(--text-primary)] rounded px-3 py-2 outline-none"
             >
               {Array.from({ length: kanda.sargas }, (_, i) => i + 1).map(num => (
@@ -151,7 +161,7 @@ export default function KandaReader() {
         <LoadingSpinner size="medium" text={labels.loading} />
       )}
 
-      {error && <p className="text-center text-red-400 mt-8">{labels.failed}</p>}
+      {error && <div className="chapter-reader__empty"><p role="alert">{labels.failed}</p><button type="button" className="chapter-reader__nav-btn" onClick={() => setRetry((value) => value + 1)}>↻ {RETRY_COPY[language] || RETRY_COPY.en}</button></div>}
       
       {!loading && !error && verses.length === 0 && (
         <div className="text-center mt-16 text-[color:var(--text-secondary)]">
@@ -161,46 +171,44 @@ export default function KandaReader() {
       )}
 
       {!loading && verses.length > 0 && currentVerse && (
-        <section className={`chapter-reader__content ${animClass}`}>
-          <div className="chapter-reader__verse-nav mb-6 flex justify-between items-center text-[color:var(--text-secondary)]">
-             <span className="text-sm">
-                {t('shloka')} {currentIndex + 1} {labels.of} {verses.length}
-             </span>
-             {currentVerse.verified === false && (
-                <span className="text-xs border border-red-500/30 text-red-400 px-2 py-1 rounded-full uppercase tracking-wider">
-                  {labels.unverified}
-                </span>
-             )}
+        <section className="chapter-reader__content" id="reader-passage">
+          <div className="chapter-reader__position">
+            <p role="status">{t('sarga')} {currentSarga} · {t('shloka')} <strong>{currentVerse.shlokaNumber}</strong> / {verses.length}</p>
+            <div className="chapter-reader__progress" role="progressbar" aria-label={labels.navigation} aria-valuemin="0" aria-valuemax={verses.length} aria-valuenow={currentIndex + 1}>
+              <div className="chapter-reader__progress-bar" style={{ width: `${(currentIndex + 1) / verses.length * 100}%` }} />
+            </div>
           </div>
           
-          <IlluminatedVerseCard verse={currentVerse} />
+          <IlluminatedVerseCard verse={currentVerse} key={currentVerse.id} />
         </section>
       )}
 
       {/* ── Floating Navigation Controls ──────────────────────── */}
       {!loading && verses.length > 0 && (
-        <nav className="chapter-reader__controls" aria-label={labels.navigation}>
-          <AnimatedButton
+        <nav className="chapter-reader__nav" aria-label={labels.navigation}>
+          <button type="button"
             onClick={handlePrev}
             disabled={currentIndex === 0 && currentSarga === 1}
-            className="control-btn"
+            className="chapter-reader__nav-btn"
             aria-label={labels.previous}
           >
-            ←<span className="sr-only">{labels.previous}</span>
-          </AnimatedButton>
+            ← <span>{labels.previous}</span>
+          </button>
           
-          <span className="control-progress">
-            {currentIndex + 1} / {verses.length}
-          </span>
+          <label className="chapter-reader__jump-wrap"><span className="sr-only">{t('shloka')}</span>
+            <select className="chapter-reader__verse-select" value={currentIndex} onChange={(event) => goTo(Number(event.target.value))}>
+              {verses.map((verse, index) => <option key={verse.id} value={index}>{t('shloka')} {verse.shlokaNumber}</option>)}
+            </select>
+          </label>
           
-          <AnimatedButton
+          <button type="button"
             onClick={handleNext}
             disabled={currentIndex === verses.length - 1 && currentSarga === kanda.sargas}
-            className="control-btn"
+            className="chapter-reader__nav-btn chapter-reader__nav-btn--next"
             aria-label={labels.next}
           >
-            <span className="sr-only">{labels.next}</span>→
-          </AnimatedButton>
+            <span>{labels.next}</span> →
+          </button>
         </nav>
       )}
 

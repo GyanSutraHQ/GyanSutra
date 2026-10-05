@@ -1,7 +1,7 @@
 /**
  * ChapterReader - reads all verses in a chapter.
  * Shows one verse at a time with prev/next navigation.
- * Page-turn animation between verses.
+ * Verse URLs preserve the current reading location without refetching the chapter.
  *
  * Additions (non-breaking, UI only):
  *   - Compact chapter strip at the top - quick jump between chapters
@@ -15,8 +15,9 @@ import { getChapter, getChapterVerses } from '../services/api';
 import IlluminatedVerseCard from '../components/IlluminatedVerseCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import RecommendationsRail from '../components/RecommendationsRail';
-import AnimatedButton from '../components/AnimatedButton';
 import useLanguage from '../i18n/useLanguage';
+import { gitaChapterVerses, readerArrow, verseIndex } from '../utils/reader';
+import { RETRY_COPY, READER_INTRO_COPY } from '../utils/readerCopy';
 
 import './ChapterReader.css';
 
@@ -37,45 +38,42 @@ export default function ChapterReader() {
   const labels = READER_COPY[language] || READER_COPY.en;
   const navigate = useNavigate();
   const { id } = useParams();
-  const [searchParams] = useSearchParams();
-  const requestedVerse = Number(searchParams.get('verse'));
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requestedVerse = searchParams.get('verse');
   const [chapter, setChapter]           = useState(null);
   const [verses, setVerses]             = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading]           = useState(true);
   const [error, setError]               = useState(null);
-  const [animClass, setAnimClass]       = useState('');
+  const [retry, setRetry] = useState(0);
+  const currentIndex = verseIndex(verses, requestedVerse);
 
   useEffect(() => {
+    let active = true;
     setLoading(true);
-    setCurrentIndex(0);
+    setVerses([]);
     setError(null);
     Promise.all([getChapter(id), getChapterVerses(id)])
       .then(([ch, versesRes]) => {
+        if (!active) return;
         setChapter(ch || null);
-        const vs = Array.isArray(versesRes?.verses) ? versesRes.verses : [];
+        const vs = gitaChapterVerses(versesRes?.verses, ch.number);
         setVerses(vs);
-        const requestedIndex = Number.isFinite(requestedVerse) && requestedVerse > 0
-          ? vs.findIndex((verse) => Number(verse.verseNumber) === requestedVerse)
-          : -1;
-        setCurrentIndex(requestedIndex >= 0 ? requestedIndex : 0);
         setLoading(false);
       })
       .catch((err) => {
+        if (!active) return;
         console.error("Failed to load chapter:", err);
         setError(err?.message || 'Could not load chapter.');
         setLoading(false);
       });
-  }, [id, requestedVerse]);
+    return () => { active = false; };
+  }, [id, retry]);
 
   const goTo = useCallback((newIndex) => {
-    setAnimClass('page-turn-exit');
-    setTimeout(() => {
-      setCurrentIndex(newIndex);
-      setAnimClass('page-turn-enter');
-      setTimeout(() => setAnimClass(''), 350);
-    }, 200);
-  }, []);
+    if (loading || !verses[newIndex]) return;
+    setSearchParams((params) => { params.set('verse', verses[newIndex].verseNumber); return params; }, { replace: true });
+    document.getElementById('reader-passage')?.scrollIntoView({ block: 'start' });
+  }, [loading, verses, setSearchParams]);
 
   const handlePrev = () => { if (currentIndex > 0) goTo(currentIndex - 1); };
   const handleNext = () => {
@@ -87,21 +85,12 @@ export default function ChapterReader() {
   // Keyboard Navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
-      const activeEl = document.activeElement;
-      if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.tagName === 'SELECT' || activeEl.isContentEditable)) {
-        return;
-      }
-      if (e.key === 'ArrowLeft') {
-        if (currentIndex > 0) goTo(currentIndex - 1);
-      } else if (e.key === 'ArrowRight') {
-        if (currentIndex < verses.length - 1) {
-          goTo(currentIndex + 1);
-        }
-      }
+      const direction = readerArrow(e, Boolean(document.querySelector('.sarathi-panel--open')));
+      if (direction && !loading && verses[currentIndex + direction]) { e.preventDefault(); goTo(currentIndex + direction); }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, verses, goTo]);
+  }, [currentIndex, verses, goTo, loading]);
 
   const isLastVerse   = currentIndex === verses.length - 1;
   const currentVerse  = verses[currentIndex];
@@ -109,7 +98,8 @@ export default function ChapterReader() {
   if (error) return (
     <main className="chapter-reader chapter-reader--error">
       <Link to="/bhagavad-gita" className="chapter-reader__back">← {labels.chapters}</Link>
-      <p>{labels.failed}</p>
+      <p role="alert">{labels.failed}</p>
+      <button type="button" className="chapter-reader__nav-btn" onClick={() => setRetry((value) => value + 1)}>↻ {RETRY_COPY[language] || RETRY_COPY.en}</button>
     </main>
   );
 
@@ -130,15 +120,13 @@ export default function ChapterReader() {
             <span className="chapter-reader__chapter-num">
               {t('chapter')} {chapter.number}
             </span>
-            <h1 className="chapter-reader__title devanagari">
-              {chapter.titleSanskrit}
+            <h1 className={`chapter-reader__title ${language === 'en' ? '' : 'devanagari'}`} lang={language === 'en' ? 'en' : 'sa'}>
+              {language === 'en' ? chapter.titleEnglish : chapter.titleSanskrit}
             </h1>
-            {language === 'en' && <p className="chapter-reader__title-en">{chapter.titleEnglish}</p>}
+            {language === 'en' && <p className="chapter-reader__title-en devanagari" lang="sa">{chapter.titleSanskrit}</p>}
           </div>
           <hr className="gold-rule" />
-          {language === 'en' && chapter.summary && (
-            <p className="chapter-reader__summary">{chapter.summary}</p>
-          )}
+          <p className="chapter-reader__summary">{language === 'en' && chapter.summary ? chapter.summary : (READER_INTRO_COPY[language] || READER_INTRO_COPY.en)[Number(chapter.number) === 1 ? 'chapterOne' : 'gita']}</p>
           <hr className="gold-rule" />
         </header>
       )}
@@ -161,24 +149,28 @@ export default function ChapterReader() {
 
       {/* ── Progress bar ──────────────────────────────────────────── */}
       {!loading && verses.length > 0 && (
-        <div className="chapter-reader__progress">
-          <div
-            className="chapter-reader__progress-bar"
-            style={{ width: `${((currentIndex + 1) / verses.length) * 100}%` }}
-            role="progressbar"
-            aria-valuenow={currentIndex + 1}
-            aria-valuemax={verses.length}
-            aria-label={`${t('verse')} ${currentIndex + 1} / ${verses.length}`}
-          />
+        <div className="chapter-reader__position">
+          <p role="status">{t('verse')} <strong>{currentVerse?.verseNumber}</strong> / {verses.length}</p>
+          <div className="chapter-reader__progress">
+            <div
+              className="chapter-reader__progress-bar"
+              style={{ width: `${((currentIndex + 1) / verses.length) * 100}%` }}
+              role="progressbar"
+              aria-valuenow={currentIndex + 1}
+              aria-valuemin="0"
+              aria-valuemax={verses.length}
+              aria-label={`${t('verse')} ${currentIndex + 1} / ${verses.length}`}
+            />
+          </div>
         </div>
       )}
 
       {/* ── Current verse ─────────────────────────────────────────── */}
-      <div className="chapter-reader__verse-area">
+      <div className="chapter-reader__verse-area" id="reader-passage" aria-busy={loading}>
         {loading ? (
           <LoadingSpinner size="medium" text={labels.loading} />
         ) : currentVerse ? (
-          <div className={animClass} key={currentVerse.id}>
+          <div key={currentVerse.id}>
             <IlluminatedVerseCard verse={currentVerse} variant="full" />
           </div>
         ) : (
@@ -189,7 +181,7 @@ export default function ChapterReader() {
       {/* ── Verse navigation: prev / verse-jump select / next ─────── */}
       {!loading && verses.length > 0 && (
         <nav className="chapter-reader__nav" aria-label={labels.navigation}>
-          <AnimatedButton
+          <button type="button"
             className="active-press chapter-reader__nav-btn"
             onClick={handlePrev}
             disabled={currentIndex === 0}
@@ -197,7 +189,7 @@ export default function ChapterReader() {
             aria-label={`${labels.previous} ${t('verse')}`}
           >
             ← {labels.previous}
-          </AnimatedButton>
+          </button>
 
           {/* Verse jump dropdown */}
           <div className="chapter-reader__jump-wrap">
@@ -222,7 +214,7 @@ export default function ChapterReader() {
             </span>
           </div>
 
-          <AnimatedButton
+          <button type="button"
             className={`active-press chapter-reader__nav-btn chapter-reader__nav-btn--next${isLastVerse ? ' chapter-reader__nav-btn--finish' : ''}`}
             onClick={handleNext}
             disabled={isLastVerse}
@@ -230,7 +222,7 @@ export default function ChapterReader() {
             aria-label={isLastVerse ? labels.end : `${labels.next} ${t('verse')}`}
           >
             {isLastVerse ? labels.end : `${labels.next} →`}
-          </AnimatedButton>
+          </button>
         </nav>
       )}
 

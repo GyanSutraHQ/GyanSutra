@@ -1,0 +1,9182 @@
+{
+  "auditType": "automated-source-provenance",
+  "humanEditorialReview": "pending",
+  "gita": {
+    "upstreamRevision": "c6fce39595445768876ddbb8d1268a9c935e1d2b",
+    "localSha256": "dbbb5033cc823601884ff3be02af918846cefb2fc09e9c2fa837d126069bdb3e",
+    "upstreamSha256": {
+      "verse": "bb599e666e552bd65080f1f8da6d488f067237f64091ab265978861cf3fadec7",
+      "translation": "92354e876e9a48112e352d0c7ed573ef6ebc802f8ef6d3369edf92ede33391e3",
+      "commentary": "0389c0ab7ebe7ec35da23f7661f135828534aaad9f6c6de25028542f54b2ea50"
+    },
+    "checks": {
+      "records": 701,
+      "englishMatched": 0,
+      "englishNormalizedTextMatched": 52,
+      "hindiMatched": 698,
+      "hindiNormalizedTextMatched": 698,
+      "additional_translationsChecked": 4907,
+      "additional_translationsMatched": 4560,
+      "additional_translationsNormalizedTextMatched": 4891,
+      "detailed_explanationsChecked": 11177,
+      "detailed_explanationsMatched": 10278,
+      "detailed_explanationsNormalizedTextMatched": 10626
+    },
+    "issues": [
+      {
+        "coordinate": [
+          1,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          1,
+          2
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          2
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          1,
+          4
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          5
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          1,
+          6
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          6
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          1,
+          7
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          7
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          1,
+          8
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          8
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          1,
+          9
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          9
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          1,
+          10
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          1,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          1,
+          11
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          11
+        ],
+        "field": "additional_translations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          1,
+          11
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          1,
+          11
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          1,
+          12
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          13
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          13
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          1,
+          14
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          14
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          1,
+          15
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          16
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          17
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          18
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          1,
+          19
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          21
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          22
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          24
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          25
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          26
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          26
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          1,
+          27
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          28
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          28
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          1,
+          29
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          30
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          30
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          1,
+          31
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          31
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          1,
+          32
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          32
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          1,
+          34
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          34
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Sivananda"
+      },
+      {
+        "coordinate": [
+          1,
+          35
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          36
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          36
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          1,
+          37
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          37
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          1,
+          39
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          39
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          1,
+          40
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          41
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          42
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          44
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          44
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          1,
+          45
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          1,
+          46
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          1,
+          46
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          1,
+          47
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          1
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          2
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          3
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          3
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          2,
+          4
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          4
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Abhinavgupta"
+      },
+      {
+        "coordinate": [
+          2,
+          5
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          5
+        ],
+        "field": "additional_translations",
+        "author": "Swami Tejomayananda"
+      },
+      {
+        "coordinate": [
+          2,
+          6
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          7
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          8
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          8
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          2,
+          9
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          10
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          11
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          11
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          2,
+          11
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          2,
+          11
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Neelkanth"
+      },
+      {
+        "coordinate": [
+          2,
+          12
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          12
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          2,
+          12
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          2,
+          13
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          13
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          2,
+          14
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          14
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          2,
+          14
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          2,
+          15
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          15
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          2,
+          15
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          2,
+          16
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          16
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          2,
+          16
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          2,
+          16
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          2,
+          16
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Shankaracharya"
+      },
+      {
+        "coordinate": [
+          2,
+          17
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          17
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          2,
+          18
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          2,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          2,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Shankaracharya"
+      },
+      {
+        "coordinate": [
+          2,
+          19
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          20
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          20
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          2,
+          20
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Shankaracharya"
+      },
+      {
+        "coordinate": [
+          2,
+          21
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          21
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          2,
+          22
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          22
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          2,
+          22
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          2,
+          23
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          24
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          24
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          2,
+          24
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          2,
+          24
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          2,
+          24
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Purushottamji"
+      },
+      {
+        "coordinate": [
+          2,
+          25
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          26
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          26
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          2,
+          27
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          27
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          2,
+          28
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          28
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          2,
+          29
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          2,
+          29
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          2,
+          29
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          2,
+          30
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          31
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          32
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          33
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          34
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          35
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          36
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          37
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          38
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          38
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          2,
+          38
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          2,
+          39
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          39
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          2,
+          40
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          41
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          42
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          42
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          2,
+          43
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          44
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          45
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          45
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Abhinavgupta"
+      },
+      {
+        "coordinate": [
+          2,
+          45
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Shankaracharya"
+      },
+      {
+        "coordinate": [
+          2,
+          46
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          46
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          2,
+          47
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          47
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          2,
+          49
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          50
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          50
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Neelkanth"
+      },
+      {
+        "coordinate": [
+          2,
+          50
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          2,
+          51
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          52
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          52
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          2,
+          53
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          53
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          2,
+          54
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          54
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          2,
+          55
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          55
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          2,
+          56
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          56
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          2,
+          57
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          57
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          2,
+          58
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          59
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          60
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          60
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          2,
+          61
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          2,
+          62
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          62
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          2,
+          63
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          64
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          64
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          2,
+          65
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          66
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          67
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          2,
+          69
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          70
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          70
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          2,
+          70
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          2,
+          70
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          2,
+          71
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          71
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          2,
+          72
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          2,
+          72
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Neelkanth"
+      },
+      {
+        "coordinate": [
+          3,
+          1
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          3,
+          2
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          3
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          3,
+          4
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          4
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          3,
+          5
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          3,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          3,
+          6
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          7
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          7
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          3,
+          8
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          8
+        ],
+        "field": "additional_translations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          3,
+          8
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          3,
+          9
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          9
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          3,
+          10
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          3,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Purushottamji"
+      },
+      {
+        "coordinate": [
+          3,
+          11
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          12
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          13
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          13
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          3,
+          13
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Shankaracharya"
+      },
+      {
+        "coordinate": [
+          3,
+          15
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          15
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          3,
+          16
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          17
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          17
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          3,
+          17
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          3,
+          18
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          3,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          3,
+          19
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          19
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          3,
+          20
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          21
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          21
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Neelkanth"
+      },
+      {
+        "coordinate": [
+          3,
+          22
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          23
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          23
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          3,
+          24
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          25
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          25
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          3,
+          26
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          27
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          27
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          3,
+          27
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          3,
+          28
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          28
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          3,
+          29
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          29
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          3,
+          29
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          3,
+          30
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          30
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          3,
+          31
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          31
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          3,
+          31
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          3,
+          31
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          3,
+          32
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          32
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          3,
+          33
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          33
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          3,
+          34
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          34
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          3,
+          35
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          35
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          3,
+          36
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          37
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          37
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          3,
+          38
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          38
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          3,
+          38
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          3,
+          39
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          39
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Purushottamji"
+      },
+      {
+        "coordinate": [
+          3,
+          40
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          41
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          41
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          3,
+          42
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          42
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          3,
+          42
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          3,
+          43
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          3,
+          43
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          4,
+          1
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          4,
+          2
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          2
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          4,
+          3
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          3
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          4,
+          3
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          4,
+          4
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          6
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          6
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          4,
+          6
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Purushottamji"
+      },
+      {
+        "coordinate": [
+          4,
+          7
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          8
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          4,
+          8
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          4,
+          9
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          10
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          12
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          12
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          4,
+          12
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Purushottamji"
+      },
+      {
+        "coordinate": [
+          4,
+          13
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          13
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Neelkanth"
+      },
+      {
+        "coordinate": [
+          4,
+          14
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          14
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          4,
+          15
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          16
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          16
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          4,
+          17
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          18
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          4,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          4,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          4,
+          19
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          19
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          4,
+          20
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          20
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          4,
+          21
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          21
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          4,
+          21
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          4,
+          22
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          22
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          4,
+          22
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          4,
+          23
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          24
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          25
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          25
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          4,
+          26
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          26
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          4,
+          28
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          28
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          4,
+          28
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          4,
+          29
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          29
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          4,
+          30
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          31
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          31
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          4,
+          32
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          33
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          34
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          34
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          4,
+          35
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          36
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          36
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          4,
+          37
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          37
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          4,
+          38
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          39
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          40
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          40
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          4,
+          41
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          41
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          4,
+          42
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          4,
+          42
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          5,
+          1
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          1
+        ],
+        "field": "additional_translations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          5,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          5,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          5,
+          2
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          5,
+          3
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          3
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          5,
+          4
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          5,
+          5
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          6
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          6
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          5,
+          6
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          5,
+          7
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          8
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          9
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          9
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          5,
+          9
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          5,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          5,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          5,
+          11
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          11
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Abhinavgupta"
+      },
+      {
+        "coordinate": [
+          5,
+          12
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          13
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          13
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          5,
+          14
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          15
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          15
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Neelkanth"
+      },
+      {
+        "coordinate": [
+          5,
+          16
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          16
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          5,
+          17
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          17
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          5,
+          17
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          5,
+          18
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          5,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          5,
+          19
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          19
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          5,
+          20
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          20
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          5,
+          21
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          21
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          5,
+          21
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Neelkanth"
+      },
+      {
+        "coordinate": [
+          5,
+          21
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          5,
+          22
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          23
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          23
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          5,
+          24
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          25
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          25
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          5,
+          26
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          27
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          28
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          5,
+          28
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          5,
+          29
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          6,
+          2
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          2
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          6,
+          3
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          4
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          4
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          6,
+          4
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          6,
+          4
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          6,
+          5
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          6,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          6,
+          6
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          6
+        ],
+        "field": "additional_translations",
+        "author": "Swami Tejomayananda"
+      },
+      {
+        "coordinate": [
+          6,
+          6
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          6,
+          7
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          7
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Purushottamji"
+      },
+      {
+        "coordinate": [
+          6,
+          8
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          8
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhavacharya"
+      },
+      {
+        "coordinate": [
+          6,
+          9
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          9
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhavacharya"
+      },
+      {
+        "coordinate": [
+          6,
+          9
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          6,
+          10
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          6,
+          11
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          11
+        ],
+        "field": "additional_translations",
+        "author": "Swami Tejomayananda"
+      },
+      {
+        "coordinate": [
+          6,
+          12
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          14
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          14
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          6,
+          14
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Neelkanth"
+      },
+      {
+        "coordinate": [
+          6,
+          14
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Purushottamji"
+      },
+      {
+        "coordinate": [
+          6,
+          15
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          15
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          6,
+          16
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          6,
+          17
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          18
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          19
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          19
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          6,
+          20
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          21
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          22
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          23
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          23
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          6,
+          24
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          25
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          26
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          26
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          6,
+          27
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          28
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          28
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          6,
+          28
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          6,
+          29
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          29
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          6,
+          30
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          31
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          32
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          33
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          33
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          6,
+          34
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          34
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          6,
+          35
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          35
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          6,
+          36
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          36
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhavacharya"
+      },
+      {
+        "coordinate": [
+          6,
+          37
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          38
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          38
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          6,
+          38
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          6,
+          39
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          40
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          40
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          6,
+          40
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Sivananda"
+      },
+      {
+        "coordinate": [
+          6,
+          41
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          41
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          6,
+          42
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          42
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          6,
+          43
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          44
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          45
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          45
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Neelkanth"
+      },
+      {
+        "coordinate": [
+          6,
+          46
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          46
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          6,
+          47
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          6,
+          47
+        ],
+        "field": "additional_translations",
+        "author": "Swami Tejomayananda"
+      },
+      {
+        "coordinate": [
+          7,
+          1
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          2
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          3
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          4
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          7,
+          5
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          7,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          7,
+          6
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          7
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          7
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          7,
+          8
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          9
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          9
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhavacharya"
+      },
+      {
+        "coordinate": [
+          7,
+          10
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          7,
+          11
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          13
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          14
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          14
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          7,
+          14
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          7,
+          14
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          7,
+          15
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          15
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhavacharya"
+      },
+      {
+        "coordinate": [
+          7,
+          16
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          16
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          7,
+          16
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          7,
+          17
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          18
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          7,
+          19
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          19
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          7,
+          20
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          20
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          7,
+          21
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          22
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          23
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          24
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          24
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          7,
+          25
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          25
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          7,
+          26
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          26
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          7,
+          27
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          27
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          7,
+          28
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          28
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          7,
+          29
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          29
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          7,
+          30
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          7,
+          30
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          7,
+          30
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Neelkanth"
+      },
+      {
+        "coordinate": [
+          8,
+          1
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          8,
+          2
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          3
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          3
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          8,
+          4
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          4
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhavacharya"
+      },
+      {
+        "coordinate": [
+          8,
+          5
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          6
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          6
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          8,
+          7
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          7
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Abhinavgupta"
+      },
+      {
+        "coordinate": [
+          8,
+          8
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          9
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          8,
+          9
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          8,
+          10
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          8,
+          11
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          11
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          8,
+          12
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          12
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          8,
+          13
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          14
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          15
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          16
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          17
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          18
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          8,
+          19
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          19
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          8,
+          20
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          21
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          21
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          8,
+          23
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          23
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          8,
+          23
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          8,
+          24
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          24
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          8,
+          24
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhavacharya"
+      },
+      {
+        "coordinate": [
+          8,
+          24
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          8,
+          25
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          26
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          8,
+          28
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          9,
+          1
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          9,
+          2
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          3
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          3
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          9,
+          4
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          4
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          9,
+          4
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Neelkanth"
+      },
+      {
+        "coordinate": [
+          9,
+          5
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          9,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          9,
+          6
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          6
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          9,
+          8
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          9
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          9
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Purushottamji"
+      },
+      {
+        "coordinate": [
+          9,
+          10
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          9,
+          12
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          12
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          9,
+          12
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhavacharya"
+      },
+      {
+        "coordinate": [
+          9,
+          13
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          13
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          9,
+          14
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          15
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          15
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          9,
+          16
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          16
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Shankaracharya"
+      },
+      {
+        "coordinate": [
+          9,
+          17
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          18
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          9,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          9,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          9,
+          20
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          20
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          9,
+          21
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          22
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          23
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          23
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          9,
+          23
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          9,
+          24
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          24
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          9,
+          25
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          26
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          9,
+          27
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          27
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          9,
+          27
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          9,
+          28
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          28
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          9,
+          29
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          30
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          30
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          9,
+          31
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          31
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          9,
+          31
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          9,
+          32
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          33
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          33
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Shankaracharya"
+      },
+      {
+        "coordinate": [
+          9,
+          34
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          9,
+          34
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Neelkanth"
+      },
+      {
+        "coordinate": [
+          9,
+          34
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Purushottamji"
+      },
+      {
+        "coordinate": [
+          10,
+          1
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          10,
+          2
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          3
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          4
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          10,
+          5
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          10,
+          6
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          6
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          10,
+          7
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          8
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          9
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          10
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          10,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          10,
+          11
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          11
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          10,
+          12
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          13
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          14
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          15
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          16
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          17
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          17
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          10,
+          18
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          10,
+          19
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          19
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          10,
+          20
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          20
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          10,
+          21
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          21
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          10,
+          21
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Purushottamji"
+      },
+      {
+        "coordinate": [
+          10,
+          22
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          23
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          24
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          26
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          27
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          29
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          30
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          31
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          32
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          32
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          10,
+          33
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          33
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          10,
+          34
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          34
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          10,
+          35
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          36
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          36
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          10,
+          37
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          10,
+          38
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          38
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          10,
+          39
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          40
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          41
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          10,
+          42
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          1
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          11,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          11,
+          2
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          2
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          11,
+          3
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          4
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          5
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          6
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          7
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          8
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          8
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          11,
+          9
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          10
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          11
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          11
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          11,
+          12
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          13
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          14
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          15
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          16
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          17
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          18
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          19
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          19
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          11,
+          20
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          20
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          11,
+          21
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          21
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          11,
+          22
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          23
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          24
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          24
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          11,
+          24
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          11,
+          25
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          26
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          26
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Purushottamji"
+      },
+      {
+        "coordinate": [
+          11,
+          27
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          28
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          29
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          30
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          30
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          11,
+          31
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          31
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          11,
+          32
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          33
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          33
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          11,
+          34
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          35
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          36
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          37
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          37
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          11,
+          38
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          38
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          11,
+          39
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          40
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          41
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          41
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          11,
+          42
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          43
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          44
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          45
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          46
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          46
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Shankaracharya"
+      },
+      {
+        "coordinate": [
+          11,
+          47
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          48
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          48
+        ],
+        "field": "additional_translations",
+        "author": "Swami Tejomayananda"
+      },
+      {
+        "coordinate": [
+          11,
+          49
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          49
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          11,
+          50
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          50
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          11,
+          51
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          52
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          53
+        ],
+        "field": "additional_translations",
+        "author": "Swami Tejomayananda"
+      },
+      {
+        "coordinate": [
+          11,
+          53
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Purushottamji"
+      },
+      {
+        "coordinate": [
+          11,
+          54
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          55
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          11,
+          55
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          12,
+          1
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          2
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          2
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          12,
+          3
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          3
+        ],
+        "field": "hindi"
+      },
+      {
+        "coordinate": [
+          12,
+          4
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          4
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          12,
+          4
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          12,
+          5
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          12,
+          6
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          7
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          7
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          12,
+          8
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          9
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          10
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          11
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          11
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          12,
+          11
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          12,
+          12
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          13
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          14
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          14
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          12,
+          15
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          16
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          16
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          12,
+          16
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          12,
+          17
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          17
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          12,
+          18
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          18
+        ],
+        "field": "hindi"
+      },
+      {
+        "coordinate": [
+          12,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          12,
+          19
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          20
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          12,
+          20
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          12,
+          20
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          13,
+          1
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          2
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          2
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          13,
+          2
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          13,
+          2
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          13,
+          2
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          13,
+          3
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          3
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          13,
+          3
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          13,
+          3
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          13,
+          4
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          5
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          13,
+          6
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          13,
+          7
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          7
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          13,
+          7
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          13,
+          8
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          8
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          13,
+          9
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          9
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          13,
+          10
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          11
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          11
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          13,
+          12
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          12
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          13,
+          13
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          13
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Shankaracharya"
+      },
+      {
+        "coordinate": [
+          13,
+          14
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          13,
+          14
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          13,
+          15
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          16
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          16
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          13,
+          17
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          17
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          13,
+          18
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          19
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          13,
+          20
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          20
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          13,
+          21
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          21
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          13,
+          22
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          22
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          13,
+          22
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Neelkanth"
+      },
+      {
+        "coordinate": [
+          13,
+          23
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          23
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          13,
+          23
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          13,
+          24
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          24
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          13,
+          24
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Shankaracharya"
+      },
+      {
+        "coordinate": [
+          13,
+          25
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          25
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          13,
+          26
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          26
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          13,
+          27
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          27
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          13,
+          28
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          28
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          13,
+          29
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          30
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          31
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          32
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          32
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Neelkanth"
+      },
+      {
+        "coordinate": [
+          13,
+          33
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          33
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Neelkanth"
+      },
+      {
+        "coordinate": [
+          13,
+          34
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          13,
+          34
+        ],
+        "field": "additional_translations",
+        "author": "Swami Tejomayananda"
+      },
+      {
+        "coordinate": [
+          13,
+          35
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          1
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          14,
+          2
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          2
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          14,
+          2
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Neelkanth"
+      },
+      {
+        "coordinate": [
+          14,
+          3
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          3
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          14,
+          4
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          14,
+          5
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          14,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          14,
+          6
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          6
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          14,
+          7
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          7
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          14,
+          7
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          14,
+          8
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          10
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          14,
+          11
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          11
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          14,
+          12
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          13
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          13
+        ],
+        "field": "additional_translations",
+        "author": "Swami Tejomayananda"
+      },
+      {
+        "coordinate": [
+          14,
+          13
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          14,
+          14
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          14
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          14,
+          15
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          15
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          14,
+          16
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          16
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          14,
+          18
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          14,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          14,
+          19
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          20
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          21
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          22
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          23
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          23
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          14,
+          24
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          24
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          14,
+          25
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          25
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          14,
+          26
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          26
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          14,
+          27
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          14,
+          27
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          15,
+          1
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          15,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          15,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          15,
+          2
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          2
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Sivananda"
+      },
+      {
+        "coordinate": [
+          15,
+          3
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          3
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          15,
+          4
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          4
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          15,
+          5
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          15,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          15,
+          6
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          6
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          15,
+          7
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          7
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          15,
+          7
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          15,
+          8
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          8
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          15,
+          9
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          9
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          15,
+          10
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          15,
+          11
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          11
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          15,
+          12
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          12
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          15,
+          13
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          14
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          15
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          16
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          17
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          17
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          15,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          15,
+          19
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          19
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          15,
+          20
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          15,
+          20
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          15,
+          20
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          16,
+          1
+        ],
+        "field": "additional_translations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          16,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          16,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          16,
+          2
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          2
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          16,
+          3
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          3
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          16,
+          4
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          4
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          16,
+          5
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          16,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          16,
+          6
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          6
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          16,
+          7
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          7
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          16,
+          8
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          9
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          9
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          16,
+          10
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          11
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          11
+        ],
+        "field": "additional_translations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          16,
+          11
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          16,
+          12
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          13
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          14
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          15
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          16
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          16
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          16,
+          17
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          18
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          16,
+          19
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          19
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          16,
+          20
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          20
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          16,
+          20
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          16,
+          21
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          22
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          23
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          23
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Neelkanth"
+      },
+      {
+        "coordinate": [
+          16,
+          24
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          16,
+          24
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          17,
+          1
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          17,
+          2
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          3
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          3
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          17,
+          3
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          17,
+          4
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          4
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          17,
+          5
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          17,
+          6
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          6
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          17,
+          7
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          8
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          9
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          10
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          17,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          17,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          17,
+          11
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          11
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          17,
+          11
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Shankaracharya"
+      },
+      {
+        "coordinate": [
+          17,
+          12
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          13
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          13
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Ramanujacharya"
+      },
+      {
+        "coordinate": [
+          17,
+          14
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          14
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          17,
+          15
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          16
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          16
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          17,
+          17
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          18
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          19
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          19
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          17,
+          20
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          20
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          17,
+          21
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          21
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Purushottamji"
+      },
+      {
+        "coordinate": [
+          17,
+          22
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          22
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          17,
+          23
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          23
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Abhinavgupta"
+      },
+      {
+        "coordinate": [
+          17,
+          24
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          25
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          25
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          17,
+          26
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          27
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          28
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          17,
+          28
+        ],
+        "field": "additional_translations",
+        "author": "Swami Tejomayananda"
+      },
+      {
+        "coordinate": [
+          17,
+          28
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          17,
+          28
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          18,
+          1
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          1
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          18,
+          2
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          3
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          3
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          18,
+          3
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Shankaracharya"
+      },
+      {
+        "coordinate": [
+          18,
+          4
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          4
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          18,
+          5
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          5
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          18,
+          6
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          7
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          7
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          8
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          10
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          18,
+          10
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Shankaracharya"
+      },
+      {
+        "coordinate": [
+          18,
+          11
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          12
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          12
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          14
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          14
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          18,
+          14
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          18,
+          15
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          15
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          18,
+          15
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          18,
+          15
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Jayatritha"
+      },
+      {
+        "coordinate": [
+          18,
+          16
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          17
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          17
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          18,
+          17
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          18,
+          18
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          18,
+          18
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          18,
+          19
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          20
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          20
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          20
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Abhinavgupta"
+      },
+      {
+        "coordinate": [
+          18,
+          21
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          22
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          23
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          23
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          18,
+          24
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          25
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          26
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          26
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          18,
+          27
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          28
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          29
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Sivananda"
+      },
+      {
+        "coordinate": [
+          18,
+          30
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          30
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          18,
+          30
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          18,
+          31
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          32
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          33
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          33
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          34
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          35
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          35
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          36
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          36
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          37
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          38
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          38
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          18,
+          39
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          39
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          40
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          40
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          41
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          41
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Purushottamji"
+      },
+      {
+        "coordinate": [
+          18,
+          42
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          42
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Shankaracharya"
+      },
+      {
+        "coordinate": [
+          18,
+          43
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          43
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          18,
+          44
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          44
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Abhinavgupta"
+      },
+      {
+        "coordinate": [
+          18,
+          45
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          45
+        ],
+        "field": "hindi"
+      },
+      {
+        "coordinate": [
+          18,
+          46
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          46
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          18,
+          47
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          47
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          47
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          18,
+          48
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          48
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          48
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          18,
+          49
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          49
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          18,
+          49
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Shankaracharya"
+      },
+      {
+        "coordinate": [
+          18,
+          50
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          50
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Abhinavgupta"
+      },
+      {
+        "coordinate": [
+          18,
+          51
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          51
+        ],
+        "field": "additional_translations",
+        "author": "Swami Tejomayananda"
+      },
+      {
+        "coordinate": [
+          18,
+          52
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          52
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          52
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          18,
+          53
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          53
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          53
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Madhusudan Saraswati"
+      },
+      {
+        "coordinate": [
+          18,
+          54
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          54
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          18,
+          55
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          55
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          18,
+          55
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          18,
+          55
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Shankaracharya"
+      },
+      {
+        "coordinate": [
+          18,
+          56
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          57
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          57
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          58
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          58
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          59
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          60
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          60
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          18,
+          61
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          61
+        ],
+        "field": "additional_translations",
+        "author": "Swami Tejomayananda"
+      },
+      {
+        "coordinate": [
+          18,
+          61
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          18,
+          61
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          18,
+          62
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          62
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          18,
+          63
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          63
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          63
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          18,
+          64
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          65
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          66
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          66
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          66
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          18,
+          66
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          18,
+          66
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      },
+      {
+        "coordinate": [
+          18,
+          67
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          67
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          18,
+          67
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Anandgiri"
+      },
+      {
+        "coordinate": [
+          18,
+          68
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          69
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          70
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          70
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Sridhara Swami"
+      },
+      {
+        "coordinate": [
+          18,
+          71
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          71
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Ramsukhdas"
+      },
+      {
+        "coordinate": [
+          18,
+          71
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vedantadeshikacharya Venkatanatha"
+      },
+      {
+        "coordinate": [
+          18,
+          72
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          72
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          18,
+          73
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          74
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          74
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          18,
+          75
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          75
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Dhanpati"
+      },
+      {
+        "coordinate": [
+          18,
+          75
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Shankaracharya"
+      },
+      {
+        "coordinate": [
+          18,
+          76
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          77
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          78
+        ],
+        "field": "english"
+      },
+      {
+        "coordinate": [
+          18,
+          78
+        ],
+        "field": "detailed_explanations",
+        "author": "Swami Chinmayananda"
+      },
+      {
+        "coordinate": [
+          18,
+          78
+        ],
+        "field": "detailed_explanations",
+        "author": "Sri Vallabhacharya"
+      }
+    ],
+    "scope": "Both whitespace-normalized exact wording and normalized letters and digits (ignoring leading verse references, punctuation, case and spacing) are checked. Neither is a critical-edition comparison of Sanskrit."
+  },
+  "ramayana": {
+    "datasetSha256": "373fec26817638ac2d808623a15262a70b2411a42112e2b68eebdab4803acbbb",
+    "itihasaSha256": "339add3c677aa3062d975879ba3b3cfb5e549c2dcee7f543879354428e776c89",
+    "checks": {
+      "records": 23291,
+      "unreviewedFallback": 20800,
+      "missingSanskrit": 0,
+      "missingTranslation": 0,
+      "publishedSourceMatched": 2491,
+      "ambiguousNormalizedWitness": 14
+    },
+    "byKanda": {
+      "Bala Kanda": {
+        "records": 2217,
+        "unreviewedFallback": 2128,
+        "publishedSourceMatched": 89
+      },
+      "Ayodhya Kanda": {
+        "records": 4262,
+        "unreviewedFallback": 3707,
+        "publishedSourceMatched": 555
+      },
+      "Aranya Kanda": {
+        "records": 2439,
+        "unreviewedFallback": 2200,
+        "publishedSourceMatched": 239
+      },
+      "Kishkindha Kanda": {
+        "records": 2445,
+        "unreviewedFallback": 2224,
+        "publishedSourceMatched": 221
+      },
+      "Sundara Kanda": {
+        "records": 2772,
+        "unreviewedFallback": 2456,
+        "publishedSourceMatched": 316
+      },
+      "Yuddha Kanda": {
+        "records": 5693,
+        "unreviewedFallback": 5208,
+        "publishedSourceMatched": 485
+      },
+      "Uttara Kanda": {
+        "records": 3463,
+        "unreviewedFallback": 2877,
+        "publishedSourceMatched": 586
+      }
+    },
+    "duplicateCoordinates": [],
+    "unpairedItihasaRows": 0,
+    "scope": "Exact normalized Sanskrit-to-English source matching as used by ingestion, not proof of editorial accuracy or alignment across editions.",
+    "fallbackProvenance": "The dataset includes a Gemini script for filling missing Uttara Kanda translations and explanations. Per-record generation metadata is absent; fallback text must not be represented as a verified published translation."
+  }
+}

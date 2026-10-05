@@ -90,6 +90,17 @@ async def test_daily_verse_one_database_read_per_day(client, store):
     store.get_doc.assert_awaited_once()
 
 
+async def test_gita_chapter_excludes_other_scriptures_with_same_chapter_number(client, store):
+    store.get_doc.return_value = {"id": "chapter_2", "number": 2}
+    store.query.return_value = [
+        VERSE.copy(),
+        {**VERSE, "id": "vishnu-purana_2_47", "source_id": "vishnu-purana"},
+        {**VERSE, "source_id": "vishnu-purana"},
+    ]
+    response = await client.get("/api/chapters/chapter_2/verses")
+    assert [v["id"] for v in response.json()["verses"]] == [VERSE["id"]]
+
+
 async def test_search_sanskrit_exact_intercept_and_recommendations(client, store):
     store.query.return_value = [{**VERSE, "sanskrit": "कर्मण्येवाधिकारस्ते"}]
     result = await client.get("/api/search", params={"q": "कर्मण्येवाधिकारस्ते"})
