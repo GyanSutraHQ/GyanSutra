@@ -13,6 +13,7 @@ official async Firestore client, and the committed quantized ONNX model.
 | Primary-to-backup model fallback | Passed; `gemini-3.8-flash` returned HTTP 503 and the configured backup answered. Primary-model availability is not confirmed. |
 | Grok live request | Blocked: no `XAI_API_KEY` or `GROK_API_KEY` is available locally. Mocked transport tests verify endpoint and request compatibility. |
 | Current production health | Existing Node API at `https://gyansutra-backend-0yo7.onrender.com/health` returned HTTP 200. |
+| Current production reading load | All 16 measured requests passed at four clients; 3.09 requests/s and p95 3,213 ms. This measures the existing Node deployment. |
 | Python production deployment | Pending Render credentials/access; the existing Node runtime must be switched before deploying Python source. |
 
 The Gemini check used real HTTP generation grounded in the versioned Gita
@@ -51,6 +52,9 @@ of bias. These numbers are not production latency targets or evidence of faster
 LLM generation. Repeat the same bounded profiles against the Python deployment
 after the runtime switch. Keep the existing per-IP limits intact and allow their
 15-minute window to reset between larger test runs.
+
+Sanitized raw results are preserved in
+[verification results](verification/python-migration.json).
 
 ## Deployment completion
 

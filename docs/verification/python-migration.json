@@ -1,0 +1,211 @@
+{
+  "liveChecks": {
+    "checkedAt": "2026-10-05T08:26:48.146687+00:00",
+    "checks": [
+      {
+        "check": "firestore_and_vector_search",
+        "status": "passed",
+        "elapsedMs": 3764,
+        "candidates": 8,
+        "topSimilarity": 0.854008717130252
+      },
+      {
+        "check": "gemini",
+        "status": "passed",
+        "reason": "generated",
+        "elapsedMs": 6487,
+        "model": "gemini-3.1-flash-lite",
+        "usage": {
+          "inputTokens": 596,
+          "outputTokens": 170,
+          "totalTokens": 882
+        },
+        "attempts": [
+          {
+            "provider": "gemini",
+            "model": "gemini-3.8-flash",
+            "outcome": 503,
+            "errorType": "OpenAIAPIError"
+          },
+          {
+            "provider": "gemini",
+            "model": "gemini-3.1-flash-lite",
+            "outcome": "success"
+          }
+        ],
+        "citationIds": [
+          "bhagavad-gita_2_47"
+        ]
+      },
+      {
+        "check": "grok",
+        "source": "versioned_gita_2_47",
+        "status": "blocked",
+        "reason": "missing_credentials"
+      }
+    ]
+  },
+  "localComparison": [
+    {
+      "checkedAt": "2026-10-05T08:27:32.353539+00:00",
+      "baseUrl": "http://127.0.0.1:43102",
+      "profile": "reading",
+      "requests": 24,
+      "concurrency": 1,
+      "warmupRequests": 4,
+      "seconds": 39.622,
+      "requestsPerSecond": 0.61,
+      "p50Ms": 838.16,
+      "p95Ms": 5183.68,
+      "maxMs": 5863.97,
+      "statuses": {
+        "200": 24
+      },
+      "failures": 0,
+      "backend": "node_baseline"
+    },
+    {
+      "checkedAt": "2026-10-05T08:28:08.115582+00:00",
+      "baseUrl": "http://127.0.0.1:43102",
+      "profile": "reading",
+      "requests": 40,
+      "concurrency": 8,
+      "warmupRequests": 4,
+      "seconds": 29.246,
+      "requestsPerSecond": 1.37,
+      "p50Ms": 1601.33,
+      "p95Ms": 19724.06,
+      "maxMs": 20177.51,
+      "statuses": {
+        "200": 40
+      },
+      "failures": 0,
+      "backend": "node_baseline"
+    },
+    {
+      "checkedAt": "2026-10-05T08:28:21.749413+00:00",
+      "baseUrl": "http://127.0.0.1:43102",
+      "profile": "search",
+      "requests": 12,
+      "concurrency": 1,
+      "warmupRequests": 1,
+      "seconds": 12.365,
+      "requestsPerSecond": 0.97,
+      "p50Ms": 1043.1,
+      "p95Ms": 1225.11,
+      "maxMs": 1227.8,
+      "statuses": {
+        "200": 12
+      },
+      "failures": 0,
+      "backend": "node_baseline"
+    },
+    {
+      "checkedAt": "2026-10-05T08:28:27.825958+00:00",
+      "baseUrl": "http://127.0.0.1:43102",
+      "profile": "search",
+      "requests": 24,
+      "concurrency": 8,
+      "warmupRequests": 1,
+      "seconds": 4.82,
+      "requestsPerSecond": 4.98,
+      "p50Ms": 1269.49,
+      "p95Ms": 2642.74,
+      "maxMs": 2651.27,
+      "statuses": {
+        "200": 24
+      },
+      "failures": 0,
+      "backend": "node_baseline"
+    },
+    {
+      "checkedAt": "2026-10-05T08:29:05.679194+00:00",
+      "baseUrl": "http://127.0.0.1:43101",
+      "profile": "reading",
+      "requests": 24,
+      "concurrency": 1,
+      "warmupRequests": 4,
+      "seconds": 29.36,
+      "requestsPerSecond": 0.82,
+      "p50Ms": 779.21,
+      "p95Ms": 3367.55,
+      "maxMs": 3504.95,
+      "statuses": {
+        "200": 24
+      },
+      "failures": 0,
+      "backend": "python"
+    },
+    {
+      "checkedAt": "2026-10-05T08:29:21.800511+00:00",
+      "baseUrl": "http://127.0.0.1:43101",
+      "profile": "reading",
+      "requests": 40,
+      "concurrency": 8,
+      "warmupRequests": 4,
+      "seconds": 11.305,
+      "requestsPerSecond": 3.54,
+      "p50Ms": 1575.22,
+      "p95Ms": 4858.6,
+      "maxMs": 5016.89,
+      "statuses": {
+        "200": 40
+      },
+      "failures": 0,
+      "backend": "python"
+    },
+    {
+      "checkedAt": "2026-10-05T08:29:35.565394+00:00",
+      "baseUrl": "http://127.0.0.1:43101",
+      "profile": "search",
+      "requests": 12,
+      "concurrency": 1,
+      "warmupRequests": 1,
+      "seconds": 12.765,
+      "requestsPerSecond": 0.94,
+      "p50Ms": 1049.81,
+      "p95Ms": 1244.76,
+      "maxMs": 1260.25,
+      "statuses": {
+        "200": 12
+      },
+      "failures": 0,
+      "backend": "python"
+    },
+    {
+      "checkedAt": "2026-10-05T08:29:41.436732+00:00",
+      "baseUrl": "http://127.0.0.1:43101",
+      "profile": "search",
+      "requests": 24,
+      "concurrency": 8,
+      "warmupRequests": 1,
+      "seconds": 4.817,
+      "requestsPerSecond": 4.98,
+      "p50Ms": 1220.75,
+      "p95Ms": 2116.53,
+      "maxMs": 2176.81,
+      "statuses": {
+        "200": 24
+      },
+      "failures": 0,
+      "backend": "python"
+    }
+  ],
+  "productionNodeBaseline": {
+    "checkedAt": "2026-10-05T08:32:46.516954+00:00",
+    "baseUrl": "https://gyansutra-backend-0yo7.onrender.com",
+    "profile": "reading",
+    "requests": 16,
+    "concurrency": 4,
+    "warmupRequests": 4,
+    "seconds": 5.176,
+    "requestsPerSecond": 3.09,
+    "p50Ms": 658.6,
+    "p95Ms": 3213.24,
+    "maxMs": 3413.51,
+    "statuses": {
+      "200": 16
+    },
+    "failures": 0
+  }
+}
