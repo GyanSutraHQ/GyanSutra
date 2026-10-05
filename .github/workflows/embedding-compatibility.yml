@@ -24,14 +24,14 @@ jobs:
         run: |
           mkdir -p /tmp/embedding-reference
           cd /tmp/embedding-reference
-          npm install --no-save @xenova/transformers@2.17.2
+          npm install --no-save @huggingface/transformers@4.2.0
           cat > reference.mjs <<'JS'
           import fs from 'node:fs';
-          import { pipeline, env } from '@xenova/transformers';
+          import { pipeline, env } from '@huggingface/transformers';
           const root = process.env.GITHUB_WORKSPACE + '/backend';
           env.allowRemoteModels = false;
           env.localModelPath = root + '/models/';
-          const model = await pipeline('feature-extraction', 'Xenova/gte-small', { quantized: true });
+          const model = await pipeline('feature-extraction', 'Xenova/gte-small', { dtype: 'q8', device: 'cpu' });
           const cases = JSON.parse(fs.readFileSync(root + '/tests/fixtures/legacy_embeddings.json'));
           const outputs = [];
           for (const item of cases) {
