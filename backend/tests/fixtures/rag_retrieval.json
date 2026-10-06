@@ -1,0 +1,10 @@
+[
+  {"query":"right action fruits Gita", "relevantIds":["bhagavad-gita_2_47"]},
+  {"query":"anger delusion memory Gita", "relevantIds":["bhagavad-gita_2_63"]},
+  {"query":"attachment objects desire anger Gita", "relevantIds":["bhagavad-gita_2_62"]},
+  {"query":"soul weapons fire water Gita", "relevantIds":["bhagavad-gita_2_23"]},
+  {"query":"desire anger greed hell Gita", "relevantIds":["bhagavad-gita_16_21"]},
+  {"query":"Dhruva Vishnu Purana", "relevantPrefixes":["vishnu-purana_1_11_", "vishnu-purana_1_12_"]},
+  {"query":"गीता क्रोध काम", "relevantIds":["bhagavad-gita_3_37", "bhagavad-gita_16_21"]},
+  {"query":"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन", "relevantIds":["bhagavad-gita_2_47"]}
+]

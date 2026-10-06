@@ -1,7 +1,9 @@
 """Bounded LRU/TTL caches and cancellation-safe concurrent request coalescing."""
 
 import asyncio
+import time
 from collections.abc import Awaitable, Callable
+from contextlib import asynccontextmanager
 from typing import Any
 
 from cachetools import TTLCache
@@ -12,6 +14,38 @@ class ServiceError(Exception):
         super().__init__(message)
         self.code = code
         self.attempts = attempts or []
+
+
+class CapacityBudget:
+    """Bound both active work and waiting callers; release on every exit path."""
+
+    def __init__(self, active, queued, timeout, code):
+        self.semaphore = asyncio.Semaphore(active)
+        self.max_queued, self.timeout, self.code = queued, timeout, code
+        self.waiting = 0
+
+    @asynccontextmanager
+    async def slot(self):
+        started = time.monotonic()
+        if self.semaphore.locked() and (self.waiting >= self.max_queued or not self.timeout):
+            raise ServiceError("Sarathi capacity is busy. Please try again shortly.", self.code)
+        if not self.semaphore.locked():
+            # Reserve without deferring to another task; burst admission is atomic.
+            await self.semaphore.acquire()
+        else:
+            self.waiting += 1
+            try:
+                await asyncio.wait_for(self.semaphore.acquire(), self.timeout)
+            except TimeoutError as error:
+                raise ServiceError(
+                    "Sarathi capacity is busy. Please try again shortly.", self.code
+                ) from error
+            finally:
+                self.waiting -= 1
+        try:
+            yield round((time.monotonic() - started) * 1000)
+        finally:
+            self.semaphore.release()
 
 
 class SingleFlight:

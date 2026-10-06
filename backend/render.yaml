@@ -36,7 +36,25 @@ services:
       - key: RAG_SIMILARITY_THRESHOLD
         value: "0.55"
       - key: RAG_TOP_K
-        value: "12"
+        value: "20"
+      - key: RAG_HYBRID_ENABLED
+        value: "true"
+      - key: RAG_MULTILINGUAL_QUERY_ENABLED
+        value: "true"
+      - key: RAG_QUERY_TRANSLATION_TIMEOUT_MS
+        value: "4000"
+      - key: RAG_MIN_LEXICAL_COVERAGE
+        value: "0.6"
+      - key: RAG_DIVERSITY_WEIGHT
+        value: "0.2"
+      - key: RAG_MAX_CONCURRENT_RETRIEVALS
+        value: "8"
+      - key: RAG_MAX_QUEUED_RETRIEVALS
+        value: "32"
+      - key: RAG_RETRIEVAL_QUEUE_TIMEOUT_MS
+        value: "3000"
+      - key: RAG_REQUEST_DEADLINE_MS
+        value: "45000"
       - key: RAG_TOP_CONTEXT
         value: "4"
       - key: RAG_MAX_MODEL_ATTEMPTS
@@ -48,15 +66,17 @@ services:
       - key: RAG_MAX_OUTPUT_TOKENS
         value: "1200"
       - key: RAG_MAX_CONCURRENT_GENERATIONS
-        value: "2"
+        value: "4"
+      - key: RAG_MAX_QUEUED_GENERATIONS
+        value: "24"
       - key: RAG_MODEL_QUEUE_TIMEOUT_MS
-        value: "5000"
+        value: "10000"
       - key: RAG_CACHE_ENABLED
         value: "true"
       - key: RAG_CACHE_MAX_ENTRIES
         value: "250"
       - key: RAG_CORPUS_VERSION
-        value: gita-ramayana-v1
+        value: gita-ramayana-vishnu-purana-v1
       - key: EMBEDDING_PREWARM
         value: "true"
       - key: ASK_RATE_LIMIT_MAX

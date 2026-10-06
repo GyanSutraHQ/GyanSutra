@@ -12,7 +12,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
 
-from .cache import ServiceError
+from .cache import CapacityBudget, ServiceError
 from .config import integer, names
 from .text import modernize
 
@@ -50,9 +50,15 @@ class GenerationService:
         self.model_timeout = integer("RAG_MODEL_TIMEOUT_MS", 10000, 1000, 30000) / 1000
         self.deadline = integer("RAG_GENERATION_DEADLINE_MS", 24000, 2000, 45000) / 1000
         self.maximum_attempts = integer("RAG_MAX_MODEL_ATTEMPTS", 3, 1, 3)
-        self.queue_timeout = integer("RAG_MODEL_QUEUE_TIMEOUT_MS", 5000, 0, 10000) / 1000
+        self.queue_timeout = integer("RAG_MODEL_QUEUE_TIMEOUT_MS", 10000, 0, 30000) / 1000
         self.output_tokens = integer("RAG_MAX_OUTPUT_TOKENS", 1200, 256, 2000)
-        self.capacity = asyncio.Semaphore(integer("RAG_MAX_CONCURRENT_GENERATIONS", 2, 1, 20))
+        self.budget = CapacityBudget(
+            integer("RAG_MAX_CONCURRENT_GENERATIONS", 4, 1, 20),
+            integer("RAG_MAX_QUEUED_GENERATIONS", 24, 0, 200),
+            self.queue_timeout,
+            "RAG_BUSY",
+        )
+        self.capacity = self.budget.semaphore
         self.effort = os.getenv("GEMINI_REASONING_EFFORT", "low")
         if self.effort not in {"low", "medium", "high"}:
             self.effort = "low"
@@ -146,82 +152,75 @@ class GenerationService:
             if type(max_output_tokens) is int
             else self.output_tokens
         )
-        if self.queue_timeout == 0 and self.capacity.locked():
-            raise ServiceError("Sarathi generation capacity is busy.", "RAG_BUSY")
-        try:
-            if self.queue_timeout:
-                await asyncio.wait_for(self.capacity.acquire(), self.queue_timeout)
-            else:
-                await self.capacity.acquire()
-        except TimeoutError as error:
-            raise ServiceError("Sarathi generation capacity is busy.", "RAG_BUSY") from error
+        async with self.budget.slot() as queue_ms:
+            return await self._generate(messages, tokens, attempts, queue_ms)
+
+    async def _generate(self, messages, tokens, attempts, queue_ms):
         started = time.monotonic()
         log, tried, terminal = [], set(), set()
-        try:
-            for attempt in attempts:
-                provider = attempt["provider"]
-                entry = {"provider": provider, "model": attempt["model"]}
-                if provider in terminal:
-                    log.append({**entry, "outcome": "terminal_error"})
-                    continue
-                circuit = self.circuits.get(provider)
-                if provider not in tried and circuit and circuit[1] > time.monotonic():
-                    log.append({**entry, "outcome": "circuit_open"})
-                    continue
-                if circuit and circuit[1] <= time.monotonic():
-                    self.circuits.pop(provider, None)
-                tried.add(provider)
-                remaining = self.deadline - (time.monotonic() - started)
-                if remaining < 0.5:
-                    break
-                try:
-                    response = await asyncio.wait_for(
-                        self.chain(attempt, tokens).ainvoke({"messages": messages}),
-                        min(self.model_timeout, remaining),
+        for attempt in attempts:
+            provider = attempt["provider"]
+            entry = {"provider": provider, "model": attempt["model"]}
+            if provider in terminal:
+                log.append({**entry, "outcome": "terminal_error"})
+                continue
+            circuit = self.circuits.get(provider)
+            if provider not in tried and circuit and circuit[1] > time.monotonic():
+                log.append({**entry, "outcome": "circuit_open"})
+                continue
+            if circuit and circuit[1] <= time.monotonic():
+                self.circuits.pop(provider, None)
+            tried.add(provider)
+            remaining = self.deadline - (time.monotonic() - started)
+            if remaining < 0.5:
+                break
+            try:
+                response = await asyncio.wait_for(
+                    self.chain(attempt, tokens).ainvoke({"messages": messages}),
+                    min(self.model_timeout, remaining),
+                )
+                answer = clean_response(await StrOutputParser().ainvoke(response))
+                if len(answer) < 20:
+                    raise ServiceError(
+                        "The model returned an empty response.", "EMPTY_MODEL_RESPONSE"
                     )
-                    answer = clean_response(await StrOutputParser().ainvoke(response))
-                    if len(answer) < 20:
-                        raise ServiceError(
-                            "The model returned an empty response.", "EMPTY_MODEL_RESPONSE"
-                        )
-                    if response.response_metadata.get("finish_reason") == "length":
-                        raise ServiceError(
-                            "The model response reached its output limit.", "MODEL_OUTPUT_LIMIT"
-                        )
-                    usage = response.usage_metadata or {}
-                    self.circuits.pop(provider, None)
-                    log.append({**entry, "outcome": "success"})
-                    return {
-                        "answer": answer,
-                        **entry,
-                        "usage": {
-                            "inputTokens": usage.get("input_tokens", 0),
-                            "outputTokens": usage.get("output_tokens", 0),
-                            "totalTokens": usage.get("total_tokens", 0),
-                        },
-                        "attempts": log,
-                    }
-                except Exception as error:
-                    status = getattr(error, "status_code", None) or getattr(error, "status", None)
-                    outcome = (
-                        "MODEL_TIMEOUT"
-                        if isinstance(error, TimeoutError)
-                        else getattr(error, "code", None) or status or "failed"
+                if response.response_metadata.get("finish_reason") == "length":
+                    raise ServiceError(
+                        "The model response reached its output limit.", "MODEL_OUTPUT_LIMIT"
                     )
-                    failures = min(self.circuits.get(provider, (0, 0))[0] + 1, 6)
-                    delay = (
-                        600
-                        if status in {401, 403, 404}
-                        else 60
-                        if status == 429
-                        else min(5 * 2 ** (failures - 1), 60)
-                    )
-                    self.circuits[provider] = (failures, time.monotonic() + delay)
-                    if status in {400, 401, 403, 404, 422, 429} or outcome == "MODEL_OUTPUT_LIMIT":
-                        terminal.add(provider)
-                    log.append({**entry, "outcome": outcome, "errorType": type(error).__name__})
-        finally:
-            self.capacity.release()
+                usage = response.usage_metadata or {}
+                self.circuits.pop(provider, None)
+                log.append({**entry, "outcome": "success"})
+                return {
+                    "answer": answer,
+                    **entry,
+                    "usage": {
+                        "inputTokens": usage.get("input_tokens", 0),
+                        "outputTokens": usage.get("output_tokens", 0),
+                        "totalTokens": usage.get("total_tokens", 0),
+                    },
+                    "attempts": log,
+                    "queueMs": queue_ms,
+                }
+            except Exception as error:
+                status = getattr(error, "status_code", None) or getattr(error, "status", None)
+                outcome = (
+                    "MODEL_TIMEOUT"
+                    if isinstance(error, TimeoutError)
+                    else getattr(error, "code", None) or status or "failed"
+                )
+                failures = min(self.circuits.get(provider, (0, 0))[0] + 1, 6)
+                delay = (
+                    600
+                    if status in {401, 403, 404}
+                    else 60
+                    if status == 429
+                    else min(5 * 2 ** (failures - 1), 60)
+                )
+                self.circuits[provider] = (failures, time.monotonic() + delay)
+                if status in {400, 401, 403, 404, 422, 429} or outcome == "MODEL_OUTPUT_LIMIT":
+                    terminal.add(provider)
+                log.append({**entry, "outcome": outcome, "errorType": type(error).__name__})
         raise ServiceError(
             "All bounded model attempts were unavailable.", "AI_ATTEMPTS_EXHAUSTED", log
         )

@@ -32,6 +32,8 @@ def environment(monkeypatch):
         ):
             monkeypatch.delenv(key)
     monkeypatch.setenv("NODE_ENV", "test")
+    monkeypatch.setenv("RAG_HYBRID_ENABLED", "false")
+    monkeypatch.setenv("RAG_MULTILINGUAL_QUERY_ENABLED", "false")
     monkeypatch.setenv("EMBEDDING_MODEL_ID", "Xenova/gte-small")
 
 

@@ -1,0 +1,109 @@
+{
+  "scope": "offline keyword retrieval smoke evaluation; not end-to-end answer quality",
+  "indexedPassages": 1200,
+  "cases": 8,
+  "topK": 5,
+  "recallAtK": 1.0,
+  "meanReciprocalRank": 1.0,
+  "indexBuildMs": 268.33,
+  "queryMedianMs": 0.086,
+  "queryP95Ms": 0.102,
+  "results": [
+    {
+      "query": "right action fruits Gita",
+      "firstRelevantRank": 1,
+      "retrievedIds": [
+        "bhagavad-gita_2_47",
+        "bhagavad-gita_5_4",
+        "bhagavad-gita_18_15",
+        "bhagavad-gita_4_20",
+        "bhagavad-gita_18_2"
+      ],
+      "strongEvidenceCount": 5
+    },
+    {
+      "query": "anger delusion memory Gita",
+      "firstRelevantRank": 1,
+      "retrievedIds": [
+        "bhagavad-gita_2_63",
+        "bhagavad-gita_18_73",
+        "bhagavad-gita_7_27",
+        "bhagavad-gita_10_34",
+        "bhagavad-gita_15_15"
+      ],
+      "strongEvidenceCount": 2
+    },
+    {
+      "query": "attachment objects desire anger Gita",
+      "firstRelevantRank": 1,
+      "retrievedIds": [
+        "bhagavad-gita_2_62",
+        "bhagavad-gita_4_10",
+        "bhagavad-gita_2_56",
+        "bhagavad-gita_7_11",
+        "bhagavad-gita_3_34"
+      ],
+      "strongEvidenceCount": 1
+    },
+    {
+      "query": "soul weapons fire water Gita",
+      "firstRelevantRank": 1,
+      "retrievedIds": [
+        "bhagavad-gita_2_23",
+        "bhagavad-gita_7_4",
+        "bhagavad-gita_1_46",
+        "bhagavad-gita_1_9",
+        "bhagavad-gita_11_10"
+      ],
+      "strongEvidenceCount": 1
+    },
+    {
+      "query": "desire anger greed hell Gita",
+      "firstRelevantRank": 1,
+      "retrievedIds": [
+        "bhagavad-gita_16_21",
+        "bhagavad-gita_2_62",
+        "bhagavad-gita_5_28",
+        "bhagavad-gita_5_26",
+        "bhagavad-gita_18_53"
+      ],
+      "strongEvidenceCount": 1
+    },
+    {
+      "query": "Dhruva Vishnu Purana",
+      "firstRelevantRank": 1,
+      "retrievedIds": [
+        "vishnu-purana_1_12_3",
+        "vishnu-purana_1_12_4",
+        "vishnu-purana_1_12_8",
+        "vishnu-purana_1_12_5",
+        "vishnu-purana_1_12_1"
+      ],
+      "strongEvidenceCount": 5
+    },
+    {
+      "query": "गीता क्रोध काम",
+      "firstRelevantRank": 1,
+      "retrievedIds": [
+        "bhagavad-gita_3_37",
+        "bhagavad-gita_16_21",
+        "bhagavad-gita_16_12",
+        "bhagavad-gita_5_26",
+        "bhagavad-gita_16_18"
+      ],
+      "strongEvidenceCount": 5
+    },
+    {
+      "query": "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन",
+      "firstRelevantRank": 1,
+      "retrievedIds": [
+        "bhagavad-gita_2_47",
+        "bhagavad-gita_11_49",
+        "bhagavad-gita_18_67",
+        "bhagavad-gita_2_3",
+        "bhagavad-gita_16_5"
+      ],
+      "strongEvidenceCount": 1
+    }
+  ]
+}

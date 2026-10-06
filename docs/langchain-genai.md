@@ -6,6 +6,10 @@ headers, scripture coordinates, guardrails, and RAG behavior.
 
 ## Components
 
+The current hybrid retrieval and capacity design is documented in
+[Sarathi RAG architecture](sarathi-rag.md); that page supersedes the original
+vector-only retrieval details below.
+
 | Module under `backend/gyansutra/` | Responsibility |
 | --- | --- |
 | `app.py`, `middleware.py` | Routes, validation, CORS, security headers, body bounds, rate limits, health, and crawlers. |

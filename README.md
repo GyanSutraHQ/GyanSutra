@@ -62,14 +62,19 @@ model files at startup.
 
 ### Sarathi (grounded answers)
 
+See [Sarathi RAG architecture and verification](docs/sarathi-rag.md) for hybrid
+retrieval, multilingual query preparation, source selection, concurrency budgets,
+and the optional Ramayana keyword snapshot.
+
 1. The API validates a question, short conversation history, language, and
    prior citation IDs.
 2. `gyansutra/rag.py` applies local guardrails, resolves exact references when possible,
-   embeds eligible queries, and retrieves a small set of scripture passages.
-3. A provider is used only when the evidence clears the similarity threshold.
+   runs parallel BM25/vector retrieval, and selects a diverse scripture source pack.
+3. Answer generation runs only when evidence clears the vector or keyword gate.
    The answer is checked against the retrieved citations before it is returned.
 4. If generation is unavailable or invalid, Sarathi returns a clearly marked,
-   source-based fallback instead of inventing an answer.
+   source-based fallback. Cached query translation bridges Indian-script searches
+   to the existing English embedding model when enabled.
 
 ### Corpus lifecycle
 

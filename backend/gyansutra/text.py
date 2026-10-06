@@ -11,7 +11,7 @@ from .config import ROOT
 POLICY = json.loads((ROOT / "data/ai-policy.json").read_text())
 SOURCES = POLICY["sources"]
 STOP_WORDS = set(
-    "a an and are about does for from how in is it me of on or the to what when where which who why with teach teaches explain please और का की के क्या को से है हैं में पर यह वह".split()
+    "a an and are about does for from how in is it me of on or the to what when where which who why with teach teaches explain please tell give according scripture scriptures can could should would do did this that those these its my your us more follow up और का की के क्या को से है हैं में पर यह वह मुझे बताओ समझाओ".split()
 )
 KANDAS = {
     name: index + 1
@@ -79,7 +79,7 @@ def reference(kind: str, values: tuple) -> dict | None:
     return None
 
 
-def explicit_references(value) -> list[dict]:
+def explicit_references(value, maximum=4) -> list[dict]:
     question = normalize_question(value)
     patterns = [
         (
@@ -137,7 +137,7 @@ def explicit_references(value) -> list[dict]:
             if item and item["id"] not in seen:
                 result.append(item)
                 seen.add(item["id"])
-    return result[:4]
+    return result[:maximum]
 
 
 def follow_up(value) -> bool:
@@ -221,12 +221,16 @@ def classify_guardrail(question, language="en") -> dict | None:
     return None
 
 
-def tokenize(value) -> set[str]:
-    return {
+def terms(value) -> list[str]:
+    return [
         t
-        for t in re.findall(r"[\p{L}\p{N}]+", normalize_question(value))
+        for t in re.findall(r"[\p{L}\p{N}][\p{L}\p{M}\p{N}]*", normalize_question(value))
         if len(t) > 1 and t not in STOP_WORDS
-    }
+    ]
+
+
+def tokenize(value) -> set[str]:
+    return set(terms(value))
 
 
 def rerank(candidates, question) -> list[dict]:
@@ -264,6 +268,23 @@ def verse_reference(verse) -> str:
     return f"Bhagavad Gita, Chapter {verse.get('chapterNumber')}, Verse {verse.get('verseNumber')}"
 
 
+def response_script_matches(answer, language):
+    script = {
+        "hi": "Devanagari",
+        "mr": "Devanagari",
+        "bn": "Bengali",
+        "te": "Telugu",
+        "ta": "Tamil",
+    }.get(language)
+    if not script:
+        return True
+    # This catches wrong-script output; it cannot distinguish Hindi from Marathi.
+    prose = re.sub(r"\[S\d+\]", "", str(answer), flags=re.I)
+    letters = re.findall(r"\p{L}", prose)
+    target = sum(bool(re.fullmatch(r"\p{" + script + "}", letter)) for letter in letters)
+    return bool(letters) and target >= len(letters) * 0.25
+
+
 def unsupported_references(answer, allowed_ids, source_count) -> list[str]:
     text = str(answer or "").translate(str.maketrans("०१२३४५६७८९", "0123456789"))
     unsupported = []
@@ -275,6 +296,16 @@ def unsupported_references(answer, allowed_ids, source_count) -> list[str]:
             valid += 1
     if source_count and not valid:
         unsupported.append("missing source marker")
+    for marker in re.findall(r"\[S[^\]\n]{0,30}\]", text, re.I):
+        if not re.fullmatch(r"\[S\d+\]", marker, re.I):
+            unsupported.append(marker)
+    # Reuse multilingual routing rules so Hindi references cannot bypass validation.
+    for ref in explicit_references(text, maximum=100):
+        doc_id = ref["id"]
+        if doc_id not in allowed_ids and not (
+            ref["type"] == "vishnu-purana" and any(v.startswith(doc_id + "_") for v in allowed_ids)
+        ):
+            unsupported.append(doc_id)
     patterns = [
         (
             "bhagavad-gita",

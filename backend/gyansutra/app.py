@@ -89,10 +89,16 @@ def create_app(store=None, embeddings=None, generation=None, http_client=None):
         if enabled("EMBEDDING_PREWARM") and os.getenv("NODE_ENV") != "test":
 
             async def warm():
-                try:
-                    await embeddings.prewarm()
-                except Exception:
-                    logging.exception("Embedding background prewarm failed")
+                async def stage(service, label):
+                    try:
+                        await service.prewarm()
+                    except Exception:
+                        logging.exception("%s background prewarm failed", label)
+
+                jobs = [stage(embeddings, "Embedding")]
+                if rag.lexical:
+                    jobs.append(stage(rag.lexical, "Keyword index"))
+                await asyncio.gather(*jobs)
 
             prewarm = asyncio.create_task(warm())
         try:

@@ -13,7 +13,7 @@ from google.oauth2 import service_account
 from .config import ROOT
 from .embedding import DIMENSIONS
 
-FIELDS = "chapterNumber verseNumber book kanda kandaNumber sarga shlokaNumber partNumber partTitle sectionNumber passageNumber storyTitle storySummary sanskrit transliteration translationEnglish translationHindi explanationEnglish comments wordMeanings detailedExplanations tags".split()
+FIELDS = "source_id sourceText translationSources verificationStatus verified chapterNumber verseNumber book kanda kandaNumber sarga shlokaNumber partNumber partTitle sectionNumber passageNumber storyTitle storySummary sanskrit transliteration translationEnglish translationHindi explanationEnglish comments wordMeanings detailedExplanations tags".split()
 TEXT_FIELDS = "sanskrit transliteration translationEnglish translationHindi explanationEnglish comments".split()
 ARRAY_FIELDS = "wordMeanings detailedExplanations tags".split()
 
