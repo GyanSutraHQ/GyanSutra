@@ -11,15 +11,12 @@
  */
 
 import { useState, useEffect, useLayoutEffect, useCallback, useRef, lazy, Suspense } from 'react';
-import { Link, Route, Routes, useLocation } from 'react-router-dom';
+import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { askQuestion } from './services/api';
 import Home from './pages/Home';
-import TextReader from './pages/TextReader';
 import ThemeToggle from './components/ThemeToggle';
-import SarathiPanel from './components/SarathiPanel';
 import ErrorBoundary from './components/ErrorBoundary';
 import SEOHead from './components/SEO/SEOHead';
-import AnimatedButton from './components/AnimatedButton';
 import Footer from './components/Footer';
 import NativeAppBridge from './components/NativeAppBridge';
 import { recoverFromChunkError } from './utils/chunkRecovery';
@@ -43,8 +40,10 @@ function lazyWithRetry(componentImport) {
   });
 }
 
-// Lazy-load heavier pages, then warm their small chunks while the browser is idle.
+// Keep reader code out of the landing page's startup path.
+const SarathiPanel = lazyWithRetry(() => import('./components/SarathiPanel'));
 const routeImports = {
+  textReader: () => import('./pages/TextReader'),
   chapterReader: () => import('./pages/ChapterReader'),
   search: () => import('./pages/Search'),
   verseDetail: () => import('./pages/VerseDetail'),
@@ -59,6 +58,7 @@ const routeImports = {
 };
 
 const ChapterReader = lazyWithRetry(routeImports.chapterReader);
+const TextReader = lazyWithRetry(routeImports.textReader);
 const Search        = lazyWithRetry(routeImports.search);
 const VerseDetail   = lazyWithRetry(routeImports.verseDetail);
 const Ramayana      = lazyWithRetry(routeImports.ramayana);
@@ -134,6 +134,13 @@ function BottomNavIcon({ name }) {
         <path d="M6.25 16.5H20M8 7.25h8M8 10.5h5.25" />
       </>
     ),
+    purana: (
+      <>
+        <circle cx="12" cy="12" r="7.5" />
+        <ellipse cx="12" cy="12" rx="10" ry="3.6" transform="rotate(-28 12 12)" />
+        <circle cx="12" cy="12" r="2" />
+      </>
+    ),
     sarathi: (
       <>
         <path d="M12 3.25c0 0-5 5.15-5 9.75a5 5 0 0 0 10 0c0-4.6-5-9.75-5-9.75Z" />
@@ -168,6 +175,17 @@ export default function App() {
     },
   ]);
 
+  const [hasLoadedSarathi, setHasLoadedSarathi] = useState(false);
+
+  const openSarathiPanel = useCallback(() => {
+    setHasLoadedSarathi(true);
+    setIsSarathiOpen(true);
+  }, []);
+
+  const closeSarathiPanel = useCallback(() => {
+    setIsSarathiOpen(false);
+  }, []);
+
   useEffect(() => {
     setMessages((current) => current.map((message) => message.id === 'welcome'
       ? { ...message, content: t('sarathiWelcome') }
@@ -187,13 +205,30 @@ export default function App() {
     };
   }, []);
 
-  // Always begin a new route at the top. Repeat this after the route renders
-  // so browser restoration and lazy-loaded content cannot leave it midway down.
+  // Always begin a new route at the top, unless navigating to an in-page hash anchor.
+  // Repeat this after the route renders so browser restoration and lazy-loaded
+  // content cannot leave it midway down.
   const scrollPathRef = useRef(null);
   useLayoutEffect(() => {
     const preserveReadingPosition = isReaderQueryNavigation(scrollPathRef.current, location.pathname);
     scrollPathRef.current = location.pathname;
     if (preserveReadingPosition) return;
+    if (location.hash) {
+      const targetId = decodeURIComponent(location.hash.slice(1));
+      const scrollToAnchor = () => {
+        const element = document.getElementById(targetId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return true;
+        }
+        return false;
+      };
+      if (!scrollToAnchor()) {
+        const timerId = window.setTimeout(scrollToAnchor, 120);
+        return () => window.clearTimeout(timerId);
+      }
+      return;
+    }
     const resetScrollPosition = () => {
       window.scrollTo(0, 0);
 
@@ -209,9 +244,13 @@ export default function App() {
     resetScrollPosition();
     const animationFrame = window.requestAnimationFrame(resetScrollPosition);
     return () => window.cancelAnimationFrame(animationFrame);
-  }, [location.key, location.pathname]);
+  }, [location.hash, location.key, location.pathname]);
 
   useEffect(() => {
+    // A visit to the homepage must not download the entire application.
+    // Readers still get idle preloading, unless their connection is constrained.
+    if (location.pathname === '/' || navigator.connection?.saveData
+      || /2g/.test(navigator.connection?.effectiveType || '')) return;
     const warmRouteChunks = () => {
       Object.values(routeImports).forEach((loadRoute) => {
         loadRoute().catch(() => {
@@ -227,7 +266,7 @@ export default function App() {
 
     const timerId = window.setTimeout(warmRouteChunks, 500);
     return () => window.clearTimeout(timerId);
-  }, []);
+  }, [location.pathname]);
 
   async function handleAsk(event) {
     event.preventDefault();
@@ -291,11 +330,11 @@ export default function App() {
         setQuestion(e.detail.prompt);
         if (e.detail?.submit) void submitQuestion(e.detail.prompt, e.detail.contextIds);
       }
-      setIsSarathiOpen(true);
+      openSarathiPanel();
     };
     window.addEventListener('open-sarathi', handleOpenSarathi);
     return () => window.removeEventListener('open-sarathi', handleOpenSarathi);
-  }, [submitQuestion]);
+  }, [openSarathiPanel, submitQuestion]);
 
   const isGitaRoute = location.pathname.startsWith('/bhagavad-gita')
     || location.pathname.startsWith('/chapters')
@@ -303,15 +342,20 @@ export default function App() {
   const isRamayanaRoute = location.pathname.startsWith('/ramayana');
   const isVishnuPuranaRoute = location.pathname.startsWith('/vishnu-purana');
   const sarathiPrompts = [t('promptDuty'), t('promptDetachment'), t('promptDecision')];
+  // A single metadata owner per route: React 19 does not deduplicate two
+  // different <title> elements from a global default and a page component.
+  const needsShellSEO = location.pathname === '/ask'
+    || /^\/(chapters|verses|ramayana)\//.test(location.pathname);
 
   return (
-    <div className="gs-app">
+    <div className={`gs-app${location.pathname === '/' ? ' gs-app--landing' : ''}`}>
+      <a className="gs-skip-link" href="#main-content">Skip to content</a>
       <NativeAppBridge
         isOverlayOpen={isSarathiOpen}
-        onCloseOverlay={() => setIsSarathiOpen(false)}
+        onCloseOverlay={closeSarathiPanel}
         offlineLabel={t('offlineNotice')}
       />
-      <SEOHead />
+      {needsShellSEO && <SEOHead canonical={location.pathname} noindex />}
       {/* ── Fixed Header ── */}
       <header className={`gs-header${isSarathiOpen ? ' gs-header--sarathi-open' : ''}`}>
         <div className="gs-header__nav">
@@ -328,16 +372,17 @@ export default function App() {
             </span>
           </Link>
 
-          {/* Right Side Elements */}
-          <div className="gs-header__right">
-            {/* Reading links stay in the desktop header. */}
-            <nav className="gs-header__nav-links" aria-label="Primary navigation">
-              <span className="gs-header__nav-label">{t('read')}</span>
-              <Link to="/bhagavad-gita" aria-current={isGitaRoute ? 'page' : undefined} className={`gs-header__nav-link${isGitaRoute ? ' gs-header__nav-link--active' : ''}`}>{language === 'en' ? 'Bhagavad Gita' : t('heroTitleHighlight')}</Link>
-              <Link to="/ramayana" aria-current={isRamayanaRoute ? 'page' : undefined} className={`gs-header__nav-link${isRamayanaRoute ? ' gs-header__nav-link--active' : ''}`}>{t('ramayana')}</Link>
-              <Link to="/vishnu-purana" aria-current={isVishnuPuranaRoute ? 'page' : undefined} className={`gs-header__nav-link${isVishnuPuranaRoute ? ' gs-header__nav-link--active' : ''}`}>Vishnu Purana</Link>
-            </nav>
+          {/* Center Navigation Pill (Desktop) */}
+          <nav className="gs-header__nav-links" aria-label="Primary navigation">
+            <Link to="/" aria-current={location.pathname === '/' ? 'page' : undefined} className={`gs-header__nav-link${location.pathname === '/' ? ' gs-header__nav-link--active' : ''}`}>{t('home')}</Link>
+            <Link to="/bhagavad-gita" aria-current={isGitaRoute ? 'page' : undefined} className={`gs-header__nav-link${isGitaRoute ? ' gs-header__nav-link--active' : ''}`}>{language === 'en' ? 'Bhagavad Gita' : t('heroTitleHighlight')}</Link>
+            <Link to="/ramayana" aria-current={isRamayanaRoute ? 'page' : undefined} className={`gs-header__nav-link${isRamayanaRoute ? ' gs-header__nav-link--active' : ''}`}>{t('ramayana')}</Link>
+            <Link to="/vishnu-purana" aria-current={isVishnuPuranaRoute ? 'page' : undefined} className={`gs-header__nav-link${isVishnuPuranaRoute ? ' gs-header__nav-link--active' : ''}`}>Vishnu Purana</Link>
+            <Link to="/faq" aria-current={location.pathname === '/faq' ? 'page' : undefined} className={`gs-header__nav-link${location.pathname === '/faq' ? ' gs-header__nav-link--active' : ''}`}>About</Link>
+          </nav>
 
+          {/* Right Side Utilities */}
+          <div className="gs-header__right">
             {/* Desktop utilities. Mobile keeps a calmer app bar and moves
                 reading controls into a native-style settings sheet. */}
             <div className="gs-header__actions gs-header__actions--desktop">
@@ -353,16 +398,19 @@ export default function App() {
                   <path strokeLinecap="round" d="M15.5 15.5L21 21" />
                 </svg>
               </Link>
-              <AnimatedButton
-                className="sarathi-trigger"
-                onClick={() => setIsSarathiOpen(true)}
+              <LanguageSwitcher />
+              <ThemeToggle />
+              <span className="gs-header__divider" aria-hidden="true" />
+              <button type="button"
+                className={`sarathi-trigger${isSarathiOpen ? ' sarathi-trigger--active' : ''}`}
+                onClick={() => isSarathiOpen ? closeSarathiPanel() : openSarathiPanel()}
                 aria-label={t('askSarathi')}
+                aria-expanded={isSarathiOpen}
+                onMouseEnter={() => { void import('./components/SarathiPanel'); }}
               >
                 <TriggerFlame />
                 <span className="sarathi-trigger__label">{t('askSarathi')}</span>
-              </AnimatedButton>
-              <LanguageSwitcher />
-              <ThemeToggle />
+              </button>
             </div>
 
             <div className="gs-header__actions gs-header__actions--mobile">
@@ -386,7 +434,7 @@ export default function App() {
 
       {/* ── App body - shifts right on desktop when Sarathi is open ── */}
       <div className={`gs-body${isSarathiOpen ? ' gs-body--sarathi-open' : ''}`}>
-        <div className="gs-reading-content">
+        <div className="gs-reading-content" id={location.pathname === '/' ? undefined : 'main-content'}>
           <ErrorBoundary>
             <Suspense fallback={<PageLoader />}>
               <Routes location={location} key={`${location.pathname}${location.search}`}>
@@ -394,6 +442,11 @@ export default function App() {
                   path="/"
                   element={<PageTransition><Home /></PageTransition>}
                 />
+                <Route path="/home" element={<Navigate to="/" replace />} />
+                <Route path="/index.html" element={<Navigate to="/" replace />} />
+                <Route path="/gita" element={<Navigate to="/bhagavad-gita" replace />} />
+                <Route path="/valmiki-ramayana" element={<Navigate to="/ramayana" replace />} />
+                <Route path="/purana" element={<Navigate to="/vishnu-purana" replace />} />
                 <Route path="/search" element={<PageTransition><Search /></PageTransition>} />
                 <Route path="/verses/:id" element={<PageTransition><VerseDetail /></PageTransition>} />
                 <Route path="/chapters/:id" element={<PageTransition><ChapterReader /></PageTransition>} />
@@ -406,6 +459,7 @@ export default function App() {
                 <Route path="/faq" element={<PageTransition><FAQ /></PageTransition>} />
                 <Route path="/ask" element={<PageTransition><Ask /></PageTransition>} />
                 <Route path="/:source_id" element={<PageTransition><TextReader /></PageTransition>} />
+                <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </Suspense>
           </ErrorBoundary>
@@ -414,16 +468,16 @@ export default function App() {
       </div>
 
       {/* ── Sarathi companion - side panel on desktop, sheet on mobile ── */}
-      <SarathiPanel
+      {(hasLoadedSarathi || isSarathiOpen) && <Suspense fallback={null}><SarathiPanel
         isOpen={isSarathiOpen}
-        onClose={() => setIsSarathiOpen(false)}
+        onClose={closeSarathiPanel}
         messages={messages}
         question={question}
         setQuestion={setQuestion}
         onAsk={handleAsk}
         isLoading={isLoading}
         suggestedPrompts={sarathiPrompts}
-      />
+      /></Suspense>}
 
       {/* ── Mobile bottom navigation: destinations only ───────────── */}
       <nav className="gs-bottom-nav" aria-label="Mobile navigation">
@@ -457,12 +511,22 @@ export default function App() {
           <span className="gs-bottom-nav__label">{t('ramayana')}</span>
         </Link>
 
+        <Link
+          to="/vishnu-purana"
+          className={`gs-bottom-nav__item${isVishnuPuranaRoute ? ' gs-bottom-nav__item--active' : ''}`}
+          aria-label={`${t('read')} Vishnu Purana`}
+          aria-current={isVishnuPuranaRoute ? 'page' : undefined}
+        >
+          <BottomNavIcon name="purana" />
+          <span className="gs-bottom-nav__label">Purana</span>
+        </Link>
+
         <button
           type="button"
           className={`gs-bottom-nav__item${isSarathiOpen ? ' gs-bottom-nav__item--active' : ''}`}
           aria-label={t('askSarathi')}
           aria-pressed={isSarathiOpen}
-          onClick={() => setIsSarathiOpen(true)}
+          onClick={() => isSarathiOpen ? closeSarathiPanel() : openSarathiPanel()}
         >
           <BottomNavIcon name="sarathi" />
           <span className="gs-bottom-nav__label">Sarathi</span>

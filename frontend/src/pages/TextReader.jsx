@@ -4,7 +4,7 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getAllChapters } from '../services/api';
 import LoadingSpinner from '../components/LoadingSpinner';
 import AnimatedButton from '../components/AnimatedButton';
@@ -19,18 +19,28 @@ const SOURCE_META = {
     title: 'Bhagavad Gita',
     description: 'A foundational dialogue on duty, devotion, and self-knowledge.',
     devanagari: 'श्रीमद्भगवद्गीता',
+    image: 'images/landing/gita-card.jpg',
     available: true,
+  },
+  'vedas': {
+    title: 'Vedas',
+    description: 'Ancient hymns, mantras, and sacred sound forming the foundational root of Sanatan Dharma.',
+    devanagari: 'वेद',
+    image: 'images/landing/tradition-vedas.jpg',
+    available: false,
   },
   'upanishads': {
     title: 'Upanishads',
     description: 'A contemplative collection exploring the self, reality, and liberation.',
     devanagari: 'उपनिषद्',
+    image: 'images/landing/tradition-upanishads.jpg',
     available: false,
   },
   'ramayana': {
-    title: 'Ramayana',
+    title: 'Valmiki Ramayana',
     description: 'An epic text centered on dharma, exile, loyalty, and return.',
     devanagari: 'रामायण',
+    image: 'images/landing/ramayana-card.jpg',
     available: false,
   },
 };
@@ -52,12 +62,14 @@ const READER_COPY = {
 
 export default function TextReader() {
   const { language, t } = useLanguage();
+  const navigate = useNavigate();
   const labels = READER_COPY[language] || READER_COPY.en;
   const { source_id } = useParams();
   const meta = SOURCE_META[source_id] || {
     title: source_id,
     description: '',
     devanagari: 'ॐ',
+    image: 'images/landing/hero-landscape.jpg',
     available: false,
   };
   const [chapters, setChapters] = useState([]);
@@ -84,7 +96,7 @@ export default function TextReader() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [source_id]);
 
-  // Chapter / verse reference jump (e.g. "3" → chapter 3, "3.16" → ch 3 start)
+  // Chapter / verse reference jump (e.g. "3" → chapter 3, "2.47" → ch 2 verse 47)
   function handleJump(e) {
     e.preventDefault();
     const clean = jumpInput.trim();
@@ -92,8 +104,10 @@ export default function TextReader() {
 
     const parts = clean.split(/[.:]/);
     const chNum = parseInt(parts[0], 10);
+    const verseNum = parts[1] ? parseInt(parts[1], 10) : null;
     if (!isNaN(chNum) && chNum >= 1 && chNum <= 18) {
-      window.location.href = `/chapters/chapter_${chNum}`;
+      const query = verseNum && !isNaN(verseNum) && verseNum > 0 ? `?verse=${verseNum}` : '';
+      navigate(`/chapters/chapter_${chNum}${query}`);
     }
   }
 
@@ -104,7 +118,15 @@ export default function TextReader() {
         <SEOHead title={meta.title} description={`${meta.title} is being prepared for the Gyan Sutra scripture library.`} canonical={`/${source_id}`} noindex />
         <div className="text-reader__container">
           <Link to="/" className="text-reader__back">← {labels.library}</Link>
-          <header className="text-reader__header">
+          <header className="text-reader__header gs-cinematic-masthead">
+            <img
+              src={`${import.meta.env.BASE_URL}${meta.image}`}
+              alt=""
+              aria-hidden="true"
+              className="gs-cinematic-masthead__bg"
+              loading="eager"
+              decoding="async"
+            />
             <p className="text-reader__source-badge">{labels.preparation}</p>
             <h1 className="text-reader__title">{meta.title}</h1>
             <p className="text-reader__devanagari devanagari">{meta.devanagari}</p>
@@ -146,7 +168,15 @@ export default function TextReader() {
         </Link>
 
         {/* Source header */}
-        <header className="text-reader__header">
+        <header className="text-reader__header gs-cinematic-masthead">
+          <img
+            src={`${import.meta.env.BASE_URL}${meta.image}`}
+            alt=""
+            aria-hidden="true"
+            className="gs-cinematic-masthead__bg"
+            loading="eager"
+            decoding="async"
+          />
           <p className="text-reader__source-badge">{t('chapters18')}</p>
           <h1 className="text-reader__title">{language === 'en' ? meta.title : t('heroTitleHighlight')}</h1>
           <p className="text-reader__devanagari devanagari">{meta.devanagari}</p>

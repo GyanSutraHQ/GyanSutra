@@ -2,21 +2,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  border: var(--hairline);
-  border-radius: var(--radius-md);
-  background: transparent;
-  color: var(--text-muted);
+  width: 38px;
+  height: 38px;
+  border: 1px solid color-mix(in srgb, var(--border) 62%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--bg) 60%, var(--bg-surface));
+  color: var(--text-primary);
   cursor: pointer;
-  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    transform var(--transition-fast);
   flex-shrink: 0;
 }
 
 .theme-toggle:hover {
-  color: var(--accent);
+  color: var(--accent-hover);
   border-color: var(--accent);
-  background: color-mix(in srgb, var(--marigold) 8%, transparent);
+  background: color-mix(in srgb, var(--marigold) 12%, var(--bg-surface));
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+  color: var(--marigold);
 }
 
 .theme-toggle__icon {

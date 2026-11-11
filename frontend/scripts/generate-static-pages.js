@@ -1,5 +1,7 @@
 import fs from 'fs';
 import path from 'path';
+import { createServer } from 'vite';
+import { LANDING_META, LANDING_SCHEMA } from '../src/data/landing.js';
 import { SEO_TOPICS, SEO_TOPIC_BY_SLUG } from '../src/data/seoTopics.js';
 
 const DIST_DIR = path.resolve(process.cwd(), 'dist');
@@ -17,7 +19,16 @@ const rawTemplate = fs.readFileSync(TEMPLATE_PATH, 'utf8');
 // The generator may be run more than once against the same dist directory.
 // Restore the Vite root placeholder when a prior run has already inserted a
 // crawlable snapshot, so every route starts from the same application shell.
-const template = rawTemplate.replace(
+const template = rawTemplate
+  // Remove metadata owned by a prior generation before deriving other routes.
+  .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g, '')
+  .replace(/<meta name="robots"[^>]*>/g, '')
+  .replace(/<style data-seo-snapshot-style>[\s\S]*?<\/style>/g, '')
+  .replace(/<style data-home-prerender>[\s\S]*?<\/style>/g, '')
+  .replace(
+  /<div id="root"><!--gs-prerender-start-->[\s\S]*?<!--gs-prerender-end--><\/div>/,
+  '<div id="root"></div>',
+).replace(
   /<div id="root"><main class="seo-snapshot"[\s\S]*?<\/main><\/div>/,
   '<div id="root"></div>',
 );
@@ -79,7 +90,7 @@ function page({ route, title, description, content, type, schema }) {
     + `  <header><h1>${escapeHtml(title)}</h1><p>${escapeHtml(description)}</p></header>\n`
     + `${content}\n`
     + `</main>`;
-  const withContent = template.replace('<div id="root"></div>', `<div id="root">${snapshot}</div>`);
+  const withContent = template.replace('<div id="root"></div>', `<div id="root"><!--gs-prerender-start-->${snapshot}<!--gs-prerender-end--></div>`);
   const output = metadata(withContent, { route, title, description, type, schema });
   const outputPath = route === '/'
     ? TEMPLATE_PATH
@@ -99,12 +110,20 @@ const bookSchema = {
   url: `${CANONICAL_ORIGIN}/vishnu-purana`,
 };
 
-page({
-  route: '/',
-  title: 'Gita, Ramayana and Vishnu Purana',
-  description: 'Read the Bhagavad Gita, Valmiki Ramayana, and complete Vishnu Purana with source-grounded translations, notes, audio, and Sarathi guidance.',
-  content: `<section><h2>Scripture library</h2><ul><li>${anchor('/bhagavad-gita', 'Bhagavad Gita')}</li><li>${anchor('/ramayana', 'Valmiki Ramayana')}</li><li>${anchor('/vishnu-purana', 'The complete Vishnu Purana')}</li></ul></section><section><h2>Bhagavad Gita study guides</h2><ul>${SEO_TOPICS.map((topic) => `<li>${anchor(`/topics/${topic.slug}`, topic.h1)} — ${escapeHtml(topic.description)}</li>`).join('')}</ul></section>`,
-});
+const server = await createServer({ server: { middlewareMode: true, hmr: false, ws: false }, appType: 'custom' });
+try {
+  const { renderLanding } = await server.ssrLoadModule('/src/landing-entry.jsx');
+  const landing = renderLanding(basePath);
+  const homepage = metadata(template.replace('<div id="root"></div>',
+    `<div id="root"><!--gs-prerender-start-->${landing}<!--gs-prerender-end--></div>`),
+  { route: '/', ...LANDING_META, schema: LANDING_SCHEMA });
+  // A prerendered homepage needs no opaque startup overlay. Other routes
+  // retain their existing boot recovery UI.
+  fs.writeFileSync(TEMPLATE_PATH, homepage.replace('</head>',
+    '<style data-home-prerender>#gs-boot-splash{display:none!important}</style></head>'), 'utf8');
+} finally {
+  await server.close();
+}
 
 for (const topic of SEO_TOPICS) {
   const route = `/topics/${topic.slug}`;

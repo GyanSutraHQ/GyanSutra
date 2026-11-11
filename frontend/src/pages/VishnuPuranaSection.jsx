@@ -54,7 +54,15 @@ export default function VishnuPuranaSection() {
       <div className="vp-shell vp-shell--reading">
         <Link className="vp-back" to={`/vishnu-purana/${part.number}`}>← {part.title}</Link>
 
-        <header className="vp-reading-header">
+        <header className="vp-reading-header gs-cinematic-masthead">
+          <img
+            src={`${import.meta.env.BASE_URL}images/landing/purana-card.jpg`}
+            alt=""
+            aria-hidden="true"
+            className="gs-cinematic-masthead__bg"
+            loading="eager"
+            decoding="async"
+          />
           <p className="vp-kicker">Vishnu Purana · Source passage</p>
           <div className="vp-reading-header__title-row">
             <h1>{section.title}</h1>

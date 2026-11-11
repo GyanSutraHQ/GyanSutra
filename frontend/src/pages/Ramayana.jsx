@@ -30,7 +30,15 @@ export default function Ramayana() {
       />
       <div className="text-reader__container">
         <Link to="/" className="text-reader__back">← {t('browseLibrary')}</Link>
-        <header className="text-reader__header">
+        <header className="text-reader__header gs-cinematic-masthead">
+          <img
+            src={`${import.meta.env.BASE_URL}images/landing/ramayana-card.jpg`}
+            alt=""
+            aria-hidden="true"
+            className="gs-cinematic-masthead__bg"
+            loading="eager"
+            decoding="async"
+          />
           <p className="text-reader__source-badge">{t('kandas7')}</p>
           <h1 className="text-reader__title">{language === 'en' ? 'Valmiki Ramayana' : t('ramayana')}</h1>
           <p className="text-reader__devanagari devanagari">रामायण</p>

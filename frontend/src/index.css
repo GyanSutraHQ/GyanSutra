@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Martel:wght@300;400;600;700;900&family=Hind:wght@300;400;500;600&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap');
 @import "tailwindcss";
 @import './design-system/tokens.css';
 
@@ -1182,5 +1181,205 @@ p {
 @media (prefers-reduced-motion: reduce) {
   .gs-home__darshan-skeleton {
     animation: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Ramayana Part 1 Inspired Cinematic Typography & Mastheads
+   Applied across Landing, Scripture Indexes, and Chapter/Kanda Headers
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.gs-gold-lettering {
+  font-family: var(--font-epic);
+  background: linear-gradient(
+    110deg,
+    #fff7df 0%,
+    #f5c96b 24%,
+    #d4862a 46%,
+    #fff3c4 52%,
+    #e29f42 74%,
+    #fff6da 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 18px rgba(232, 163, 61, 0.26));
+  animation: gs-molten-shimmer 9s ease-in-out infinite;
+}
+
+html:not([data-language="en"]) .gs-gold-lettering {
+  font-family: inherit;
+}
+
+.gs-carved-title {
+  font-family: var(--font-epic);
+  letter-spacing: 0.02em;
+  background: linear-gradient(
+    115deg,
+    #4b2313 0%,
+    #9c4e1c 30%,
+    #cf832c 50%,
+    #7a3816 74%,
+    #3d1b28 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gs-molten-shimmer 11s ease-in-out infinite;
+}
+
+[data-theme="dark"] .gs-carved-title {
+  background: linear-gradient(
+    110deg,
+    #fff6dc 0%,
+    #f2c464 28%,
+    #cf832c 52%,
+    #ffe9a8 76%,
+    #e09d41 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 16px rgba(232, 163, 61, 0.22));
+}
+
+html:not([data-language="en"]) .gs-carved-title {
+  font-family: inherit;
+  letter-spacing: 0;
+}
+
+/* Cinematic Reader & Index Masthead Banner */
+.gs-cinematic-masthead {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  padding: clamp(1.75rem, 4vw, 3rem) clamp(1.5rem, 4vw, 2.75rem);
+  margin-bottom: 2.25rem;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(238, 174, 78, 0.22) 0%, transparent 70%),
+    linear-gradient(165deg, #2b1628 0%, #3d1d33 48%, #1e1222 100%);
+  border: 1px solid rgba(238, 185, 96, 0.32);
+  box-shadow:
+    0 18px 44px -12px rgba(28, 14, 28, 0.35),
+    inset 0 1px 0 rgba(255, 234, 184, 0.25);
+  color: #f9eed8;
+}
+
+.gs-cinematic-masthead__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.28;
+  mix-blend-mode: luminosity;
+  filter: contrast(1.08) saturate(1.15);
+  transform: scale(1.03);
+  transition: transform 8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  pointer-events: none;
+  z-index: -2;
+}
+
+.gs-cinematic-masthead:hover .gs-cinematic-masthead__bg {
+  transform: scale(1.08);
+}
+
+.gs-cinematic-masthead::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 82% 22%, rgba(255, 206, 115, 0.2) 0%, transparent 48%),
+    linear-gradient(90deg, rgba(28, 15, 28, 0.88) 0%, rgba(40, 20, 36, 0.74) 60%, rgba(28, 15, 28, 0.55) 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.gs-cinematic-masthead::after {
+  content: '';
+  position: absolute;
+  inset: -40% -20%;
+  background: conic-gradient(
+    from 200deg at 80% 10%,
+    transparent 0deg,
+    rgba(255, 217, 138, 0.09) 18deg,
+    transparent 38deg,
+    rgba(255, 198, 98, 0.07) 56deg,
+    transparent 80deg
+  );
+  animation: gs-masthead-rays 18s ease-in-out infinite alternate;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.gs-cinematic-masthead .text-reader__source-badge,
+.gs-cinematic-masthead .chapter-reader__chapter-num,
+.gs-cinematic-masthead .vp-kicker {
+  color: #ffd88a !important;
+  letter-spacing: 0.2em;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.45);
+}
+
+.gs-cinematic-masthead .text-reader__title,
+.gs-cinematic-masthead .chapter-reader__title,
+.gs-cinematic-masthead h1 {
+  font-family: var(--font-epic);
+  background: linear-gradient(
+    115deg,
+    #fff9e6 0%,
+    #f7cf78 30%,
+    #d98d32 54%,
+    #fff1be 76%,
+    #e6a84e 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 16px rgba(232, 163, 61, 0.25));
+  animation: gs-molten-shimmer 10s ease-in-out infinite;
+}
+
+html:not([data-language="en"]) .gs-cinematic-masthead .text-reader__title,
+html:not([data-language="en"]) .gs-cinematic-masthead .chapter-reader__title,
+.gs-cinematic-masthead .devanagari.chapter-reader__title {
+  font-family: var(--font-devanagari);
+}
+
+.gs-cinematic-masthead .text-reader__devanagari,
+.gs-cinematic-masthead .chapter-reader__title-en,
+.gs-cinematic-masthead .vp-devanagari {
+  color: #f6ce82 !important;
+  opacity: 0.92;
+}
+
+.gs-cinematic-masthead .text-reader__description,
+.gs-cinematic-masthead .chapter-reader__summary,
+.gs-cinematic-masthead .vp-lede {
+  color: #efe1cb !important;
+}
+
+@keyframes gs-molten-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes gs-masthead-rays {
+  0% { transform: rotate(-4deg) scale(1); opacity: 0.65; }
+  100% { transform: rotate(5deg) scale(1.06); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gs-gold-lettering,
+  .gs-carved-title,
+  .gs-cinematic-masthead h1,
+  .gs-cinematic-masthead .text-reader__title,
+  .gs-cinematic-masthead .chapter-reader__title,
+  .gs-cinematic-masthead::after {
+    animation: none !important;
   }
 }

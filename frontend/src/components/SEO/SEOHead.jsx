@@ -4,7 +4,7 @@ export default function SEOHead({
   title = "Gita, Ramayana and Vishnu Purana",
   description = "Read the Bhagavad Gita, Valmiki Ramayana, and complete Vishnu Purana with source-grounded translations, notes, audio, and Sarathi guidance.",
   canonical = "",
-  ogImage = "https://gyansutraapp.com/linkedin/gyan-sutra-linkedin-cover.png",
+  ogImage = "https://gyansutraapp.com/social/gyansutra-library.png",
   noindex = false,
   schemaData = null
 }) {
@@ -28,7 +28,7 @@ export default function SEOHead({
       <link rel="canonical" href={canonicalUrl} />
       
       {/* Robots indexing */}
-      <meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow"} />
+      <meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow,max-snippet:-1,max-image-preview:large"} />
 
       {/* Open Graph */}
       <meta property="og:type" content="website" />
@@ -37,6 +37,9 @@ export default function SEOHead({
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={fullDesc} />
       <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content="Gyan Sutra — many scriptures, one living thread; a sunset scripture landscape" />
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -47,7 +50,7 @@ export default function SEOHead({
       {/* Structured Data (JSON-LD) */}
       {schemaData && (
         <script type="application/ld+json">
-          {JSON.stringify(schemaData)}
+          {JSON.stringify(schemaData).replaceAll('<', '\\u003c')}
         </script>
       )}
     </Helmet>

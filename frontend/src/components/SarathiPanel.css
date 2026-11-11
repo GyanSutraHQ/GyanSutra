@@ -6,25 +6,25 @@
 
 /* ── Mobile backdrop ─────────────────────────────────────────────────── */
 .sarathi-backdrop {
-  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 44;
+  background: rgba(14, 7, 18, 0.28);
+  animation: backdrop-in 0.24s ease forwards;
 }
 
 @media (max-width: 1023px) {
   .sarathi-backdrop {
-    display: block;
-    position: fixed;
-    inset: 0;
     z-index: 58;
     background: color-mix(in srgb, var(--night) 48%, transparent);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
-    animation: backdrop-in 0.24s ease forwards;
   }
+}
 
-  @keyframes backdrop-in {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
+@keyframes backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* ── Panel base ──────────────────────────────────────────────────────── */
@@ -32,6 +32,13 @@
   display: flex;
   flex-direction: column;
   background: var(--bg-surface);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.sarathi-panel--open {
+  pointer-events: auto;
+  visibility: visible;
 }
 
 /* ── Mobile: resizable bottom sheet ─────────────────────────────────── */
@@ -47,7 +54,7 @@
     border-bottom: 0;
     border-radius: 22px 22px 0 0;
     /* Closed state: hidden below */
-    transform: translateY(105%);
+    transform: translate3d(0, 105%, 0);
     opacity: 0;
     padding-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
     transition:
@@ -55,17 +62,25 @@
       opacity     0.22s ease,
       height      0.3s cubic-bezier(0.22, 1, 0.36, 1),
       border-radius 0.3s ease,
-      box-shadow  0.3s  ease;
+      box-shadow  0.3s  ease,
+      visibility  0s linear 0.32s;
     box-shadow:
       0 -20px 60px color-mix(in srgb, var(--night) 34%, transparent),
       0 -1px 0 color-mix(in srgb, white 4%, transparent);
-    will-change: transform, opacity, height;
+    will-change: transform, opacity;
     overflow: hidden;
   }
 
   .sarathi-panel--open {
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
     opacity: 1;
+    transition:
+      transform   0.32s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity     0.22s ease,
+      height      0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      border-radius 0.3s ease,
+      box-shadow  0.3s  ease,
+      visibility  0s linear 0s;
     box-shadow:
       0 -24px 72px color-mix(in srgb, var(--night) 40%, transparent),
       0 -1px 0 color-mix(in srgb, white 5%, transparent);
@@ -73,14 +88,6 @@
 
   .sarathi-panel--full {
     border-radius: 0;
-  }
-
-  .sarathi-panel--open.sarathi-panel--minimizing {
-    transform: translateY(104%) !important;
-    opacity: 0 !important;
-    transition:
-      transform 0.26s cubic-bezier(0.4, 0, 1, 1),
-      opacity 0.2s ease-out !important;
   }
 
   /* Disable transitions during drag */
@@ -101,27 +108,25 @@
     bottom: 0;
     width: 420px;
     border-left: 1px solid var(--border);
-    transform: translateX(100%);
+    transform: translate3d(102%, 0, 0);
     opacity: 0;
     z-index: 45;
+    will-change: transform, opacity;
     transition:
-      transform 0.35s cubic-bezier(0.32, 0.72, 0, 1),
-      opacity 0.25s ease;
-    box-shadow: -18px 0 55px color-mix(in srgb, var(--night) 24%, transparent);
+      transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.24s ease,
+      visibility 0s linear 0.34s;
+    box-shadow: -20px 0 60px rgba(10, 5, 16, 0.28);
     overflow: hidden;
-  }
-  
-  .sarathi-panel--open.sarathi-panel--minimizing {
-    transform: translateX(100%) !important;
-    opacity: 0 !important;
-    transition:
-      transform 0.26s cubic-bezier(0.4, 0, 1, 1),
-      opacity 0.2s ease-out !important;
   }
 
   .sarathi-panel--open {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
     opacity: 1;
+    transition:
+      transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.24s ease,
+      visibility 0s linear 0s;
   }
 }
 
@@ -175,8 +180,8 @@
 /* Desktop: push header below the sticky app header */
 @media (min-width: 1024px) {
   .sarathi-panel__header {
-    min-height: 112px;
-    padding-top: 4.65rem;
+    min-height: 76px;
+    padding-top: 1.15rem;
   }
 }
 
@@ -585,24 +590,22 @@
 .sarathi-panel__submit {
   font-family: var(--font-body);
   font-size: var(--text-sm);
-  font-weight: 500;
+  font-weight: 650;
   letter-spacing: 0.02em;
-  min-width: 68px;
+  min-width: 72px;
   min-height: 38px;
-  padding: 0.45rem 1rem;
-  background: var(--accent);
-  color: white;
-  border: none;
+  padding: 0.45rem 1.05rem;
+  background: linear-gradient(135deg, #ffe29e 0%, #efb047 100%);
+  color: #1f1224;
+  border: 1px solid var(--accent);
   border-radius: 9px;
   cursor: pointer;
   transition:
-    background var(--transition-fast),
+    filter     var(--transition-fast),
     opacity    var(--transition-fast);
   white-space: nowrap;
   flex-shrink: 0;
 }
-
-[data-theme="dark"] .sarathi-panel__submit { color: var(--night); }
 
 .sarathi-panel__submit:disabled {
   opacity: 0.38;
@@ -610,7 +613,7 @@
 }
 
 .sarathi-panel__submit:not(:disabled):hover {
-  background: var(--accent-hover);
+  filter: brightness(1.06);
 }
 
 /* ── Reduced motion ──────────────────────────────────────────────────── */

@@ -116,7 +116,15 @@ export default function ChapterReader() {
           >
             ← {labels.chapters}
           </Link>
-          <div className="chapter-reader__title-block">
+          <div className="chapter-reader__title-block gs-cinematic-masthead">
+            <img
+              src={`${import.meta.env.BASE_URL}images/landing/gita-card.jpg`}
+              alt=""
+              aria-hidden="true"
+              className="gs-cinematic-masthead__bg"
+              loading="eager"
+              decoding="async"
+            />
             <span className="chapter-reader__chapter-num">
               {t('chapter')} {chapter.number}
             </span>
@@ -124,10 +132,8 @@ export default function ChapterReader() {
               {language === 'en' ? chapter.titleEnglish : chapter.titleSanskrit}
             </h1>
             {language === 'en' && <p className="chapter-reader__title-en devanagari" lang="sa">{chapter.titleSanskrit}</p>}
+            <p className="chapter-reader__summary">{language === 'en' && chapter.summary ? chapter.summary : (READER_INTRO_COPY[language] || READER_INTRO_COPY.en)[Number(chapter.number) === 1 ? 'chapterOne' : 'gita']}</p>
           </div>
-          <hr className="gold-rule" />
-          <p className="chapter-reader__summary">{language === 'en' && chapter.summary ? chapter.summary : (READER_INTRO_COPY[language] || READER_INTRO_COPY.en)[Number(chapter.number) === 1 ? 'chapterOne' : 'gita']}</p>
-          <hr className="gold-rule" />
         </header>
       )}
 

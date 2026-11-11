@@ -27,11 +27,14 @@
 
   /* Semantic aliases - used in component code */
   --bg:           var(--parchment);
+  --bg-primary:   var(--parchment);
   --bg-surface:   #FDFAF3;   /* slightly lighter than parchment for cards     */
+  --surface:      #FDFAF3;
   --text-primary: var(--ink);
   --text-secondary: #5C4E6B;
-  --text-muted:   #8E7E9E;
+  --text-muted:   #726183;
   --border:       var(--gold-thread);
+  --border-default: var(--gold-thread);
   --accent:       var(--marigold);
   --accent-hover: var(--copper);
   --brand-deep:   var(--indigo);
@@ -39,9 +42,16 @@
 
 /* ── Typography Scale ─────────────────────────────────────────────────── */
 :root {
+  --font-epic:    'Cinzel', 'Cinzel Decorative', 'Martel', Georgia, serif; /* Epic cinematic titles */
   --font-display: 'Martel', Georgia, serif;          /* Chapter titles, verse labels     */
+  --font-heading: 'Cinzel', 'Martel', Georgia, serif;
   --font-body:    Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', sans-serif;
   --font-devanagari: 'Tiro Devanagari Hindi', serif; /* Sanskrit and Hindi verse text    */
+
+  /* Ramayana Part 1 Inspired Molten Gold & Ember VFX Tokens */
+  --gold-molten-gradient: linear-gradient(135deg, #fff8dc 0%, #f5cb72 28%, #d48932 54%, #ffe7a3 76%, #b8681e 100%);
+  --gold-carved-light: linear-gradient(135deg, #6b3518 0%, #b56522 38%, #d99338 66%, #5c2a12 100%);
+  --gold-flare-shadow: 0 2px 24px rgba(232, 163, 61, 0.28), 0 1px 2px rgba(20, 10, 24, 0.65);
 
   /* Type scale - major third (1.25) */
   --text-xs:   0.64rem;   /* 10.24px - tags, labels        */
@@ -120,18 +130,21 @@
 /* ── Dark Mode Token Overrides ────────────────────────────────────────── */
 [data-theme="dark"] {
   --bg:           var(--night);
+  --bg-primary:   var(--night);
   --bg-surface:   var(--night-surface);
-  --text-primary: #EFE8F5;
-  --text-secondary: #BBA8CC;
-  --text-muted:   #7D6A8E;
+  --surface:      var(--night-surface);
+  --text-primary: #F5EFE6;
+  --text-secondary: #CDBDD9;
+  --text-muted:   #9C8AB0;
   --border:       var(--night-border);
+  --border-default: var(--night-border);
   --accent:       var(--marigold);
-  --accent-hover: #F0B84A;
+  --accent-hover: #F5C25B;
   --brand-deep:   #4A2E58;
   --hairline: 1px solid var(--night-border);
-  --hairline-faint: 1px solid rgba(61, 42, 72, 0.5);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --hairline-faint: 1px solid rgba(92, 68, 108, 0.55);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
 /* ── Reduce Motion ────────────────────────────────────────────────────── */

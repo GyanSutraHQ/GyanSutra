@@ -47,7 +47,10 @@ function readSavedLanguage() {
 }
 
 export function LanguageProvider({ children }) {
-  const [language, setLanguageState] = useState(readSavedLanguage);
+  // Let web visitors and crawlers reach the library immediately. Android
+  // retains its first-run language chooser; saved preferences still win.
+  const [language, setLanguageState] = useState(() => readSavedLanguage()
+    || (import.meta.env.MODE === 'android' ? null : 'en'));
 
   const setLanguage = (code) => {
     if (!LANGUAGES.some((item) => item.code === code)) return;

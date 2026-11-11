@@ -114,7 +114,6 @@ export default function SarathiPanel({
 
   // Desktop ignores panel height; mobile opens at a comfortable reading height.
   const [panelSize, _setPanelSize]       = useState('normal'); // 'peek' | 'normal' | 'full'
-  const [isMinimizing, setIsMinimizing]  = useState(false);
   const [isDragging, setIsDragging]      = useState(false);
   const [dynamicHeight, setDynamicHeight] = useState(null);    // dvh number during drag; null = use snap
   const [copiedId, setCopiedId] = useState(null);
@@ -154,11 +153,7 @@ export default function SarathiPanel({
 
   // ── Minimize panel ────────────────────────────────────────────────────
   const handleClose = useCallback(() => {
-    setIsMinimizing(true);
-    setTimeout(() => {
-      onClose();
-      setIsMinimizing(false);
-    }, 260);
+    onClose();
   }, [onClose]);
 
   // ── Drag handle: start ─────────────────────────────────────────────────
@@ -256,7 +251,6 @@ export default function SarathiPanel({
     'sarathi-panel',
     `sarathi-panel--${panelSize}`,
     isOpen        ? 'sarathi-panel--open'       : '',
-    isMinimizing  ? 'sarathi-panel--minimizing'  : '',
     isDragging    ? 'sarathi-panel--dragging'    : '',
   ].filter(Boolean).join(' ');
 

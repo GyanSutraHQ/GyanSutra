@@ -63,15 +63,23 @@
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  padding: .8rem 1.1rem;
+  padding: .8rem 1.25rem;
   border: 1px solid var(--accent);
   border-radius: .75rem;
-  color: var(--bg-primary);
-  background: var(--accent);
+  color: #1f1224;
+  background: linear-gradient(135deg, #ffe29e 0%, #efb047 100%);
+  box-shadow: 0 4px 16px -4px rgba(232, 163, 61, 0.35);
   font: inherit;
   font-weight: 700;
   text-decoration: none;
   cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+}
+
+.vp-button:hover, .vp-sarathi-invite button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 6px 22px -4px rgba(232, 163, 61, 0.5);
 }
 
 .vp-text-link { color: var(--text-secondary); font-size: .88rem; text-underline-offset: .25rem; }

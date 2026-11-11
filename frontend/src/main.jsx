@@ -10,6 +10,12 @@ import { LanguageProvider } from './i18n/LanguageContext.jsx';
 
 const basename = import.meta.env.BASE_URL;
 
+// React 19 manages metadata natively; Helmet 3 no longer replaces unowned
+// template tags. Retire the initial static SEO tags only when React starts,
+// leaving the prerendered document intact for no-JS readers and crawlers.
+document.head.querySelectorAll('title, meta[name="description"], meta[name="robots"], meta[property^="og:"], meta[name^="twitter:"], link[rel="canonical"], script[type="application/ld+json"]')
+  .forEach((element) => element.remove());
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ErrorBoundary>

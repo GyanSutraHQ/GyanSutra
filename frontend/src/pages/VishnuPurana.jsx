@@ -24,7 +24,15 @@ export default function VishnuPurana() {
       <div className="vp-shell">
         <Link to="/" className="vp-back">← Scripture library</Link>
 
-        <header className="vp-hero">
+        <header className="vp-hero gs-cinematic-masthead">
+          <img
+            src={`${import.meta.env.BASE_URL}images/landing/purana-card.jpg`}
+            alt=""
+            aria-hidden="true"
+            className="gs-cinematic-masthead__bg"
+            loading="eager"
+            decoding="async"
+          />
           <div className="vp-hero__copy">
             <p className="vp-kicker">A complete source journey · 6 parts · 126 sections</p>
             <h1>The Vishnu Purana</h1>

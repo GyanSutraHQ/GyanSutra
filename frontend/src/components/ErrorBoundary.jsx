@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import AnimatedButton from './AnimatedButton';
 import { recoverFromChunkError } from '../utils/chunkRecovery';
 
 
@@ -43,21 +42,21 @@ export default class ErrorBoundary extends Component {
           <p style={{ color: 'var(--text-secondary, #A59BB0)', marginBottom: '1.5rem', maxWidth: '480px' }}>
             {this.state.error?.message || 'An unexpected error occurred while rendering.'}
           </p>
-          <AnimatedButton
+          <button type="button"
             onClick={() => window.location.reload()}
             style={{
               padding: '0.625rem 1.25rem',
               borderRadius: '6px',
               border: '1px solid #C99A4E',
               backgroundColor: 'rgba(201, 154, 78, 0.15)',
-              color: '#EFE8F5',
+              color: 'var(--text-primary, #EFE8F5)',
               cursor: 'pointer',
               fontWeight: 500,
               fontSize: '0.9rem'
             }}
           >
             Reload Page
-          </AnimatedButton>
+          </button>
         </div>
       );
     }

@@ -26,7 +26,15 @@ export default function VishnuPuranaPart() {
       <SEOHead title={`${part.title} — Vishnu Purana`} description={`Read all ${part.sectionCount} sections in Part ${part.roman} of the Vishnu Purana.`} canonical={`/vishnu-purana/${part.number}`} />
       <div className="vp-shell vp-shell--narrow">
         <Link className="vp-back" to="/vishnu-purana">← All six parts</Link>
-        <header className="vp-part-hero">
+        <header className="vp-part-hero gs-cinematic-masthead">
+          <img
+            src={`${import.meta.env.BASE_URL}images/landing/purana-card.jpg`}
+            alt=""
+            aria-hidden="true"
+            className="gs-cinematic-masthead__bg"
+            loading="eager"
+            decoding="async"
+          />
           <div className="vp-part-hero__mark" aria-hidden="true">{part.symbol}</div>
           <p className="vp-kicker">{part.theme}</p>
           <h1>{part.title}</h1>

@@ -134,7 +134,15 @@ export default function KandaReader() {
         <Link to="/ramayana" className="chapter-reader__back" id="back-to-home-link">
           ← {labels.all}
         </Link>
-        <div className="chapter-reader__title-block">
+        <div className="chapter-reader__title-block gs-cinematic-masthead">
+          <img
+            src={`${import.meta.env.BASE_URL}images/landing/ramayana-card.jpg`}
+            alt=""
+            aria-hidden="true"
+            className="gs-cinematic-masthead__bg"
+            loading="eager"
+            decoding="async"
+          />
           <span className="chapter-reader__chapter-num">{t('ramayana')} · {t('kanda')} {kanda.id}</span>
           <h1 className="chapter-reader__title devanagari">{KANDA_NAMES[language]?.[kanda.id - 1] || kanda.name}</h1>
           <p className="chapter-reader__summary">{(READER_INTRO_COPY[language] || READER_INTRO_COPY.en).ramayana}</p>
@@ -154,7 +162,6 @@ export default function KandaReader() {
             </select>
           </div>
         </div>
-        <hr className="gold-rule" />
       </header>
 
       {loading && !error && (

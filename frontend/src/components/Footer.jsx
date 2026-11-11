@@ -33,6 +33,7 @@ export default function Footer() {
             <p className="gs-footer__nav-title">{t('read')}</p>
             <Link to="/bhagavad-gita" className="gs-footer__link">{language === 'en' ? 'Bhagavad Gita' : t('heroTitleHighlight')}</Link>
             <Link to="/ramayana" className="gs-footer__link">{t('ramayana')}</Link>
+            <Link to="/vishnu-purana" className="gs-footer__link">Vishnu Purana</Link>
           </div>
           <div className="gs-footer__nav-group">
             <p className="gs-footer__nav-title">{labels.information}</p>

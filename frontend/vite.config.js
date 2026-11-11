@@ -25,8 +25,19 @@ export default defineConfig(({ mode }) => {
       workbox: {
         clientsClaim: true,
         skipWaiting: true,
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
+        // Cache the small shell, not every reader and the large audio inventory
+        // during a first homepage visit. Other chunks cache as they are opened.
+        globPatterns: ['index.html', 'icons/*.{png,svg,ico}', 'assets/*.{css,woff,woff2}', 'assets/{index,vendor,polyfills,rolldown-runtime}-*.js'],
         runtimeCaching: [
+          {
+            urlPattern: /\/assets\/.*\.js$/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'app-route-chunks',
+              expiration: { maxEntries: 60, maxAgeSeconds: 60 * 60 * 24 * 30 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
           // Google Fonts - cache-first
           {
             urlPattern: /^https:\/\/fonts\.(googleapis|gstatic)\.com\/.*/i,
@@ -51,13 +62,12 @@ export default defineConfig(({ mode }) => {
         ],
       },
       }),
-      // Serve one transpiled bundle instead of allowing browsers with partial
-      // ESM support (notably iOS Safari 12–13 and legacy Edge) to parse a
-      // modern dependency chunk that they cannot execute. IE is not supported
-      // by React 19, but current and older supported iOS/Windows browsers are.
+      // Modern visitors get the smaller native bundle; the legacy plugin's
+      // feature detection serves SystemJS to older supported browsers. Emitting
+      // both also preserves Vite 8's extracted production stylesheets.
       !isAndroidBuild && legacy({
         targets: ['iOS >= 12', 'Safari >= 12', 'Edge >= 16', 'Chrome >= 64'],
-        renderModernChunks: false,
+        renderModernChunks: true,
       }),
     ].filter(Boolean),
     server: {
@@ -73,7 +83,7 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks: (id) => {
             if (id.includes('node_modules')) {
-              if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
+              if (/node_modules\/(react|react-dom|react-router|react-router-dom|scheduler)\//.test(id)) {
                 return 'vendor';
               }
             }
