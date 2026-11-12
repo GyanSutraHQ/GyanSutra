@@ -18,33 +18,39 @@ export default function useLandingMotion() {
     media.addEventListener('change', preference);
     document.addEventListener('visibilitychange', visibility);
     const hero = root.querySelector('.gs-landing-hero');
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
     let frame = 0;
     let pointerX = 0;
     let pointerY = 0;
     const drawScene = () => {
       frame = 0;
-      if (!hero || root.dataset.motion === 'paused' || document.hidden || media.matches) return;
+      if (!hero || !finePointer.matches || window.innerWidth < 768 || root.dataset.motion === 'paused' || document.hidden || media.matches) return;
       const rect = hero.getBoundingClientRect();
       if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-      hero.style.setProperty('--scene-scroll', `${Math.min(hero.offsetHeight, Math.max(0, -rect.top))}px`);
+      hero.style.setProperty('--scene-scroll', `${Math.min(rect.height, Math.max(0, -rect.top))}px`);
       hero.style.setProperty('--scene-pointer-x', `${pointerX}px`);
       hero.style.setProperty('--scene-pointer-y', `${pointerY}px`);
     };
-    const scheduleScene = () => { if (!frame) frame = window.requestAnimationFrame(drawScene); };
+    const scheduleScene = () => {
+      if (!finePointer.matches || window.innerWidth < 768) return;
+      if (!frame) frame = window.requestAnimationFrame(drawScene);
+    };
     const pointer = (event) => {
-      if (event.pointerType !== 'mouse') return;
+      if (event.pointerType !== 'mouse' || !hero) return;
       const rect = hero.getBoundingClientRect();
       pointerX = ((event.clientX - rect.left) / rect.width - .5) * 18;
       pointerY = ((event.clientY - rect.top) / rect.height - .5) * 12;
       scheduleScene();
     };
     const resetPointer = () => { pointerX = 0; pointerY = 0; scheduleScene(); };
-    window.addEventListener('scroll', scheduleScene, { passive: true });
-    hero?.addEventListener('pointermove', pointer, { passive: true });
-    hero?.addEventListener('pointerleave', resetPointer);
-    scheduleScene();
+    if (finePointer.matches) {
+      window.addEventListener('scroll', scheduleScene, { passive: true });
+      hero?.addEventListener('pointermove', pointer, { passive: true });
+      hero?.addEventListener('pointerleave', resetPointer);
+      scheduleScene();
+    }
 
-    const tiltCards = Array.from(root.querySelectorAll('.gs-tilt-card'));
+    const tiltCards = finePointer.matches ? Array.from(root.querySelectorAll('.gs-tilt-card')) : [];
     const handleCardMove = (event) => {
       if (event.pointerType !== 'mouse' || root.dataset.motion === 'paused' || media.matches) return;
       const card = event.currentTarget;

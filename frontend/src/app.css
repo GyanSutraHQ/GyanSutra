@@ -54,17 +54,28 @@
   top: 0;
   z-index: 40;
   border-bottom: 1px solid color-mix(in srgb, var(--border) 62%, transparent);
-  background: color-mix(in srgb, var(--bg-surface) 88%, transparent);
+  background: color-mix(in srgb, var(--bg-surface) 92%, transparent);
   box-shadow: 0 4px 24px -8px rgba(24, 14, 30, 0.08);
-  backdrop-filter: blur(22px) saturate(1.25);
-  -webkit-backdrop-filter: blur(22px) saturate(1.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding-top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
 }
 
 [data-theme="dark"] .gs-header {
-  background: color-mix(in srgb, var(--night-surface) 86%, rgba(16, 10, 22, 0.92));
+  background: color-mix(in srgb, var(--night-surface) 92%, rgba(16, 10, 22, 0.96));
   border-bottom-color: rgba(232, 163, 61, 0.22);
   box-shadow: 0 8px 32px -10px rgba(0, 0, 0, 0.48);
+}
+
+@media (max-width: 767px) {
+  .gs-header {
+    background: var(--bg-surface);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  [data-theme="dark"] .gs-header {
+    background: rgba(18, 11, 24, 0.97);
+  }
 }
 
 .gs-header__nav {
@@ -409,9 +420,7 @@
     left: 0;
     right: 0;
     z-index: 50;
-    background: color-mix(in srgb, var(--bg-surface) 94%, transparent);
-    backdrop-filter: blur(24px) saturate(1.2);
-    -webkit-backdrop-filter: blur(24px) saturate(1.2);
+    background: color-mix(in srgb, var(--bg-surface) 97%, transparent);
     border-top: 1px solid color-mix(in srgb, var(--border) 42%, transparent);
     padding-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
     height: calc(76px + var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px)));

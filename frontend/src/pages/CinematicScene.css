@@ -32,7 +32,6 @@
   inset: -3%;
   z-index: -3;
   transform: translate3d(calc(var(--scene-pointer-x, 0px) * .45), calc(var(--scene-scroll, 0px) * .12 + var(--scene-pointer-y, 0px) * .25), 0) scale(1.04);
-  transition: transform .4s cubic-bezier(.16, 1, .3, 1);
 }
 .gs-scene-backdrop__img {
   width: 100%;
@@ -40,13 +39,12 @@
   object-fit: cover;
   object-position: center 42%;
   opacity: 0.96;
-  filter: contrast(1.1) saturate(1.22) brightness(1.05);
-  animation: gs-backdrop-breathe 22s ease-in-out infinite alternate;
-  transition: opacity .8s ease, filter .8s ease;
+  filter: contrast(1.08) saturate(1.18) brightness(1.04);
+  transition: opacity .5s ease;
 }
 [data-theme="dark"] .gs-scene-backdrop__img {
   opacity: 0.92;
-  filter: contrast(1.12) saturate(1.2) brightness(1.02);
+  filter: contrast(1.1) saturate(1.16) brightness(1.02);
 }
 .gs-scene-backdrop__grade {
   position: absolute;
@@ -57,23 +55,22 @@
 }
 .gs-scene-godrays {
   position: absolute;
-  inset: -40% -30%;
+  inset: -35% -25%;
   z-index: -2;
   background: conic-gradient(
     from 142deg at 64% 18%,
     transparent 0deg,
-    rgba(255, 226, 142, 0.34) 14deg,
-    transparent 32deg,
-    rgba(255, 194, 78, 0.26) 48deg,
-    transparent 68deg,
-    rgba(255, 236, 168, 0.36) 88deg,
-    transparent 112deg,
-    rgba(255, 208, 104, 0.24) 128deg,
-    transparent 148deg
+    rgba(255, 226, 142, 0.22) 14deg,
+    transparent 34deg,
+    rgba(255, 194, 78, 0.16) 50deg,
+    transparent 70deg,
+    rgba(255, 236, 168, 0.24) 90deg,
+    transparent 114deg,
+    rgba(255, 208, 104, 0.14) 132deg,
+    transparent 154deg
   );
-  filter: blur(14px);
-  mix-blend-mode: screen;
-  animation: gs-godrays-sweep 14s ease-in-out infinite alternate;
+  animation: gs-godrays-sweep 16s ease-in-out infinite alternate;
+  will-change: transform, opacity;
   pointer-events: none;
 }
 .gs-scene-flare {
@@ -83,9 +80,9 @@
   width: min(90vw, 1040px);
   height: 2px;
   transform: translate(-50%, -50%);
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 202, 88, 0.48) 18%, rgba(255, 248, 216, 0.96) 50%, rgba(255, 202, 88, 0.48) 82%, transparent 100%);
-  box-shadow: 0 0 42px 8px rgba(255, 198, 82, 0.55), 0 0 96px 20px rgba(240, 148, 38, 0.32);
-  opacity: 0.85;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 202, 88, 0.52) 18%, rgba(255, 248, 216, 0.96) 50%, rgba(255, 202, 88, 0.52) 82%, transparent 100%);
+  box-shadow: 0 0 28px 4px rgba(255, 198, 82, 0.45);
+  opacity: 0.82;
   animation: gs-flare-pulse 7s ease-in-out infinite;
   pointer-events: none;
 }
@@ -104,7 +101,7 @@
 .gs-scene-mandala svg {
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 0 18px rgba(255, 202, 82, 0.55)) drop-shadow(0 0 40px rgba(235, 144, 32, 0.32));
+  will-change: transform;
   animation: gs-sun-turn 110s linear infinite;
 }
 .gs-scene__canvas {
@@ -113,7 +110,6 @@
   height: 100%;
   inset: 0;
   opacity: 0.92;
-  filter: drop-shadow(0 0 10px rgba(255, 198, 82, 0.38));
 }
 [data-theme="light"] .gs-scene__canvas {
   opacity: 0.95;
@@ -127,7 +123,6 @@
   top: 15%;
   color: #ffe8a3;
   opacity: 0.94;
-  filter: drop-shadow(0 0 16px rgba(255, 208, 96, 0.72));
   animation: gs-relic-float 7s ease-in-out infinite;
 }
 .gs-scene__canvas :is(path,g) { transition: fill .85s ease; }
@@ -204,20 +199,18 @@
   line-height: 1.08;
   letter-spacing: .05em;
   margin: 0;
-  filter: drop-shadow(0 6px 26px rgba(10, 4, 2, 0.92)) drop-shadow(0 0 34px rgba(250, 184, 68, 0.52));
-  animation: gs-hero-title-reveal 1.25s cubic-bezier(.16, 1, .3, 1) both;
+  filter: drop-shadow(0 6px 22px rgba(10, 4, 2, 0.88));
+  animation: gs-hero-title-reveal 1s cubic-bezier(.16, 1, .3, 1) both;
 }
 .gs-landing-hero h1 em {
   display: block;
   margin-top: 8px;
   font-style: normal;
-  background: linear-gradient(110deg, #ffeba6 0%, #f7be4f 25%, #ffffff 48%, #df8b24 72%, #ffea9f 100%);
-  background-size: 220% auto;
+  background: linear-gradient(110deg, #ffeba6 0%, #f7be4f 28%, #fff6d4 50%, #df8b24 74%, #ffea9f 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: .06em;
-  animation: gs-molten-shimmer 7s ease-in-out infinite;
 }
 .gs-landing-hero .gs-landing-actions { justify-content: center; margin-top: 26px; }
 .gs-landing-hero .gs-landing-button { background: #ffdf91; color: #46203e; border-color: #ffdf91; border-radius: 4px; box-shadow: 0 4px 22px #4d1e4033; }
@@ -258,13 +251,13 @@
 .gs-scene__fireflies { position: absolute; inset: 0; }
 .gs-scene__fireflies i {
   position: absolute;
-  width: 4px;
-  height: 4px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   left: var(--particle-x);
   top: var(--particle-y);
-  background: #fff4c2;
-  box-shadow: 0 0 12px #ffc852, 0 0 24px #ff9d22;
+  background: radial-gradient(circle, #fff8d6 0%, #ffc852 45%, rgba(255, 165, 38, 0) 100%);
+  will-change: transform, opacity;
   animation: gs-firefly var(--particle-duration) ease-in-out var(--particle-delay) infinite;
 }
 .gs-scene__embers { position: absolute; inset: 0; pointer-events: none; }
@@ -276,8 +269,8 @@
   height: 11px;
   border-radius: 999px;
   background: linear-gradient(180deg, #fff9d6 0%, #ffb838 58%, transparent 100%);
-  box-shadow: 0 0 14px rgba(255, 188, 64, 0.95);
   opacity: 0;
+  will-change: transform, opacity;
   animation: gs-ember-rise var(--ember-duration) ease-in var(--ember-delay) infinite;
 }
 .gs-motion-zone *, .gs-motion-zone::before, .gs-motion-zone::after { animation-play-state: paused; }
@@ -285,10 +278,9 @@
 .gs-landing[data-motion="paused"] *, .gs-landing[data-page-visible="false"] * { animation-play-state: paused !important; }
 .gs-landing[data-motion="paused"] .gs-scene__depth, .gs-landing[data-motion="paused"] .gs-scene-backdrop { transform: none; }
 @keyframes gs-sun-turn { to { transform: rotate(360deg); } }
-@keyframes gs-backdrop-breathe { 0% { transform: scale(1); } 100% { transform: scale(1.06); } }
-@keyframes gs-flare-pulse { 0%, 100% { opacity: .48; transform: translate(-50%, -50%) scaleX(.92); } 50% { opacity: .9; transform: translate(-50%, -50%) scaleX(1.06); } }
-@keyframes gs-godrays-sweep { 0% { transform: rotate(-5deg) scale(1); opacity: .72; } 100% { transform: rotate(6deg) scale(1.08); opacity: 1; } }
-@keyframes gs-hero-title-reveal { 0% { opacity: 0; transform: translateY(18px) scale(.97); filter: blur(6px); } 100% { opacity: 1; transform: translateY(0) scale(1); filter: drop-shadow(0 8px 34px rgba(12, 3, 12, 0.9)) drop-shadow(0 0 32px rgba(245, 178, 72, 0.42)); } }
+@keyframes gs-flare-pulse { 0%, 100% { opacity: .55; transform: translate(-50%, -50%) scaleX(.94); } 50% { opacity: .9; transform: translate(-50%, -50%) scaleX(1.04); } }
+@keyframes gs-godrays-sweep { 0% { transform: rotate(-4deg) scale(1); opacity: .74; } 100% { transform: rotate(5deg) scale(1.05); opacity: 1; } }
+@keyframes gs-hero-title-reveal { 0% { opacity: 0; transform: translate3d(0, 14px, 0) scale(.98); } 100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); } }
 @keyframes gs-ember-rise {
   0% { transform: translate3d(0, 0, 0) scale(.7); opacity: 0; }
   20% { opacity: .92; }
@@ -351,12 +343,9 @@
     linear-gradient(180deg, rgba(16, 8, 20, 0.2) 0%, rgba(16, 8, 20, 0.78) 100%);
   pointer-events: none;
 }
-.gs-tradition__art > svg { position: relative; z-index: 1; width: 78px; height: 78px; filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.75)); animation: gs-relic-float 7s ease-in-out infinite; }
-.gs-tradition--upanishads .gs-tradition__art > svg { animation-delay: -1.75s; }
-.gs-tradition--itihasas .gs-tradition__art > svg { animation-delay: -3.5s; }
-.gs-tradition--puranas .gs-tradition__art > svg { animation-delay: -5.25s; }
-.gs-tradition__halo { position: absolute; z-index: 1; width: 118px; height: 118px; border: 1px dashed currentColor; border-radius: 50%; opacity: .42; animation: gs-sun-turn 35s linear infinite; }
-.gs-tradition__art > span { position: absolute; z-index: 1; right: 12px; bottom: 8px; padding: 2px 8px; border-radius: 999px; background: rgba(20, 10, 22, 0.62); border: 1px solid rgba(255, 226, 162, 0.28); font-family: var(--font-devanagari); font-size: .82rem; color: #ffdf9e; }
+.gs-tradition__art > svg { position: relative; z-index: 1; width: 78px; height: 78px; }
+.gs-tradition__halo { position: absolute; z-index: 1; width: 118px; height: 118px; border: 1px dashed currentColor; border-radius: 50%; opacity: .42; animation: gs-sun-turn 45s linear infinite; }
+.gs-tradition__art > span { position: absolute; z-index: 1; right: 12px; bottom: 8px; padding: 2px 8px; border-radius: 999px; background: rgba(20, 10, 22, 0.68); border: 1px solid rgba(255, 226, 162, 0.28); font-family: var(--font-devanagari); font-size: .82rem; color: #ffdf9e; }
 .gs-tradition__body { padding: 22px 20px 18px; }
 .gs-tradition__status { color: var(--landing-rust); font-size: .59rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; }
 .gs-tradition__status--future { color: var(--landing-muted); }
@@ -369,10 +358,13 @@
 [data-theme="dark"] .gs-tradition__art { background: color-mix(in srgb,var(--tradition-color) 30%,#251d37); color: #f1d4a2; }
 .gs-landing .gs-landing-companion { background: linear-gradient(145deg, #2d162e 0%, #3d1c37 55%, #231126 100%); }
 .gs-landing-companion .gs-landing-prompts button:hover { background: rgba(244, 198, 117, 0.16); }
-.gs-book-art__cover { animation: gs-book-bob 7s ease-in-out infinite; }
-.gs-landing-book--ramayana .gs-book-art__cover { animation-delay: -2.3s; }
-.gs-landing-book--purana .gs-book-art__cover { animation-delay: -4.6s; }
-@keyframes gs-book-bob { 0%,100% { translate: 0 0; rotate: 0deg; } 50% { translate: 0 -6px; rotate: 1.5deg; } }
+.gs-book-art__cover { transition: transform .4s ease; }
+
+@media (hover: none), (max-width: 900px) {
+  .gs-traditions__grid, .gs-landing-books { perspective: none; }
+  .gs-tradition, .gs-landing-book { transform-style: flat; transform: none; }
+  .gs-tradition__halo { animation: none; }
+}
 
 @media (max-width: 1100px) {
   .gs-traditions__grid { grid-template-columns: repeat(2,1fr); gap: 24px; }
@@ -383,18 +375,28 @@
   .gs-landing-hero {
     min-height: clamp(560px, calc(100dvh - 64px), 780px);
   }
+  .gs-scene-backdrop { transform: none; }
   .gs-scene-backdrop__img {
     object-position: 36% 42%;
+    filter: none;
   }
+  [data-theme="dark"] .gs-scene-backdrop__img {
+    filter: none;
+  }
+  .gs-scene-godrays { animation: none; opacity: 0.72; }
+  .gs-scene-aura { animation: none; opacity: 0.65; }
+  .gs-scene-flare { animation: none; }
+  .gs-scene__fireflies i:nth-child(n+11) { display: none; }
+  .gs-scene__embers { display: none; }
   .gs-scene-mandala {
     width: min(88vw, 390px);
     height: min(88vw, 390px);
     top: 45%;
   }
-  .gs-scene__canvas { width: 100%; left: 0; max-width: none; }
+  .gs-scene__canvas { display: none; }
   .gs-scene__mobile-sun { display: none; }
-  .gs-scene__mobile-architecture { display: block; position: absolute; bottom: 0; left: 0; width: 100%; height: auto; max-width: none; opacity: 0.9; filter: drop-shadow(0 0 8px rgba(255, 198, 82, 0.45)); }
-  .gs-scene__selected-emblem { width: 44px; height: 44px; right: 20px; top: 88px; }
+  .gs-scene__mobile-architecture { display: block; position: absolute; bottom: 0; left: 0; width: 100%; height: auto; max-width: none; opacity: 0.9; }
+  .gs-scene__selected-emblem { width: 44px; height: 44px; right: 20px; top: 88px; animation: none; }
   .gs-scene__shade {
     background: radial-gradient(ellipse 82% 44% at 50% 46%, rgba(18, 9, 5, 0.62) 0%, rgba(18, 9, 5, 0.28) 62%, transparent 100%);
   }
@@ -402,7 +404,7 @@
   .gs-hero-invocation { gap: 10px; margin-bottom: 16px; }
   .gs-hero-invocation__medallion { width: 46px; height: 46px; }
   .gs-hero-invocation__om { font-size: 1.65rem; }
-  .gs-landing-hero h1 { font-size: clamp(2.35rem, 10.2vw, 4.1rem); max-width: none; line-height: 1.07; margin-bottom: 16px; }
+  .gs-landing-hero h1 { font-size: clamp(2.35rem, 10.2vw, 4.1rem); max-width: none; line-height: 1.07; margin-bottom: 16px; filter: none; }
   .gs-landing-hero__intro { font-size: .88rem; max-width: 37ch; line-height: 1.78; }
   .gs-landing-hero__bottom { width: calc(100% - 36px); padding-bottom: 16px; }
   .gs-traditions { padding-block: 24px 64px; }
