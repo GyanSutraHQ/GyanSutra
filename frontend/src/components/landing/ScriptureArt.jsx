@@ -38,6 +38,7 @@ export function BookArtwork({ kind }) {
         height="402"
         loading="lazy"
         decoding="async"
+        fetchPriority="low"
         className="gs-book-visual__photo"
       />
       <div className="gs-book-visual__vignette" />
@@ -86,6 +87,7 @@ export function SarathiArtwork() {
         height="357"
         loading="lazy"
         decoding="async"
+        fetchPriority="low"
         className="gs-companion-visual__photo"
       />
       <div className="gs-companion-visual__aura" />

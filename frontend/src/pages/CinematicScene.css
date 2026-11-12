@@ -282,8 +282,9 @@
   opacity: 0;
   animation: gs-ember-rise var(--ember-duration) ease-in var(--ember-delay) infinite;
 }
-.gs-motion-zone *, .gs-motion-zone::before, .gs-motion-zone::after { animation-play-state: paused; }
-.gs-motion-zone[data-in-view="true"] *, .gs-motion-zone[data-in-view="true"]::before, .gs-motion-zone[data-in-view="true"]::after { animation-play-state: running; }
+/* Animations run by default so the prerendered hero paints without waiting for JS;
+   scripts only pause a zone once it has scrolled far off screen. */
+.gs-motion-zone[data-in-view="false"] *, .gs-motion-zone[data-in-view="false"]::before, .gs-motion-zone[data-in-view="false"]::after { animation-play-state: paused; }
 .gs-landing[data-motion="paused"] *, .gs-landing[data-page-visible="false"] * { animation-play-state: paused !important; }
 .gs-landing[data-motion="paused"] .gs-scene__depth, .gs-landing[data-motion="paused"] .gs-scene-backdrop { transform: none; }
 @keyframes gs-sun-turn { to { transform: rotate(360deg); } }
