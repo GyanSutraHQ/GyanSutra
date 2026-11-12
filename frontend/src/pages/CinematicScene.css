@@ -9,6 +9,7 @@
   --scene-flag: #ffcb57;
   position: relative;
   isolation: isolate;
+  contain: layout style paint;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,7 +27,7 @@
 [data-theme="dark"] .gs-landing-hero {
   background: radial-gradient(ellipse 95% 75% at 58% 28%, #47290f 0%, #1c0e09 58%, #0b0505 100%);
 }
-.gs-scripture-scene { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.gs-scripture-scene { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; contain: layout style paint; }
 .gs-scene-backdrop {
   position: absolute;
   inset: -3%;
@@ -168,6 +169,7 @@
   box-shadow: 0 0 12px rgba(255, 204, 84, 0.9);
 }
 .gs-hero-invocation__medallion {
+  position: relative;
   display: inline-grid;
   place-items: center;
   width: 56px;
@@ -179,6 +181,15 @@
     0 0 0 4px rgba(255, 212, 108, 0.18),
     0 0 28px rgba(255, 192, 68, 0.65),
     inset 0 0 16px rgba(255, 216, 112, 0.38);
+}
+.gs-hero-invocation__medallion::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 228, 146, 0.6);
+  animation: gs-sun-turn 28s linear infinite;
+  pointer-events: none;
 }
 .gs-hero-invocation__om {
   font-family: var(--font-devanagari);
@@ -257,7 +268,6 @@
   left: var(--particle-x);
   top: var(--particle-y);
   background: radial-gradient(circle, #fff8d6 0%, #ffc852 45%, rgba(255, 165, 38, 0) 100%);
-  will-change: transform, opacity;
   animation: gs-firefly var(--particle-duration) ease-in-out var(--particle-delay) infinite;
 }
 .gs-scene__embers { position: absolute; inset: 0; pointer-events: none; }
@@ -270,7 +280,6 @@
   border-radius: 999px;
   background: linear-gradient(180deg, #fff9d6 0%, #ffb838 58%, transparent 100%);
   opacity: 0;
-  will-change: transform, opacity;
   animation: gs-ember-rise var(--ember-duration) ease-in var(--ember-delay) infinite;
 }
 .gs-motion-zone *, .gs-motion-zone::before, .gs-motion-zone::after { animation-play-state: paused; }
@@ -287,6 +296,7 @@
   80% { opacity: .55; }
   100% { transform: translate3d(28px, -460px, 0) scale(.25); opacity: 0; }
 }
+@keyframes gs-rays-breathe { from { opacity: .5; } to { opacity: .95; } }
 @keyframes gs-sky-breathe { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
 @keyframes gs-cloud-drift { from { transform: translateX(-25px); } to { transform: translateX(35px); } }
 @keyframes gs-bird-flight { 0%,100% { transform: translate(0,0); } 50% { transform: translate(36px,-14px); } }
@@ -358,12 +368,14 @@
 [data-theme="dark"] .gs-tradition__art { background: color-mix(in srgb,var(--tradition-color) 30%,#251d37); color: #f1d4a2; }
 .gs-landing .gs-landing-companion { background: linear-gradient(145deg, #2d162e 0%, #3d1c37 55%, #231126 100%); }
 .gs-landing-companion .gs-landing-prompts button:hover { background: rgba(244, 198, 117, 0.16); }
-.gs-book-art__cover { transition: transform .4s ease; }
+.gs-book-art__cover { animation: gs-book-bob 7s ease-in-out infinite; }
+.gs-landing-book--ramayana .gs-book-art__cover { animation-delay: -2.3s; }
+.gs-landing-book--purana .gs-book-art__cover { animation-delay: -4.6s; }
+@keyframes gs-book-bob { 0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); } 50% { transform: translate3d(0, -6px, 0) rotate(1.5deg); } }
 
 @media (hover: none), (max-width: 900px) {
   .gs-traditions__grid, .gs-landing-books { perspective: none; }
   .gs-tradition, .gs-landing-book { transform-style: flat; transform: none; }
-  .gs-tradition__halo { animation: none; }
 }
 
 @media (max-width: 1100px) {
@@ -373,7 +385,8 @@
 }
 @media (max-width: 767px) {
   .gs-landing-hero {
-    min-height: clamp(560px, calc(100dvh - 64px), 780px);
+    /* svh stays constant while the mobile URL bar collapses, so the hero never resizes or re-rasterises mid-scroll. */
+    min-height: clamp(560px, calc(100svh - 64px), 780px);
   }
   .gs-scene-backdrop { transform: none; }
   .gs-scene-backdrop__img {
@@ -383,20 +396,24 @@
   [data-theme="dark"] .gs-scene-backdrop__img {
     filter: none;
   }
-  .gs-scene-godrays { animation: none; opacity: 0.72; }
-  .gs-scene-aura { animation: none; opacity: 0.65; }
-  .gs-scene-flare { animation: none; }
-  .gs-scene__fireflies i:nth-child(n+11) { display: none; }
-  .gs-scene__embers { display: none; }
+  /* Eliminate full-screen animated gradient overdraw on mobile tile GPUs; keep crisp static glow + lightweight focal motion. */
+  /* Opacity/transform-only loops run on the compositor thread: no repaint, no layout. */
+  .gs-scene-godrays { inset: 0; animation: gs-rays-breathe 9s ease-in-out infinite alternate; opacity: 0.72; will-change: opacity; }
+  .gs-scene-aura--gold { animation: gs-sky-breathe 11s ease-in-out infinite; will-change: opacity; }
+  .gs-scene-aura--violet { display: none; }
+  .gs-scene-flare { box-shadow: none; height: 1.5px; will-change: transform, opacity; }
+  .gs-scene__tree { animation: none; }
+  .gs-scene__fireflies i:nth-child(n+9) { display: none; }
+  .gs-scene__embers span:nth-child(n+6) { display: none; }
   .gs-scene-mandala {
-    width: min(88vw, 390px);
-    height: min(88vw, 390px);
+    width: min(86vw, 370px);
+    height: min(86vw, 370px);
     top: 45%;
   }
   .gs-scene__canvas { display: none; }
   .gs-scene__mobile-sun { display: none; }
   .gs-scene__mobile-architecture { display: block; position: absolute; bottom: 0; left: 0; width: 100%; height: auto; max-width: none; opacity: 0.9; }
-  .gs-scene__selected-emblem { width: 44px; height: 44px; right: 20px; top: 88px; animation: none; }
+  .gs-scene__selected-emblem { width: 44px; height: 44px; right: 20px; top: 88px; }
   .gs-scene__shade {
     background: radial-gradient(ellipse 82% 44% at 50% 46%, rgba(18, 9, 5, 0.62) 0%, rgba(18, 9, 5, 0.28) 62%, transparent 100%);
   }
@@ -409,7 +426,7 @@
   .gs-landing-hero__bottom { width: calc(100% - 36px); padding-bottom: 16px; }
   .gs-traditions { padding-block: 24px 64px; }
   .gs-traditions__grid { gap: 14px; }
-  .gs-tradition__art { height: 139px; }
+  .gs-tradition__art { height: 139px; contain: layout style paint; }
   .gs-tradition__art > svg { width: 78px; height: 78px; }
   .gs-tradition__halo { width: 105px; height: 105px; }
   .gs-tradition__body { padding: 18px 14px 12px; }
@@ -417,9 +434,10 @@
   .gs-tradition p { font-size: .72rem; min-height: 85px; }
   .gs-tradition .gs-landing-link { font-size: .64rem; line-height: 1.5; }
   .gs-tradition__status { font-size: .5rem; letter-spacing: .02em; }
+  .gs-book-art__orbit, .gs-companion-art__flame { animation: none; }
 }
 @media (max-width: 360px) {
-  .gs-landing-hero { min-height: clamp(540px, calc(100dvh - 64px), 740px); }
+  .gs-landing-hero { min-height: clamp(540px, calc(100svh - 64px), 740px); }
   .gs-traditions__grid { grid-template-columns: 1fr; }
   .gs-tradition { display: grid; grid-template-columns: .75fr 1fr; }
   .gs-tradition__art { height: 100%; min-height: 198px; }
@@ -428,4 +446,21 @@
 @media (prefers-reduced-motion: reduce) {
   .gs-landing .gs-scene__depth { transform: none; }
   .gs-landing *, .gs-landing *::before, .gs-landing *::after { animation: none !important; transition: none !important; }
+}
+
+/* Cinematic hero polish: every effect below animates only transform/opacity (compositor-only). */
+.gs-scene-backdrop__img { animation: gs-kenburns 40s ease-in-out infinite alternate; will-change: transform; }
+.gs-scene-mandala { animation: gs-mandala-in 2s cubic-bezier(.16, 1, .3, 1) both; }
+.gs-landing-hero h1 { animation-delay: .18s; }
+.gs-landing-hero__intro { animation: gs-hero-title-reveal 1s cubic-bezier(.16, 1, .3, 1) .5s both; }
+.gs-landing-hero__bottom { animation: gs-hero-title-reveal 1s cubic-bezier(.16, 1, .3, 1) .85s both; }
+@keyframes gs-kenburns { from { transform: scale(1) translate3d(0, 0, 0); } to { transform: scale(1.07) translate3d(-1%, -1%, 0); } }
+@keyframes gs-mandala-in { from { opacity: 0; transform: translate(-50%, -50%) scale(.8); } to { opacity: .95; transform: translate(-50%, -50%) scale(1); } }
+@keyframes gs-hero-exit { to { opacity: 0; transform: translate3d(0, -48px, 0) scale(.97); } }
+@keyframes gs-scene-recede { to { transform: translate3d(0, 36px, 0) scale(1.04); opacity: .55; } }
+/* Scroll-linked depth, run by the browser's scroll timeline (no JS). Reversible, so scrolling back up replays it exactly. */
+@supports (animation-timeline: scroll()) {
+  .gs-landing-hero__copy { animation: gs-hero-exit linear both; animation-timeline: scroll(root); animation-range: 0 62vh; }
+  .gs-scene-mandala > svg { animation: gs-sun-turn 110s linear infinite; }
+  .gs-scene__mobile-architecture { animation: gs-scene-recede linear both; animation-timeline: scroll(root); animation-range: 0 80vh; }
 }

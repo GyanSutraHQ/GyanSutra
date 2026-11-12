@@ -70,16 +70,21 @@ const WORLD_BACKDROPS = {
 
 export default function ScriptureLandscape({ world }) {
   const baseUrl = import.meta.env.BASE_URL || '/';
-  const backdropSrc = `${baseUrl}${WORLD_BACKDROPS[world] || WORLD_BACKDROPS.itihasas}`;
+  const relPath = WORLD_BACKDROPS[world] || WORLD_BACKDROPS.itihasas;
+  const backdropSrc = `${baseUrl}${relPath}`;
+  const backdropSmSrc = `${baseUrl}${relPath.replace('.jpg', '-sm.jpg')}`;
 
   return (
     <div className="gs-scripture-scene gs-motion-zone" aria-hidden="true">
       <div className="gs-scene-backdrop">
         <img
           src={backdropSrc}
+          srcSet={`${backdropSmSrc} 760w, ${backdropSrc} 1376w`}
+          sizes="100vw"
           alt=""
-          width="1600"
-          height="900"
+          width="1376"
+          height="768"
+          loading="eager"
           fetchPriority="high"
           decoding="async"
           className="gs-scene-backdrop__img"

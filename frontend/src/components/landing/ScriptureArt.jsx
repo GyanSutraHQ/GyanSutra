@@ -23,15 +23,19 @@ export function Lotus({ className = '', ...props }) {
 
 export function BookArtwork({ kind }) {
   const baseUrl = import.meta.env.BASE_URL || '/';
-  const imageSrc = `${baseUrl}${BOOK_IMAGES[kind] || BOOK_IMAGES.gita}`;
+  const relPath = BOOK_IMAGES[kind] || BOOK_IMAGES.gita;
+  const imageSrc = `${baseUrl}${relPath}`;
+  const imageSmSrc = `${baseUrl}${relPath.replace('.jpg', '-sm.jpg')}`;
 
   return (
     <div className={`gs-book-visual gs-book-visual--${kind}`} aria-hidden="true">
       <img
         src={imageSrc}
+        srcSet={`${imageSmSrc} 720w, ${imageSrc} 1376w`}
+        sizes="(max-width: 767px) 92vw, 390px"
         alt=""
         width="720"
-        height="530"
+        height="402"
         loading="lazy"
         decoding="async"
         className="gs-book-visual__photo"
@@ -69,14 +73,17 @@ export function BookArtwork({ kind }) {
 export function SarathiArtwork() {
   const baseUrl = import.meta.env.BASE_URL || '/';
   const imageSrc = `${baseUrl}images/landing/sarathi-companion.jpg`;
+  const imageSmSrc = `${baseUrl}images/landing/sarathi-companion-sm.jpg`;
 
   return (
     <div className="gs-companion-visual" aria-hidden="true">
       <img
         src={imageSrc}
+        srcSet={`${imageSmSrc} 720w, ${imageSrc} 1376w`}
+        sizes="(max-width: 767px) 90vw, 560px"
         alt=""
         width="640"
-        height="528"
+        height="357"
         loading="lazy"
         decoding="async"
         className="gs-companion-visual__photo"

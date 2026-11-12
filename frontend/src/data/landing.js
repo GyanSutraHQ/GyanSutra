@@ -32,7 +32,18 @@ export const LANDING_FAQS = [
 export const LANDING_SCHEMA = {
   '@context': 'https://schema.org',
   '@graph': [
-    { '@type': 'WebSite', '@id': 'https://gyansutraapp.com/#website', name: 'Gyan Sutra', url: 'https://gyansutraapp.com/', inLanguage: ['en', 'hi', 'bn', 'mr', 'te', 'ta'] },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://gyansutraapp.com/#website',
+      name: 'Gyan Sutra',
+      url: 'https://gyansutraapp.com/',
+      inLanguage: ['en', 'hi', 'bn', 'mr', 'te', 'ta'],
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: 'https://gyansutraapp.com/search?q={search_term_string}',
+        'query-input': 'required name=search_term_string',
+      },
+    },
     { '@type': 'Organization', '@id': 'https://gyansutraapp.com/#organization', name: 'Gyan Sutra', url: 'https://gyansutraapp.com/', logo: 'https://gyansutraapp.com/icons/logo.svg' },
     { '@type': 'WebPage', '@id': 'https://gyansutraapp.com/#webpage', url: 'https://gyansutraapp.com/', name: LANDING_META.title, description: LANDING_META.description, isPartOf: { '@id': 'https://gyansutraapp.com/#website' }, publisher: { '@id': 'https://gyansutraapp.com/#organization' }, isAccessibleForFree: true },
     { '@type': 'ItemList', name: 'Gyan Sutra scripture library', itemListElement: [
@@ -40,5 +51,14 @@ export const LANDING_SCHEMA = {
       { '@type': 'ListItem', position: 2, name: 'Valmiki Ramayana', url: 'https://gyansutraapp.com/ramayana' },
       { '@type': 'ListItem', position: 3, name: 'Vishnu Purana', url: 'https://gyansutraapp.com/vishnu-purana' },
     ] },
+    {
+      '@type': 'FAQPage',
+      '@id': 'https://gyansutraapp.com/#faq',
+      mainEntity: LANDING_FAQS.map(({ question, answer }) => ({
+        '@type': 'Question',
+        name: question,
+        acceptedAnswer: { '@type': 'Answer', text: answer },
+      })),
+    },
   ],
 };

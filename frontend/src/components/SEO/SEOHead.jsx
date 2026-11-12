@@ -1,5 +1,13 @@
 import { Helmet } from 'react-helmet-async';
 
+function clampMeta(text, max) {
+  const clean = String(text || '').replace(/\s+/g, ' ').trim();
+  if (clean.length <= max) return clean;
+  const sliced = clean.slice(0, max - 1);
+  const lastSpace = sliced.lastIndexOf(' ');
+  return `${(lastSpace > max * 0.6 ? sliced.slice(0, lastSpace) : sliced).trim()}…`;
+}
+
 export default function SEOHead({
   title = "Gita, Ramayana and Vishnu Purana",
   description = "Read the Bhagavad Gita, Valmiki Ramayana, and complete Vishnu Purana with source-grounded translations, notes, audio, and Sarathi guidance.",
@@ -9,17 +17,13 @@ export default function SEOHead({
   schemaData = null
 }) {
   const siteUrl = "https://gyansutraapp.com";
-  
-  // Format title up to ~60 chars
-  const fullTitle = `${title} | Gyan Sutra`.substring(0, 60);
-  
-  // Format description up to ~160 chars
-  const fullDesc = description.substring(0, 160);
-  
-  // Ensure canonical URL is complete
-  const canonicalUrl = canonical.startsWith('http') 
-    ? canonical 
-    : `${siteUrl}${canonical.startsWith('/') ? canonical : `/${canonical}`}`;
+  const rawTitle = /gyan sutra/i.test(title) ? title : `${title} | Gyan Sutra`;
+  const fullTitle = clampMeta(rawTitle, 68);
+  const fullDesc = clampMeta(description, 158);
+  const normalizedCanonical = canonical === '/' || canonical === '' ? '/' : (canonical.startsWith('/') ? canonical : `/${canonical}`);
+  const canonicalUrl = canonical.startsWith('http')
+    ? canonical
+    : `${siteUrl}${normalizedCanonical}`;
 
   return (
     <Helmet>

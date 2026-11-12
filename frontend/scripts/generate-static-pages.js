@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { createServer } from 'vite';
-import { LANDING_META, LANDING_SCHEMA } from '../src/data/landing.js';
+import { LANDING_FAQS, LANDING_META, LANDING_SCHEMA } from '../src/data/landing.js';
 import { SEO_TOPICS, SEO_TOPIC_BY_SLUG } from '../src/data/seoTopics.js';
 
 const DIST_DIR = path.resolve(process.cwd(), 'dist');
@@ -120,7 +120,7 @@ try {
   // A prerendered homepage needs no opaque startup overlay. Other routes
   // retain their existing boot recovery UI.
   fs.writeFileSync(TEMPLATE_PATH, homepage.replace('</head>',
-    '<style data-home-prerender>#gs-boot-splash{display:none!important}</style></head>'), 'utf8');
+    '<link rel="preload" as="image" href="/images/landing/hero-landscape.jpg" imagesrcset="/images/landing/hero-landscape-sm.jpg 760w, /images/landing/hero-landscape.jpg 1376w" imagesizes="100vw" fetchpriority="high"><style data-home-prerender>#gs-boot-splash{display:none!important}</style></head>'), 'utf8');
 } finally {
   await server.close();
 }
@@ -169,6 +169,23 @@ page({
   content: `<article><h2>Six-part source journey</h2><ol>${corpus.parts.map((part) => `<li>${anchor(`/vishnu-purana/${part.number}`, `Part ${part.roman}: ${part.title}`)} — ${escapeHtml(part.theme)}, ${part.sectionCount} sections</li>`).join('')}</ol></article>`,
   type: 'book',
   schema: bookSchema,
+});
+
+page({
+  route: '/faq',
+  title: 'Frequently Asked Questions',
+  description: 'Answers about reading the Bhagavad Gita, Valmiki Ramayana, and Vishnu Purana, search, languages, and Sarathi.',
+  content: `<article><h2>Frequently Asked Questions</h2><dl>${LANDING_FAQS.map(({ question, answer }) => `<dt>${escapeHtml(question)}</dt><dd>${escapeHtml(answer)}</dd>`).join('')}</dl></article>`,
+  type: 'website',
+  schema: {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: LANDING_FAQS.map(({ question, answer }) => ({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: { '@type': 'Answer', text: answer },
+    })),
+  },
 });
 
 for (const part of corpus.parts) {

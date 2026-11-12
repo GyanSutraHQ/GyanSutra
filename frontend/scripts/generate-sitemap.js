@@ -11,6 +11,7 @@ const routes = [
   { url: '/bhagavad-gita' },
   { url: '/ramayana' },
   { url: '/vishnu-purana' },
+  { url: '/faq' },
   // Verse and chapter readers use client-fetched content. The fully static
   // Vishnu Purana routes below are included because the build emits complete,
   // crawlable HTML for each one.

@@ -1363,12 +1363,6 @@ html:not([data-language="en"]) .gs-cinematic-masthead .chapter-reader__title,
   100% { transform: rotate(5deg) scale(1.06); opacity: 1; }
 }
 
-@media (max-width: 767px) {
-  .gs-cinematic-masthead::after {
-    animation: none;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .gs-gold-lettering,
   .gs-carved-title,

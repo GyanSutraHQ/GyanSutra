@@ -8,8 +8,8 @@ export default function SplashScreen({ children }) {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const bootStartedAt = window.__gyanSutraBootStartedAt ?? window.performance.now();
     const elapsed = window.performance.now() - bootStartedAt;
-    const minimumVisibleTime = prefersReducedMotion ? 0 : 260;
-    const exitDuration = prefersReducedMotion ? 80 : 160;
+    const minimumVisibleTime = prefersReducedMotion ? 0 : 80;
+    const exitDuration = prefersReducedMotion ? 60 : 120;
     const exitDelay = Math.max(0, minimumVisibleTime - elapsed);
 
     let revealFrame;

@@ -85,6 +85,7 @@
   box-shadow: 0 18px 38px -14px rgba(32, 16, 30, 0.42), inset 0 1px 0 rgba(255, 232, 179, 0.35);
   height: auto;
   aspect-ratio: 360/265;
+  contain: layout style paint;
   transition: border-color .4s, box-shadow .4s;
 }
 .gs-landing-book:hover .gs-landing-book__picture {
@@ -261,14 +262,14 @@
 .gs-motion-zone [class*="__"] { animation-play-state: paused; }
 .gs-motion-zone[data-in-view="true"] [class*="__"] { animation-play-state: running; }
 .gs-landing[data-motion="paused"] *, .gs-landing[data-page-visible="false"] * { animation-play-state: paused !important; }
-.gs-landing[data-enhanced="true"] [data-reveal]:not([data-revealed="true"]) { opacity: 0; transform: translate3d(0, 18px, 0); }
+.gs-landing[data-enhanced="true"] [data-reveal]:not([data-revealed="true"]) { opacity: 0; transform: translate3d(0, 18px, 0) scale(0.985); }
 .gs-landing[data-motion="paused"] [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
 .gs-landing[data-motion="paused"] .gs-tilt-card { transform: none !important; }
 .gs-landing [data-reveal] {
   transition:
-    opacity .6s cubic-bezier(.16, 1, .3, 1),
-    transform .6s cubic-bezier(.16, 1, .3, 1);
-  transition-delay: calc(var(--stagger-idx, 0) * 80ms);
+    opacity .65s cubic-bezier(.16, 1, .3, 1),
+    transform .65s cubic-bezier(.16, 1, .3, 1);
+  transition-delay: calc(var(--stagger-idx, 0) * 85ms);
 }
 @keyframes gs-manuscript-turn { to { transform: rotate(360deg); } }
 @keyframes gs-manuscript-float { 0%,100% { translate: 0 0; } 50% { translate: 0 -9px; } }

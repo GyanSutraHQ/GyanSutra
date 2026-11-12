@@ -73,21 +73,27 @@ export default function useLandingMotion() {
     });
 
     let observer;
+    let zoneObserver;
     if ('IntersectionObserver' in window) {
       observer = new IntersectionObserver((entries) => {
         entries.forEach(({ target, isIntersecting }) => {
-          target.dataset.inView = String(isIntersecting);
-          if (isIntersecting) {
-            target.dataset.revealed = 'true';
-            if (!target.classList.contains('gs-motion-zone')) observer.unobserve(target);
-          }
+          if (!isIntersecting) return;
+          target.dataset.revealed = 'true';
+          observer.unobserve(target);
         });
-      }, { threshold: 0.08 });
-      root.querySelectorAll('.gs-motion-zone, [data-reveal]').forEach((element) => observer.observe(element));
+      }, { threshold: 0.04, rootMargin: '60px 0px' });
+      // Scenery resumes a full screen before it re-enters the viewport, so scrolling
+      // back up never shows a cold, half-started animation.
+      zoneObserver = new IntersectionObserver((entries) => {
+        entries.forEach(({ target, isIntersecting }) => { target.dataset.inView = String(isIntersecting); });
+      }, { threshold: 0, rootMargin: '100% 0px' });
+      root.querySelectorAll('[data-reveal]').forEach((element) => observer.observe(element));
+      root.querySelectorAll('.gs-motion-zone').forEach((element) => zoneObserver.observe(element));
       root.dataset.enhanced = 'true';
     }
     return () => {
       observer?.disconnect();
+      zoneObserver?.disconnect();
       if (frame) window.cancelAnimationFrame(frame);
       window.removeEventListener('scroll', scheduleScene);
       hero?.removeEventListener('pointermove', pointer);
