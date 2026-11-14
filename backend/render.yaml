@@ -26,11 +26,15 @@ services:
       - key: ALLOWED_ORIGINS
         sync: false   # Set to your Cloudflare Pages URL e.g. https://gyansutra.pages.dev
       - key: GEMINI_GENERATION_MODELS
-        value: gemini-3.8-flash,gemini-3.1-flash-lite
+        value: gemini-2.5-flash,gemini-2.0-flash
+      - key: GROQ_MODELS
+        value: llama-3.3-70b-versatile
       - key: GROK_MODELS
         value: grok-4.7
       - key: RAG_PROVIDER_ORDER
-        value: gemini,grok,openrouter
+        value: gemini,groq,grok,openrouter
+      - key: RAG_QA_BANK_ENABLED
+        value: "true"
       - key: GEMINI_REASONING_EFFORT
         value: low
       - key: RAG_SIMILARITY_THRESHOLD

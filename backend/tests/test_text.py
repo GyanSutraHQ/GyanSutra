@@ -5,6 +5,7 @@ import pytest
 from gyansutra.config import ROOT
 from gyansutra.text import (
     classify_guardrail,
+    clean_commentary,
     direct_request,
     explicit_references,
     follow_up,
@@ -44,3 +45,22 @@ def test_rerank_deduplicates_and_keeps_exact_reference():
         {"id": "a", "similarity": 0.8},
     ]
     assert [v["id"] for v in rerank(values, "duty")] == ["b", "a"]
+
+
+def test_clean_commentary_strips_gloss_and_repairs_ocr():
+    raw_with_commentary = (
+        "2.47 कर्मणि in work? ते thy? मा never?।\n"
+        "Commentary One controls senses? action and anger? How can he expect? "
+        "It brings tranillity, eanimity, and acisition of truth against a coner."
+    )
+    cleaned = clean_commentary(raw_with_commentary)
+    assert "कर्मणि" not in cleaned
+    assert "tranquillity" in cleaned
+    assert "equanimity" in cleaned
+    assert "acquisition" in cleaned
+    assert "conquer" in cleaned
+    assert "senses, action" in cleaned
+    assert "anger? How can he expect?" in cleaned
+
+    assert clean_commentary("2.42-2.43 No Commentary.") == ""
+    assert clean_commentary("2.47 कर्मणि in work? ते thy?") == ""

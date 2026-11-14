@@ -13,9 +13,11 @@ from langchain_core.retrievers import BaseRetriever
 from .cache import CapacityBudget, ServiceError, SingleFlight, TTLCache
 from .config import enabled, integer, number
 from .firestore import retrieved
+from .qabank import QABankService
 from .query import QueryBridge
 from .retrieval import (
     LexicalRetriever,
+    evidence_text,
     fuse_results,
     query_terms,
     requested_sources,
@@ -26,6 +28,7 @@ from .retrieval import (
 from .text import (
     POLICY,
     classify_guardrail,
+    clean_commentary,
     context_ids,
     direct_request,
     explicit_references,
@@ -35,6 +38,7 @@ from .text import (
     rerank,
     response_script_matches,
     retrieval_query,
+    tokenize,
     truncate,
     unsupported_references,
     verse_reference,
@@ -51,17 +55,31 @@ LANGUAGES = {
 CITATION_FIELDS = "id source_id sourceText translationSources verificationStatus verified chapterNumber verseNumber book kanda kandaNumber sarga shlokaNumber partNumber partTitle sectionNumber passageNumber storyTitle sanskrit transliteration translationEnglish translationHindi similarity tags".split()
 
 
+def format_citations(records) -> list[dict]:
+    """Extract normalized client-safe citation fields from verse/passage records."""
+    return [
+        {
+            k: modernize(v[k]) if k == "translationEnglish" else v[k]
+            for k in CITATION_FIELDS
+            if k in v
+        }
+        for v in records
+    ]
+
+
 def source_explanation(verse) -> str:
     verse = verse or {}
-    commentary = next(
-        (
-            v.get("explanation")
-            for v in (verse.get("detailedExplanations") or [])
-            if v.get("explanation") and "english" in str(v.get("language") or "english").lower()
-        ),
-        "",
+    preferred = clean_commentary(verse.get("explanationEnglish")) or clean_commentary(
+        verse.get("comments")
     )
-    return modernize(verse.get("explanationEnglish") or verse.get("comments") or commentary)
+    if preferred:
+        return preferred
+    for entry in verse.get("detailedExplanations") or []:
+        if "english" in str(entry.get("language") or "english").lower():
+            cleaned = clean_commentary(entry.get("explanation"))
+            if cleaned:
+                return cleaned
+    return ""
 
 
 def extractive_answer(question, verses, reason="generation_unavailable", language="en") -> str:
@@ -69,12 +87,19 @@ def extractive_answer(question, verses, reason="generation_unavailable", languag
     if not verses:
         return words["noEvidence"] + "\n\n" + words["example"]
     if reason != "direct_text":
-        explanation = source_explanation(verses[0])
-        return (
-            truncate(explanation, 480) + " [S1]"
-            if explanation and language == "en"
-            else POLICY["unavailable"][language]
-        )
+        primary = verses[0]
+        explanation = source_explanation(primary)
+        if not explanation or language != "en":
+            return POLICY["unavailable"][language]
+        ref = verse_reference(primary)
+        translation = modernize(primary.get("translationEnglish") or "")
+        parts = []
+        if translation:
+            parts.append(f"In **{ref}** [S1], the text states: {truncate(translation, 280)}")
+            parts.append(truncate(explanation, 460))
+        else:
+            parts.append(f"According to **{ref}** [S1]: {truncate(explanation, 540)}")
+        return "\n\n".join(parts)
     labels = POLICY["referenceWords"][language]
     passages = []
     for index, verse in enumerate(verses[:2]):
@@ -160,6 +185,7 @@ class RagService:
             if enabled("RAG_HYBRID_ENABLED")
             else None
         )
+        self.qa_bank = QABankService() if enabled("RAG_QA_BANK_ENABLED") else None
         self.retrieval_budget = CapacityBudget(
             integer("RAG_MAX_CONCURRENT_RETRIEVALS", 8, 1, 32),
             integer("RAG_MAX_QUEUED_RETRIEVALS", 32, 0, 200),
@@ -186,6 +212,7 @@ class RagService:
                     self.max_chars,
                     self.lexical_coverage,
                     bool(self.lexical),
+                    bool(self.qa_bank),
                     self.diversity,
                     enabled("RAG_MULTILINGUAL_QUERY_ENABLED"),
                 )
@@ -261,8 +288,11 @@ class RagService:
             for commentary in commentaries:
                 if commentary_count >= self.max_commentaries:
                     break
+                cleaned = clean_commentary(commentary["explanation"])
+                if not cleaned:
+                    continue
                 lines.append(
-                    f"Commentary by {commentary.get('author') or 'Traditional teacher'}: {truncate(modernize(commentary['explanation']), self.commentary_chars)}"
+                    f"Commentary by {commentary.get('author') or 'Traditional teacher'}: {truncate(cleaned, self.commentary_chars)}"
                 )
                 commentary_count += 1
             block = "\n".join(lines)
@@ -332,6 +362,39 @@ class RagService:
 
     async def execute(self, question, history, ids, language):
         started = time.monotonic()
+        if self.qa_bank is not None:
+            qa_hit = await self.qa_bank.match(
+                question,
+                self.embeddings,
+                language=language,
+                context_ids=context_ids(ids),
+                history=history,
+            )
+            if qa_hit:
+                citations = format_citations(qa_hit["citations"])
+                return {
+                    "answer": qa_hit["answer"],
+                    "answered": True,
+                    "inContext": True,
+                    "degraded": False,
+                    "reason": "qa_bank_match",
+                    "citations": citations,
+                    "topSimilarity": round(qa_hit["score"], 4),
+                    "cached": False,
+                    "_diagnostics": {
+                        "timings": {"totalMs": round((time.monotonic() - started) * 1000)},
+                        "retrievalCacheHit": False,
+                        "generationAttempts": [],
+                        "retrievalMode": "qa_bank",
+                        "candidateCount": len(citations),
+                        "evidenceCount": len(citations),
+                        "retrievalErrors": [],
+                        "queryMode": "qa_bank",
+                        "qaBankClusterId": qa_hit["clusterId"],
+                        "qaBankAspect": qa_hit["aspect"],
+                    },
+                }
+
         timings, exact, failed, hit = {}, [], False, False
         refs = explicit_references(question)
         exact_ids = (
@@ -370,15 +433,23 @@ class RagService:
             if exact
             else select_evidence(eligible, self.top_context, self.diversity)
         )
+        # Drop unrelated tail candidates when the query has meaningful terms and the
+        # leading passage matches well, so Sarathi does not attach stray verses.
+        if not exact and len(evidence) > 1:
+            q_tokens = query_terms(question)
+            if q_tokens:
+                lead = evidence[0]
+                lead_has_overlap = bool(q_tokens & tokenize(evidence_text(lead)))
+                if lead_has_overlap or lead.get("similarity", 0) >= 0.72:
+                    min_tail_sim = max(0.75, top - 0.05)
+                    evidence = [lead] + [
+                        v
+                        for v in evidence[1:]
+                        if (q_tokens & tokenize(evidence_text(v)))
+                        or v.get("similarity", 0) >= min_tail_sim
+                    ]
         text, selected = self.build_context(evidence, language)
-        citations = [
-            {
-                k: modernize(v[k]) if k == "translationEnglish" else v[k]
-                for k in CITATION_FIELDS
-                if k in v
-            }
-            for v in selected
-        ]
+        citations = format_citations(selected)
         diagnostics = {
             "timings": timings,
             "retrievalCacheHit": hit,
@@ -588,3 +659,5 @@ class RagService:
         await self.query_bridge.close()
         if self.lexical:
             await self.lexical.close()
+        if self.qa_bank:
+            await self.qa_bank.close()

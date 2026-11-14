@@ -98,6 +98,8 @@ def create_app(store=None, embeddings=None, generation=None, http_client=None):
                 jobs = [stage(embeddings, "Embedding")]
                 if rag.lexical:
                     jobs.append(stage(rag.lexical, "Keyword index"))
+                if rag.qa_bank:
+                    jobs.append(stage(rag.qa_bank, "QA bank"))
                 await asyncio.gather(*jobs)
 
             prewarm = asyncio.create_task(warm())
@@ -354,7 +356,10 @@ def create_app(store=None, embeddings=None, generation=None, http_client=None):
                 v.strip()
                 for v in raw_ids
                 if isinstance(v, str)
-                and re.fullmatch(r"(?:bhagavad-gita|valmiki-ramayana)_\d+_\d+(?:_\d+)?", v.strip())
+                and re.fullmatch(
+                    r"(?:bhagavad-gita_\d+_\d+|valmiki-ramayana_\d+_\d+_\d+|vishnu-purana_\d+_\d+(?:_\d+)?)",
+                    v.strip(),
+                )
             )
         )[:4]
         language = body.get("language")

@@ -20,6 +20,7 @@ ENDPOINTS = {
     "gemini": "https://generativelanguage.googleapis.com/v1beta/openai/",
     "grok": "https://api.x.ai/v1",
     "openrouter": "https://openrouter.ai/api/v1",
+    "groq": "https://api.groq.com/openai/v1",
 }
 
 
@@ -64,15 +65,20 @@ class GenerationService:
             self.effort = "low"
         self.order = [
             p
-            for p in names("RAG_PROVIDER_ORDER", ["gemini", "grok", "openrouter"])
+            for p in names("RAG_PROVIDER_ORDER", ["gemini", "grok", "openrouter", "groq"])
             if p in ENDPOINTS
         ]
+        singular_gemini = os.getenv("GEMINI_GENERATION_MODEL", "").strip()
+        gemini_default = (
+            [singular_gemini, "gemini-2.5-flash", "gemini-2.0-flash"]
+            if singular_gemini
+            else ["gemini-3.8-flash", "gemini-3.1-flash-lite"]
+        )
         self.models = {
-            "gemini": names(
-                "GEMINI_GENERATION_MODELS", ["gemini-3.8-flash", "gemini-3.1-flash-lite"]
-            ),
+            "gemini": names("GEMINI_GENERATION_MODELS", gemini_default),
             "grok": names("GROK_MODELS", ["grok-4.7"]),
             "openrouter": names("OPENROUTER_MODELS", ["openrouter/free"]),
+            "groq": names("GROQ_MODELS", ["llama-3.3-70b-versatile"]),
         }
         self.circuits: dict[str, tuple[int, float]] = {}
         self.chains = OrderedDict()
@@ -84,6 +90,7 @@ class GenerationService:
             "grok": os.getenv("XAI_API_KEY") or os.getenv("GROK_API_KEY", ""),
             "openrouter": os.getenv("OPENROUTER_API_KEY")
             or (legacy if legacy.startswith("sk-or-") else ""),
+            "groq": os.getenv("GROQ_API_KEY", ""),
         }
         attempts = []
         for index in range(max((len(self.models[p]) for p in self.order), default=0)):

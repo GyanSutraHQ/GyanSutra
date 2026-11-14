@@ -28,12 +28,13 @@ VERSE = {
 def environment(monkeypatch):
     for key in list(os.environ):
         if key.startswith(
-            ("RAG_", "GEMINI_", "GROK_", "XAI_", "OPENROUTER_", "EMBEDDING_", "NARRATION_")
+            ("RAG_", "GEMINI_", "GROQ_", "GROK_", "XAI_", "OPENROUTER_", "EMBEDDING_", "NARRATION_")
         ):
             monkeypatch.delenv(key)
     monkeypatch.setenv("NODE_ENV", "test")
     monkeypatch.setenv("RAG_HYBRID_ENABLED", "false")
     monkeypatch.setenv("RAG_MULTILINGUAL_QUERY_ENABLED", "false")
+    monkeypatch.setenv("RAG_QA_BANK_ENABLED", "false")
     monkeypatch.setenv("EMBEDDING_MODEL_ID", "Xenova/gte-small")
 
 

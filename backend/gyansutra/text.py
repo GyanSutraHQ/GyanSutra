@@ -38,6 +38,56 @@ def modernize(value):
     return value
 
 
+_OCR_QU_FIXES = (
+    (re.compile(r"\bestions\b", re.I), "questions"),
+    (re.compile(r"\bestion\b", re.I), "question"),
+    (re.compile(r"\bacisition\b", re.I), "acquisition"),
+    (re.compile(r"\bconeror\b", re.I), "conqueror"),
+    (re.compile(r"\bconer(ed|s|ing)?\b", re.I), r"conquer\1"),
+    (re.compile(r"\btranillity\b", re.I), "tranquillity"),
+    (re.compile(r"\beanimity\b", re.I), "equanimity"),
+    (re.compile(r"\balification(s?)\b", re.I), r"qualification\1"),
+    (re.compile(r"\balities\b", re.I), "qualities"),
+    (re.compile(r"\bality\b", re.I), "quality"),
+)
+
+
+def _match_case(pattern, replacement, text):
+    return pattern.sub(
+        lambda m: (
+            m.expand(replacement)[:1].upper() + m.expand(replacement)[1:]
+            if m[0][:1].isupper()
+            else m.expand(replacement)
+        ),
+        text,
+    )
+
+
+def repair_ocr_text(value) -> str:
+    """Repair common OCR typos ('? ' commas and dropped 'qu' digraphs) and normalize prose."""
+    text = re.sub(r"\?(?=\s+[a-z])", ",", str(value or ""))
+    for pattern, repl in _OCR_QU_FIXES:
+        text = _match_case(pattern, repl, text)
+    return modernize(re.sub(r"\s+", " ", text).strip())
+
+
+def clean_commentary(value) -> str:
+    """Extract clean explanatory prose, stripping raw word-by-word glosses and OCR '?' artifacts."""
+    text = re.sub(r"\s+", " ", str(value or "")).strip()
+    if not text or re.search(r"\bNo Commentary\.?\s*$", text, re.I):
+        return ""
+    if re.search(r"\bCommentary\b", text, re.I):
+        parts = re.split(r"\.?\s*Commentary\b[:\-\s]*", text, maxsplit=1, flags=re.I)
+        text = parts[1].strip() if len(parts) > 1 else ""
+    elif re.match(r"^\d+\.\d+\s+[\u0900-\u097f]", text):
+        # Raw Sivananda word-by-word Sanskrit gloss with no Commentary section
+        return ""
+    text = re.sub(r"^(?:।।?\s*\d+\.\d+\s*।।?|\d+\.\d+\.?)\s*", "", text).strip()
+    if not text or re.fullmatch(r"[\d.\s।॥]+", text):
+        return ""
+    return repair_ocr_text(text)
+
+
 def truncate(value, maximum: int) -> str:
     text = re.sub(r"\s+", " ", str(value or "")).strip()
     if len(text) <= maximum:
@@ -166,6 +216,9 @@ def retrieval_query(question, history) -> str:
 
 
 def direct_request(question) -> bool:
+    lowered = str(question or "").lower()
+    if "distinguish interpretation from translation" in lowered or "partial source excerpt" in lowered:
+        return False
     return bool(
         explicit_references(question)
         and re.search(
