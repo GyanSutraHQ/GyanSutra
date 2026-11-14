@@ -1,12 +1,45 @@
 """Bounded LRU/TTL caches and cancellation-safe concurrent request coalescing."""
 
 import asyncio
+import inspect
 import time
 from collections.abc import Awaitable, Callable
 from contextlib import asynccontextmanager
 from typing import Any
 
 from cachetools import TTLCache
+
+
+async def read_persistent_cache(
+    store: Any, collection: str, doc_id: str, timeout: float = 1.5
+) -> dict | None:
+    """Safely read a persistent cache entry from Firestore when configured."""
+    getter = getattr(store, "get_cache", None)
+    if getter is None or not doc_id:
+        return None
+    try:
+        maybe = getter(collection, doc_id)
+        if inspect.isawaitable(maybe):
+            value = await asyncio.wait_for(maybe, timeout)
+            return value if isinstance(value, dict) else None
+    except Exception:
+        return None
+    return None
+
+
+async def write_persistent_cache(
+    store: Any, collection: str, doc_id: str, data: dict, timeout: float = 2.0
+) -> None:
+    """Safely persist a cache entry to Firestore without failing API requests."""
+    setter = getattr(store, "set_cache", None)
+    if setter is None or not doc_id:
+        return
+    try:
+        maybe = setter(collection, doc_id, data)
+        if inspect.isawaitable(maybe):
+            await asyncio.wait_for(maybe, timeout)
+    except Exception:
+        pass
 
 
 class ServiceError(Exception):
@@ -72,4 +105,10 @@ class SingleFlight:
         await asyncio.gather(*tasks, return_exceptions=True)
 
 
-__all__ = ["ServiceError", "SingleFlight", "TTLCache"]
+__all__ = [
+    "ServiceError",
+    "SingleFlight",
+    "TTLCache",
+    "read_persistent_cache",
+    "write_persistent_cache",
+]

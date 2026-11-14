@@ -77,6 +77,8 @@ services:
         value: "10000"
       - key: RAG_CACHE_ENABLED
         value: "true"
+      - key: RAG_PERSISTENT_CACHE_ENABLED
+        value: "true"
       - key: RAG_CACHE_MAX_ENTRIES
         value: "250"
       - key: RAG_CORPUS_VERSION

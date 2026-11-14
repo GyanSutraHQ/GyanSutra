@@ -106,6 +106,18 @@ class ScriptureStore:
     async def log(self, data: dict) -> None:
         await self.client.collection("qaLog").add(data)
 
+    async def get_cache(self, collection: str, doc_id: str) -> dict | None:
+        try:
+            return await self.get_doc(collection, doc_id)
+        except Exception:
+            return None
+
+    async def set_cache(self, collection: str, doc_id: str, data: dict) -> None:
+        try:
+            await self.client.collection(collection).document(doc_id).set(data)
+        except Exception:
+            pass
+
     async def close(self) -> None:
         if self._client is not None:
             api = self._client._firestore_api_internal
