@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getDailyVerse } from '../services/api';
 import useLanguage from '../i18n/useLanguage';
 import useLocalizedVerse, { GENERATED_LANGUAGES } from '../hooks/useLocalizedVerse';
 import useLandingMotion from '../hooks/useLandingMotion';
@@ -23,22 +21,13 @@ function openSarathi(prompt) {
 export default function Home() {
   const { language, t } = useLanguage();
   const copy = { ...(LANDING_COPY[language] || LANDING_COPY.en), ...(CINEMATIC_HERO_COPY[language] || CINEMATIC_HERO_COPY.en) };
-  const [world, setWorld] = useState('itihasas');
+  const world = 'itihasas';
   const motion = useLandingMotion();
-  const [dailyVerse, setDailyVerse] = useState(null);
+  const verse = FEATURED_VERSE;
   // The homepage displays existing translations only; simply visiting it must
   // not trigger on-demand AI translation work.
-  const dailyLocalization = useLocalizedVerse(dailyVerse, language, { enabled: false });
+  const dailyLocalization = useLocalizedVerse(verse, language, { enabled: false });
 
-  useEffect(() => {
-    let active = true;
-    getDailyVerse().then((res) => {
-      if (active && res.verse) setDailyVerse(res.verse);
-    }).catch(() => { /* The source-attributed featured verse stays available. */ });
-    return () => { active = false; };
-  }, []);
-
-  const verse = dailyVerse || FEATURED_VERSE;
   const generatedMeaning = GENERATED_LANGUAGES.has(language) && dailyLocalization.content?.translation;
   const dailyMeaning = modernizeEnglish(generatedMeaning || (language === 'hi'
     ? verse.translationHindi || verse.translationEnglish
@@ -93,12 +82,12 @@ export default function Home() {
 
       <section id="scripture-traditions" className="gs-traditions gs-landing-shell" aria-labelledby="traditions-title" lang="en" aria-label="Explore the scripture landscape">
         <div className="gs-landing-section-head" data-reveal><div><p className="gs-landing-kicker">The world of Gyan Sutra<span className="gs-landing-index" aria-hidden="true">/ 02</span></p><h2 id="traditions-title">An entire tradition.<br />A growing library.</h2></div><p>Vedas, Upanishads, Itihasas, and Puranas belong to the wider world we are building for. Explore the collections available today.</p></div>
-        <div className="gs-traditions__grid">{SCRIPTURE_TRADITIONS.map((tradition, idx) => <article key={tradition.id} className={`gs-tradition gs-tradition--${tradition.id} gs-tilt-card`} style={{ '--stagger-idx': idx }} data-reveal onMouseEnter={() => setWorld(tradition.id)}><div className="gs-tradition__art gs-motion-zone">{tradition.image && <img src={`${import.meta.env.BASE_URL}${tradition.image}`} srcSet={`${import.meta.env.BASE_URL}${tradition.image.replace('.jpg', '-sm.jpg')} 720w, ${import.meta.env.BASE_URL}${tradition.image} 1376w`} sizes="(max-width: 767px) 46vw, 290px" alt="" width="480" height="268" loading="lazy" decoding="async" fetchPriority="low" className="gs-tradition__photo" />}<div className="gs-tradition__vignette" /><div className="gs-tradition__halo" /><TraditionEmblem kind={tradition.id} /><span lang="sa">{tradition.sanskrit}</span></div><div className="gs-tradition__body"><span className={`gs-tradition__status${tradition.path === '/faq' ? ' gs-tradition__status--future' : ''}`}>{tradition.status}</span><h3>{tradition.name}</h3><p>{tradition.note}</p><div className="gs-tradition__actions"><Link className="gs-landing-link" to={tradition.path}>{tradition.action}<Arrow /></Link>{tradition.previewPath && <Link className="gs-tradition__preview-link" to={tradition.previewPath}>Preview edition</Link>}</div></div></article>)}</div>
+        <div className="gs-traditions__grid">{SCRIPTURE_TRADITIONS.map((tradition, idx) => <article key={tradition.id} className={`gs-tradition gs-tradition--${tradition.id} gs-tilt-card`} style={{ '--stagger-idx': idx }} data-reveal><div className="gs-tradition__art gs-motion-zone">{tradition.image && <img src={`${import.meta.env.BASE_URL}${tradition.image}`} srcSet={`${import.meta.env.BASE_URL}${tradition.image.replace('.jpg', '-sm.jpg')} 720w, ${import.meta.env.BASE_URL}${tradition.image} 1376w`} sizes="(max-width: 767px) 46vw, 290px" alt="" width="480" height="268" loading="lazy" decoding="async" fetchPriority="low" className="gs-tradition__photo" />}<div className="gs-tradition__vignette" /><div className="gs-tradition__halo" /><TraditionEmblem kind={tradition.id} /><span lang="sa">{tradition.sanskrit}</span></div><div className="gs-tradition__body"><span className={`gs-tradition__status${tradition.path === '/faq' ? ' gs-tradition__status--future' : ''}`}>{tradition.status}</span><h3>{tradition.name}</h3><p>{tradition.note}</p><div className="gs-tradition__actions"><Link className="gs-landing-link" to={tradition.path}>{tradition.action}<Arrow /></Link>{tradition.previewPath && <Link className="gs-tradition__preview-link" to={tradition.previewPath}>Preview edition</Link>}</div></div></article>)}</div>
       </section>
 
       <section className="gs-landing-verse-band" aria-labelledby="daily-verse-title">
         <div className="gs-landing-verse gs-landing-shell">
-          <div className="gs-landing-verse__intro" data-reveal><Lotus /><p className="gs-landing-kicker">{dailyVerse ? t('dailyDarshan') : copy.verse}<span className="gs-landing-index" aria-hidden="true">/ 03</span></p><h2 id="daily-verse-title">{copy.quiet}</h2><p>{copy.quietIntro}</p><Link className="gs-landing-link" to={versePath}>{t('readFullVerse')}<Arrow /></Link></div>
+          <div className="gs-landing-verse__intro" data-reveal><Lotus /><p className="gs-landing-kicker">{copy.verse}<span className="gs-landing-index" aria-hidden="true">/ 03</span></p><h2 id="daily-verse-title">{copy.quiet}</h2><p>{copy.quietIntro}</p><Link className="gs-landing-link" to={versePath}>{t('readFullVerse')}<Arrow /></Link></div>
           <article className="gs-landing-verse__paper" data-reveal>
             <span className="gs-landing-verse__bookmark" aria-hidden="true" />
             <p className="gs-landing-verse__sanskrit" lang="sa">{verse.sanskrit}</p>

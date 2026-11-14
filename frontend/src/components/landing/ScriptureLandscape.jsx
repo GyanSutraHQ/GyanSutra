@@ -110,29 +110,33 @@ export default function ScriptureLandscape({ world }) {
           </defs>
           <circle cx="300" cy="300" r="280" fill="url(#gs-mandala-glow)" />
           <g stroke="url(#gs-mandala-gold)">
-            <circle cx="300" cy="300" r="284" strokeOpacity=".55" strokeDasharray="2 8" strokeWidth="1.6" />
-            <circle cx="300" cy="300" r="268" strokeOpacity=".65" strokeWidth="1.4" />
-            <circle cx="300" cy="300" r="238" strokeOpacity=".75" strokeWidth="1.6" />
-            <circle cx="300" cy="300" r="204" strokeOpacity=".6" strokeDasharray="4 6" strokeWidth="1.5" />
-            <circle cx="300" cy="300" r="168" strokeOpacity=".65" strokeWidth="1.3" />
-            <circle cx="300" cy="300" r="126" strokeOpacity=".5" strokeDasharray="1 6" strokeWidth="1.6" />
-            <polygon points="300,66 502,417 98,417" strokeOpacity=".38" strokeWidth="1.2" />
-            <polygon points="300,534 502,183 98,183" strokeOpacity=".38" strokeWidth="1.2" />
-            {Array.from({ length: 24 }, (_, i) => (
-              <g key={i} transform={`rotate(${i * 15} 300 300)`}>
-                <path d="M300 16v22M300 62q24 46 0 94-24-48 0-94Z" strokeOpacity=".72" strokeWidth="1.35" fill="#ffd97d" fillOpacity=".05" />
-                <circle cx="300" cy="48" r="2.2" fill="#fff4c2" stroke="none" opacity=".85" />
-              </g>
-            ))}
-            {Array.from({ length: 12 }, (_, i) => (
-              <path
-                key={`inner-${i}`}
-                d="M300 132q16 32 0 64-16-32 0-64Z"
-                transform={`rotate(${i * 30 + 15} 300 300)`}
-                strokeOpacity=".58"
-                strokeWidth="1.2"
-              />
-            ))}
+            <g className="gs-scene-mandala__outer">
+              <circle cx="300" cy="300" r="284" strokeOpacity=".55" strokeDasharray="2 8" strokeWidth="1.6" />
+              <circle cx="300" cy="300" r="268" strokeOpacity=".65" strokeWidth="1.4" />
+              <circle cx="300" cy="300" r="238" strokeOpacity=".75" strokeWidth="1.6" />
+              <circle cx="300" cy="300" r="204" strokeOpacity=".6" strokeDasharray="4 6" strokeWidth="1.5" />
+              {Array.from({ length: 24 }, (_, i) => (
+                <g key={i} transform={`rotate(${i * 15} 300 300)`}>
+                  <path d="M300 16v22M300 62q24 46 0 94-24-48 0-94Z" strokeOpacity=".72" strokeWidth="1.35" fill="#ffd97d" fillOpacity=".05" />
+                  <circle cx="300" cy="48" r="2.2" fill="#fff4c2" stroke="none" opacity=".85" />
+                </g>
+              ))}
+            </g>
+            <g className="gs-scene-mandala__inner">
+              <circle cx="300" cy="300" r="168" strokeOpacity=".65" strokeWidth="1.3" />
+              <circle cx="300" cy="300" r="126" strokeOpacity=".5" strokeDasharray="1 6" strokeWidth="1.6" />
+              <polygon points="300,66 502,417 98,417" strokeOpacity=".38" strokeWidth="1.2" />
+              <polygon points="300,534 502,183 98,183" strokeOpacity=".38" strokeWidth="1.2" />
+              {Array.from({ length: 12 }, (_, i) => (
+                <path
+                  key={`inner-${i}`}
+                  d="M300 132q16 32 0 64-16-32 0-64Z"
+                  transform={`rotate(${i * 30 + 15} 300 300)`}
+                  strokeOpacity=".58"
+                  strokeWidth="1.2"
+                />
+              ))}
+            </g>
           </g>
         </svg>
       </div>
@@ -286,8 +290,8 @@ export default function ScriptureLandscape({ world }) {
         </g>
       </svg>
       <div className="gs-scene__selected-emblem"><TraditionEmblem kind={world} /></div>
-      <div className="gs-scene__fireflies">{Array.from({ length: 28 }, (_, i) => <i key={i} style={{ '--particle-x': `${5 + (i * 37) % 90}%`, '--particle-y': `${12 + (i * 19) % 74}%`, '--particle-delay': `${-i * .55}s`, '--particle-duration': `${4 + i % 5}s` }} />)}</div>
-      <div className="gs-scene__embers">{Array.from({ length: 22 }, (_, i) => <span key={i} style={{ '--ember-x': `${6 + (i * 41) % 88}%`, '--ember-delay': `${-i * .9}s`, '--ember-duration': `${5.5 + (i % 4) * 1.4}s` }} />)}</div>
+      <div className="gs-scene__fireflies">{Array.from({ length: 16 }, (_, i) => <i key={i} style={{ '--particle-x': `${5 + (i * 37) % 90}%`, '--particle-y': `${12 + (i * 19) % 74}%`, '--particle-delay': `${-i * .85}s`, '--particle-duration': `${4.6 + (i % 5) * .9}s` }} />)}</div>
+      <div className="gs-scene__embers">{Array.from({ length: 12 }, (_, i) => <span key={i} style={{ '--ember-x': `${6 + (i * 41) % 88}%`, '--ember-delay': `${-i * 1.3}s`, '--ember-duration': `${6 + (i % 4) * 1.4}s` }} />)}</div>
       <div className="gs-scene__shade" />
     </div>
   );

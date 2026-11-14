@@ -9,7 +9,6 @@
   --scene-flag: #ffcb57;
   position: relative;
   isolation: isolate;
-  contain: layout style paint;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,7 +16,7 @@
   width: 100%;
   margin: 0;
   padding: 0;
-  min-height: clamp(640px, calc(100dvh - 74px), 900px);
+  min-height: clamp(640px, calc(100svh - 74px), 900px);
   background: radial-gradient(ellipse 95% 75% at 58% 28%, #573314 0%, #24130c 58%, #0f0706 100%);
   overflow: hidden;
 }
@@ -27,12 +26,12 @@
 [data-theme="dark"] .gs-landing-hero {
   background: radial-gradient(ellipse 95% 75% at 58% 28%, #47290f 0%, #1c0e09 58%, #0b0505 100%);
 }
-.gs-scripture-scene { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; contain: layout style paint; }
+.gs-scripture-scene { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
 .gs-scene-backdrop {
   position: absolute;
   inset: -3%;
   z-index: -3;
-  transform: translate3d(calc(var(--scene-pointer-x, 0px) * .45), calc(var(--scene-scroll, 0px) * .12 + var(--scene-pointer-y, 0px) * .25), 0) scale(1.04);
+  transform: none;
 }
 .gs-scene-backdrop__img {
   width: 100%;
@@ -40,12 +39,10 @@
   object-fit: cover;
   object-position: center 42%;
   opacity: 0.96;
-  filter: contrast(1.08) saturate(1.18) brightness(1.04);
   transition: opacity .5s ease;
 }
 [data-theme="dark"] .gs-scene-backdrop__img {
   opacity: 0.92;
-  filter: contrast(1.1) saturate(1.16) brightness(1.02);
 }
 .gs-scene-backdrop__grade {
   position: absolute;
@@ -56,7 +53,7 @@
 }
 .gs-scene-godrays {
   position: absolute;
-  inset: -35% -25%;
+  inset: 0;
   z-index: -2;
   background: conic-gradient(
     from 142deg at 64% 18%,
@@ -70,8 +67,8 @@
     rgba(255, 208, 104, 0.14) 132deg,
     transparent 154deg
   );
-  animation: gs-godrays-sweep 16s ease-in-out infinite alternate;
-  will-change: transform, opacity;
+  opacity: 0.82;
+  animation: none;
   pointer-events: none;
 }
 .gs-scene-flare {
@@ -80,11 +77,12 @@
   top: 47%;
   width: min(90vw, 1040px);
   height: 2px;
-  transform: translate(-50%, -50%);
+  transform: translate3d(-50%, -50%, 0);
   background: linear-gradient(90deg, transparent 0%, rgba(255, 202, 88, 0.52) 18%, rgba(255, 248, 216, 0.96) 50%, rgba(255, 202, 88, 0.52) 82%, transparent 100%);
   box-shadow: 0 0 28px 4px rgba(255, 198, 82, 0.45);
   opacity: 0.82;
   animation: gs-flare-pulse 7s ease-in-out infinite;
+  will-change: transform, opacity;
   pointer-events: none;
 }
 .gs-scene-mandala {
@@ -93,17 +91,29 @@
   top: 47%;
   width: clamp(440px, 54vw, 740px);
   height: clamp(440px, 54vw, 740px);
-  transform: translate(-50%, -50%);
+  transform: translate3d(-50%, -50%, 0);
   color: #ffe294;
   opacity: 0.95;
+  backface-visibility: hidden;
   pointer-events: none;
   z-index: -1;
 }
 .gs-scene-mandala svg {
   width: 100%;
   height: 100%;
+  display: block;
+}
+.gs-scene-mandala__outer {
+  transform-box: view-box;
+  transform-origin: 300px 300px;
+  animation: gs-sun-turn 140s linear infinite;
   will-change: transform;
-  animation: gs-sun-turn 110s linear infinite;
+}
+.gs-scene-mandala__inner {
+  transform-box: view-box;
+  transform-origin: 300px 300px;
+  animation: gs-sun-turn 95s linear infinite reverse;
+  will-change: transform;
 }
 .gs-scene__canvas {
   position: absolute;
@@ -133,8 +143,8 @@
   background: radial-gradient(ellipse 46% 38% at 50% 48%, rgba(18, 9, 5, 0.56) 0%, rgba(18, 9, 5, 0.22) 60%, transparent 100%);
 }
 .gs-scene-aura { position: absolute; inset: -10%; pointer-events: none; }
-.gs-scene-aura--gold { background: radial-gradient(ellipse at 58% 24%, rgba(255, 216, 112, 0.42) 0%, transparent 58%); animation: gs-sky-breathe 11s ease-in-out infinite; }
-.gs-scene-aura--violet { background: radial-gradient(ellipse at 24% 62%, rgba(255, 176, 68, 0.22) 0%, transparent 52%); animation: gs-sky-breathe 13s ease-in-out -6.5s infinite; }
+.gs-scene-aura--gold { background: radial-gradient(ellipse at 58% 24%, rgba(255, 216, 112, 0.42) 0%, transparent 58%); }
+.gs-scene-aura--violet { background: radial-gradient(ellipse at 24% 62%, rgba(255, 176, 68, 0.22) 0%, transparent 52%); }
 .gs-landing-hero__copy {
   position: relative;
   z-index: 1;
@@ -142,6 +152,14 @@
   margin: auto 0;
   padding: 88px 0 24px;
   text-align: center;
+}
+.gs-landing-hero__copy::before {
+  content: '';
+  position: absolute;
+  inset: -24px -48px;
+  background: radial-gradient(ellipse at 50% 48%, rgba(16, 6, 3, 0.56) 0%, rgba(16, 6, 3, 0.24) 48%, transparent 76%);
+  pointer-events: none;
+  z-index: -1;
 }
 .gs-hero-invocation {
   display: inline-flex;
@@ -181,6 +199,8 @@
     0 0 0 4px rgba(255, 212, 108, 0.18),
     0 0 28px rgba(255, 192, 68, 0.65),
     inset 0 0 16px rgba(255, 216, 112, 0.38);
+  animation: gs-medallion-pulse 5.5s ease-in-out infinite;
+  will-change: transform;
 }
 .gs-hero-invocation__medallion::after {
   content: '';
@@ -189,6 +209,7 @@
   border-radius: 50%;
   border: 1px dashed rgba(255, 228, 146, 0.6);
   animation: gs-sun-turn 28s linear infinite;
+  will-change: transform;
   pointer-events: none;
 }
 .gs-hero-invocation__om {
@@ -210,7 +231,6 @@
   line-height: 1.08;
   letter-spacing: .05em;
   margin: 0;
-  filter: drop-shadow(0 6px 22px rgba(10, 4, 2, 0.88));
   animation: gs-hero-title-reveal 1s cubic-bezier(.16, 1, .3, 1) both;
 }
 .gs-landing-hero h1 em {
@@ -243,19 +263,12 @@
 .gs-hero-scroll > span { display: grid; place-items: center; width: 23px; height: 33px; border: 1px solid #ffd18c7a; border-radius: 20px; animation: gs-scroll-invitation 2.8s ease-in-out infinite; }
 .gs-landing-hero .gs-motion-toggle { color: #ffe7c0; }
 
-/* Parallax moves scenery, never the copy. The passive handler sets only these
-   three properties in a single animation frame; native scrolling stays native. */
-.gs-scene__depth--sky { transform: translate3d(calc(var(--scene-pointer-x,0px) * .3),calc(var(--scene-scroll,0px) * .16 + var(--scene-pointer-y,0px) * .2),0); }
-.gs-scene__depth--far { transform: translate3d(calc(var(--scene-pointer-x,0px) * .5),calc(var(--scene-scroll,0px) * .1),0); }
-.gs-scene__depth--middle { transform: translate3d(calc(var(--scene-pointer-x,0px) * -.5),calc(var(--scene-scroll,0px) * -.06),0); }
-.gs-scene__depth--foreground { transform: translate3d(calc(var(--scene-pointer-x,0px) * -1),calc(var(--scene-scroll,0px) * -.16),0); }
+/* Sacred geometry & ambient particles run cleanly without scroll-driven SVG repaints. */
 .gs-mural__sun { transform-origin: 0 0; animation: gs-sun-turn 70s linear infinite; }
 .gs-scene__celestial { transform-origin: 0 0; animation: gs-sun-turn 45s linear infinite reverse; }
-.gs-scene__clouds { animation: gs-cloud-drift 20s ease-in-out infinite alternate; }
-.gs-scene__birds { animation: gs-bird-flight 12s ease-in-out infinite; }
-.gs-scene__river { animation: gs-water-flow 6s ease-in-out infinite alternate; }
-.gs-scene__flag { transform-origin: 0 0; animation: gs-flag-wave 2.4s ease-in-out infinite; }
-.gs-scene__tree { transform-origin: 0 0; animation: gs-tree-sway 7s ease-in-out infinite alternate; }
+.gs-scene__clouds, .gs-scene__birds, .gs-scene__tree { animation: none; }
+.gs-scene__river { animation: gs-water-flow 7s ease-in-out infinite alternate; }
+.gs-scene__flag { transform-origin: 0 0; animation: gs-flag-wave 2.6s ease-in-out infinite; }
 .gs-scene__manuscript { animation: gs-manuscript-rise 6s ease-in-out infinite; }
 .gs-scene__relic { animation: gs-relic-float 8s ease-in-out infinite; }
 .gs-scene__relic--right { animation-delay: -4s; }
@@ -288,8 +301,9 @@
 .gs-landing[data-motion="paused"] *, .gs-landing[data-page-visible="false"] * { animation-play-state: paused !important; }
 .gs-landing[data-motion="paused"] .gs-scene__depth, .gs-landing[data-motion="paused"] .gs-scene-backdrop { transform: none; }
 @keyframes gs-sun-turn { to { transform: rotate(360deg); } }
-@keyframes gs-flare-pulse { 0%, 100% { opacity: .55; transform: translate(-50%, -50%) scaleX(.94); } 50% { opacity: .9; transform: translate(-50%, -50%) scaleX(1.04); } }
-@keyframes gs-godrays-sweep { 0% { transform: rotate(-4deg) scale(1); opacity: .74; } 100% { transform: rotate(5deg) scale(1.05); opacity: 1; } }
+@keyframes gs-medallion-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.045); } }
+@keyframes gs-flare-pulse { 0%, 100% { opacity: .55; transform: translate3d(-50%, -50%, 0) scaleX(.94); } 50% { opacity: .9; transform: translate3d(-50%, -50%, 0) scaleX(1.04); } }
+@keyframes gs-godrays-sweep { 0% { transform: rotate(-2.5deg) scale(1); opacity: .76; } 100% { transform: rotate(3deg) scale(1.03); opacity: .96; } }
 @keyframes gs-hero-title-reveal { 0% { opacity: 0; transform: translate3d(0, 14px, 0) scale(.98); } 100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); } }
 @keyframes gs-ember-rise {
   0% { transform: translate3d(0, 0, 0) scale(.7); opacity: 0; }
@@ -299,19 +313,16 @@
 }
 @keyframes gs-rays-breathe { from { opacity: .5; } to { opacity: .95; } }
 @keyframes gs-sky-breathe { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
-@keyframes gs-cloud-drift { from { transform: translateX(-25px); } to { transform: translateX(35px); } }
-@keyframes gs-bird-flight { 0%,100% { transform: translate(0,0); } 50% { transform: translate(36px,-14px); } }
-@keyframes gs-water-flow { from { transform: translateX(-16px); } to { transform: translateX(22px); } }
-@keyframes gs-flag-wave { 0%,100% { transform: skewY(-5deg) scaleX(.88); } 50% { transform: skewY(7deg) scaleX(1); } }
-@keyframes gs-tree-sway { from { transform: rotate(-1deg); } to { transform: rotate(1.5deg); } }
-@keyframes gs-manuscript-rise { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-15px) rotate(2deg); } }
-@keyframes gs-relic-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-18px); } }
-@keyframes gs-firefly { 0%,100% { transform: translate(0,0); opacity: .18; } 50% { transform: translate(12px,-32px); opacity: .85; } }
-@keyframes gs-scroll-invitation { 0%,100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+@keyframes gs-water-flow { from { transform: translate3d(-16px, 0, 0); } to { transform: translate3d(22px, 0, 0); } }
+@keyframes gs-flag-wave { 0%,100% { transform: rotate(-2.5deg) scaleX(.97); } 50% { transform: rotate(3deg) scaleX(1.03); } }
+@keyframes gs-manuscript-rise { 0%,100% { transform: translate3d(0, 0, 0) rotate(-2deg); } 50% { transform: translate3d(0, -15px, 0) rotate(2deg); } }
+@keyframes gs-relic-float { 0%,100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, -18px, 0); } }
+@keyframes gs-firefly { 0%,100% { transform: translate3d(0, 0, 0); opacity: .18; } 50% { transform: translate3d(12px, -32px, 0); opacity: .85; } }
+@keyframes gs-scroll-invitation { 0%,100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, 5px, 0); } }
 
 .gs-traditions { padding-block: 30px 92px; scroll-margin-top: 105px; }
 .gs-traditions .gs-landing-section-head > p { max-width: 365px; }
-.gs-traditions__grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 18px; perspective: 1100px; }
+.gs-traditions__grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 18px; }
 .gs-tradition {
   --tradition-color: #ffe2a1;
   --tradition-back: #2a1624;
@@ -320,11 +331,10 @@
   overflow: hidden;
   background: var(--landing-white);
   box-shadow: 0 14px 32px -14px rgba(36, 18, 34, 0.18);
-  transform-style: preserve-3d;
-  transform: perspective(1000px) rotateX(var(--card-rx, 0deg)) rotateY(var(--card-ry, 0deg));
-  transition: transform .25s cubic-bezier(.2,.8,.2,1), border-color .35s ease, box-shadow .35s ease;
+  transition: transform .25s ease, border-color .3s ease, box-shadow .3s ease;
 }
 .gs-tradition:hover {
+  transform: translateY(-3px);
   border-color: rgba(235, 178, 82, 0.85);
   box-shadow: 0 22px 44px -14px rgba(155, 61, 53, 0.25);
 }
@@ -339,12 +349,10 @@
   height: 100%;
   object-fit: cover;
   transform: scale(1.03);
-  transition: transform .85s cubic-bezier(.16, 1, .3, 1), filter .5s ease;
-  filter: saturate(1.12) contrast(1.06);
+  transition: transform .85s cubic-bezier(.16, 1, .3, 1);
 }
 .gs-tradition:hover .gs-tradition__photo {
-  transform: scale(1.11);
-  filter: saturate(1.24) brightness(1.06);
+  transform: scale(1.09);
 }
 .gs-tradition__vignette {
   position: absolute;
@@ -375,8 +383,7 @@
 @keyframes gs-book-bob { 0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); } 50% { transform: translate3d(0, -6px, 0) rotate(1.5deg); } }
 
 @media (hover: none), (max-width: 900px) {
-  .gs-traditions__grid, .gs-landing-books { perspective: none; }
-  .gs-tradition, .gs-landing-book { transform-style: flat; transform: none; }
+  .gs-tradition:hover, .gs-landing-book:hover { transform: none; }
 }
 
 @media (max-width: 1100px) {
@@ -398,11 +405,10 @@
     filter: none;
   }
   /* Eliminate full-screen animated gradient overdraw on mobile tile GPUs; keep crisp static glow + lightweight focal motion. */
-  /* Opacity/transform-only loops run on the compositor thread: no repaint, no layout. */
-  .gs-scene-godrays { inset: 0; animation: gs-rays-breathe 9s ease-in-out infinite alternate; opacity: 0.72; will-change: opacity; }
-  .gs-scene-aura--gold { animation: gs-sky-breathe 11s ease-in-out infinite; will-change: opacity; }
+  .gs-scene-godrays { inset: 0; animation: none; opacity: 0.72; }
+  .gs-scene-aura--gold { animation: none; }
   .gs-scene-aura--violet { display: none; }
-  .gs-scene-flare { box-shadow: none; height: 1.5px; will-change: transform, opacity; }
+  .gs-scene-flare { box-shadow: none; height: 1.5px; }
   .gs-scene__tree { animation: none; }
   .gs-scene__fireflies i:nth-child(n+9) { display: none; }
   .gs-scene__embers span:nth-child(n+6) { display: none; }
@@ -427,7 +433,7 @@
   .gs-landing-hero__bottom { width: calc(100% - 36px); padding-bottom: 16px; }
   .gs-traditions { padding-block: 24px 64px; }
   .gs-traditions__grid { gap: 14px; }
-  .gs-tradition__art { height: 139px; contain: layout style paint; }
+  .gs-tradition__art { height: 139px; }
   .gs-tradition__art > svg { width: 78px; height: 78px; }
   .gs-tradition__halo { width: 105px; height: 105px; }
   .gs-tradition__body { padding: 18px 14px 12px; }
@@ -450,18 +456,8 @@
 }
 
 /* Cinematic hero polish: every effect below animates only transform/opacity (compositor-only). */
-.gs-scene-backdrop__img { animation: gs-kenburns 40s ease-in-out infinite alternate; will-change: transform; }
 .gs-scene-mandala { animation: gs-mandala-in 2s cubic-bezier(.16, 1, .3, 1) both; }
 .gs-landing-hero h1 { animation-delay: .18s; }
 .gs-landing-hero__intro { animation: gs-hero-title-reveal 1s cubic-bezier(.16, 1, .3, 1) .5s both; }
 .gs-landing-hero__bottom { animation: gs-hero-title-reveal 1s cubic-bezier(.16, 1, .3, 1) .85s both; }
-@keyframes gs-kenburns { from { transform: scale(1) translate3d(0, 0, 0); } to { transform: scale(1.07) translate3d(-1%, -1%, 0); } }
-@keyframes gs-mandala-in { from { opacity: 0; transform: translate(-50%, -50%) scale(.8); } to { opacity: .95; transform: translate(-50%, -50%) scale(1); } }
-@keyframes gs-hero-exit { to { opacity: 0; transform: translate3d(0, -48px, 0) scale(.97); } }
-@keyframes gs-scene-recede { to { transform: translate3d(0, 36px, 0) scale(1.04); opacity: .55; } }
-/* Scroll-linked depth, run by the browser's scroll timeline (no JS). Reversible, so scrolling back up replays it exactly. */
-@supports (animation-timeline: scroll()) {
-  .gs-landing-hero__copy { animation: gs-hero-exit linear both; animation-timeline: scroll(root); animation-range: 0 62vh; }
-  .gs-scene-mandala > svg { animation: gs-sun-turn 110s linear infinite; }
-  .gs-scene__mobile-architecture { animation: gs-scene-recede linear both; animation-timeline: scroll(root); animation-range: 0 80vh; }
-}
+@keyframes gs-mandala-in { from { opacity: 0; transform: translate3d(-50%, -50%, 0) scale(.82); } to { opacity: .95; transform: translate3d(-50%, -50%, 0) scale(1); } }
