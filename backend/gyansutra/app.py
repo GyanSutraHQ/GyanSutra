@@ -76,7 +76,7 @@ def create_app(store=None, embeddings=None, generation=None, http_client=None):
     )
     generation = generation or GenerationService(http)
     rag = RagService(store, embeddings, generation)
-    translation, narration = TranslationService(generation), NarrationService(http)
+    translation, narration = TranslationService(generation, store=store), NarrationService(http)
     corpus = json.loads((ROOT / "data/vishnu-purana.json").read_text())
     metadata = {k: v for k, v in corpus.items() if k != "parts"}
     daily = {}

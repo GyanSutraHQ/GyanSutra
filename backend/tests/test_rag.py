@@ -176,3 +176,34 @@ async def test_singleflight_survives_one_cancelled_caller():
     finish.set()
     assert await second == 42
     await flight.close()
+
+
+async def test_persistent_qa_cache_survives_restart(store, embeddings, provider, monkeypatch):
+    factory, calls, _ = provider
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    persisted = {}
+
+    async def fake_get(collection, doc_id):
+        return persisted.get((collection, doc_id))
+
+    async def fake_set(collection, doc_id, data):
+        persisted[(collection, doc_id)] = data
+
+    store.get_cache.side_effect = fake_get
+    store.set_cache.side_effect = fake_set
+
+    rag1 = RagService(store, embeddings, factory())
+    first = await rag1.ask("What does duty mean?")
+    assert first["reason"] == "generated"
+    assert len(calls) == 1
+    assert any(col == "qaCache" for col, _ in persisted)
+
+    # Fresh RagService instance simulates a Render container restart (empty RAM TTLCache).
+    rag2 = RagService(store, embeddings, factory())
+    second = await rag2.ask("  WHAT does duty mean? ")
+    assert second["answered"] is True
+    assert second["cached"] is True
+    assert second["reason"] == "persistent_cache_hit"
+    assert second["answer"] == first["answer"]
+    assert len(calls) == 1
+    assert store.nearest.await_count == 1

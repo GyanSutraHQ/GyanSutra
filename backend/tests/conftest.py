@@ -44,6 +44,8 @@ def store():
     value.get_doc = AsyncMock(return_value=None)
     value.query = AsyncMock(return_value=[])
     value.nearest = AsyncMock(return_value=[VERSE.copy()])
+    value.get_cache = AsyncMock(return_value=None)
+    value.set_cache = AsyncMock()
     value.log = AsyncMock()
     value.close = AsyncMock()
     return value

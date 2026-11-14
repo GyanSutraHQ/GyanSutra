@@ -10,7 +10,14 @@ from typing import Any
 from langchain_core.documents import Document
 from langchain_core.retrievers import BaseRetriever
 
-from .cache import CapacityBudget, ServiceError, SingleFlight, TTLCache
+from .cache import (
+    CapacityBudget,
+    ServiceError,
+    SingleFlight,
+    TTLCache,
+    read_persistent_cache,
+    write_persistent_cache,
+)
 from .config import enabled, integer, number
 from .firestore import retrieved
 from .qabank import QABankService
@@ -200,6 +207,10 @@ class RagService:
             size, integer("RAG_RETRIEVAL_CACHE_TTL_SECONDS", 3600, 30, 86400)
         )
         self.cache_enabled = enabled("RAG_CACHE_ENABLED")
+        self.persistent_cache_enabled = self.cache_enabled and enabled("RAG_PERSISTENT_CACHE_ENABLED")
+        self.persistent_cache_ttl = integer(
+            "RAG_PERSISTENT_CACHE_TTL_SECONDS", 2592000, 300, 31536000
+        )
         self.corpus = os.getenv("RAG_CORPUS_VERSION", "gita-ramayana-vishnu-purana-v1")
         self.cache_namespace = hashlib.sha256(
             repr(
@@ -397,6 +408,56 @@ class RagService:
 
         timings, exact, failed, hit = {}, [], False, False
         refs = explicit_references(question)
+        direct_lookup = bool(refs and direct_request(question))
+        persistent_cacheable = (
+            self.persistent_cache_enabled
+            and not history
+            and not context_ids(ids)
+            and not direct_lookup
+        )
+        cache_doc_id = (
+            hashlib.sha256(
+                f"{self.cache_namespace}:{language}:{normalize_question(question)}".encode()
+            ).hexdigest()
+            if persistent_cacheable
+            else None
+        )
+        if persistent_cacheable and cache_doc_id:
+            stage = time.monotonic()
+            persisted = await read_persistent_cache(self.store, "qaCache", cache_doc_id)
+            timings["persistentCacheMs"] = round((time.monotonic() - stage) * 1000)
+            expires_at = persisted.get("expiresAt") if persisted else None
+            if (
+                persisted
+                and persisted.get("cacheNamespace") == self.cache_namespace
+                and persisted.get("answer")
+                and (not isinstance(expires_at, (int, float)) or expires_at > time.time())
+            ):
+                cached_citations = persisted.get("citations") or []
+                timings["totalMs"] = round((time.monotonic() - started) * 1000)
+                return {
+                    "answer": persisted["answer"],
+                    "answered": True,
+                    "inContext": bool(persisted.get("inContext", True)),
+                    "degraded": False,
+                    "reason": "persistent_cache_hit",
+                    "citations": cached_citations,
+                    "topSimilarity": float(persisted.get("topSimilarity") or 0),
+                    "cached": True,
+                    "_diagnostics": {
+                        "timings": timings,
+                        "responseCacheHit": True,
+                        "persistentCacheHit": True,
+                        "retrievalCacheHit": False,
+                        "generationAttempts": [],
+                        "retrievalMode": "persistent_cache",
+                        "candidateCount": len(cached_citations),
+                        "evidenceCount": len(cached_citations),
+                        "retrievalErrors": [],
+                        "queryMode": "persistent_cache",
+                    },
+                }
+
         exact_ids = (
             [r["id"] for r in refs] if refs else context_ids(ids) if follow_up(question) else []
         )
@@ -549,7 +610,26 @@ class RagService:
                     True,
                     "grounding_validation_failed",
                 )
-            return result(generated["answer"], True, True, False, "generated")
+            output = result(generated["answer"], True, True, False, "generated")
+            if persistent_cacheable and cache_doc_id:
+                await write_persistent_cache(
+                    self.store,
+                    "qaCache",
+                    cache_doc_id,
+                    {
+                        "cacheNamespace": self.cache_namespace,
+                        "language": language,
+                        "question": normalize_question(question),
+                        "answer": output["answer"],
+                        "citations": citations,
+                        "topSimilarity": top,
+                        "inContext": True,
+                        "reason": "generated",
+                        "updatedAt": time.time(),
+                        "expiresAt": time.time() + self.persistent_cache_ttl,
+                    },
+                )
+            return output
         except Exception as error:
             timings["generationMs"] = round((time.monotonic() - stage) * 1000)
             diagnostics["generationAttempts"] = getattr(error, "attempts", [])

@@ -6,7 +6,14 @@ import re
 
 from langchain_core.output_parsers import BaseOutputParser
 
-from .cache import ServiceError, SingleFlight, TTLCache
+from .cache import (
+    ServiceError,
+    SingleFlight,
+    TTLCache,
+    read_persistent_cache,
+    write_persistent_cache,
+)
+from .config import enabled
 
 TARGETS = {
     "bn": ("natural Bengali (Bangla)", r"[\u0980-\u09ff]"),
@@ -120,8 +127,10 @@ class TranslationOutputParser(BaseOutputParser[dict]):
 
 
 class TranslationService:
-    def __init__(self, generation):
+    def __init__(self, generation, store=None):
         self.generation = generation
+        self.store = store
+        self.persistent_cache_enabled = enabled("RAG_PERSISTENT_CACHE_ENABLED")
         self.cache = TTLCache(1500, 7 * 24 * 3600)
         self.flight = SingleFlight()
 
@@ -156,7 +165,28 @@ class TranslationService:
         if key in self.cache:
             return {**self.cache[key], "cached": True}
 
+        cache_doc_id = hashlib.sha256(key.encode()).hexdigest()
+
         async def generate():
+            if self.store is not None and self.persistent_cache_enabled:
+                persisted = await read_persistent_cache(self.store, "translationCache", cache_doc_id)
+                if persisted and persisted.get("translation") and persisted.get("cacheKey") == key:
+                    restored = {
+                        "requestedLanguage": language,
+                        "language": language,
+                        "translation": persisted.get("translation", ""),
+                        "explanation": persisted.get("explanation", ""),
+                        "context": persisted.get("context", ""),
+                        "wordMeanings": persisted.get("wordMeanings") or [],
+                        "basedOn": persisted.get("basedOn"),
+                        "explanationSource": persisted.get("explanationSource"),
+                        "explanationIsExcerpt": bool(persisted.get("explanationIsExcerpt")),
+                        "status": persisted.get("status") or "machine-assisted-unreviewed",
+                        "cached": True,
+                    }
+                    self.cache[key] = restored
+                    return restored
+
             prompt = f"""You are a meticulous literary translator for an Indian scripture reading application.
 
 Translate only the supplied prose into {TARGETS[language][0]}. The Sanskrit shloka is not part of the input and must never be invented or altered.
@@ -202,6 +232,13 @@ ACCURACY RULES:
                 "cached": False,
             }
             self.cache[key] = result
+            if self.store is not None and self.persistent_cache_enabled:
+                await write_persistent_cache(
+                    self.store,
+                    "translationCache",
+                    cache_doc_id,
+                    {**result, "cacheKey": key},
+                )
             return result
 
         return await self.flight.run(key, generate)

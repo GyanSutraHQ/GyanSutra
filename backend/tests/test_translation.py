@@ -56,3 +56,31 @@ async def test_translation_cache_and_stored_content_precedence():
     assert stored["status"] == "stored-source-translation"
     generation.generate.assert_awaited_once()
     await service.flight.close()
+
+
+async def test_persistent_translation_cache_survives_restart():
+    persisted = {}
+    store = Mock()
+    store.get_cache = AsyncMock(side_effect=lambda c, k: persisted.get((c, k)))
+    store.set_cache = AsyncMock(side_effect=lambda c, k, d: persisted.__setitem__((c, k), d))
+
+    generation = Mock()
+    generation.generate = AsyncMock(
+        return_value={
+            "answer": '{"translation":"কর্মে তোমার অধিকার","explanation":"","context":"","wordMeanings":[]}'
+        }
+    )
+
+    first_service = TranslationService(generation, store=store)
+    first = await first_service.translate(VERSE, "bn")
+    assert first["status"] == "machine-assisted-unreviewed"
+    assert first["cached"] is False
+    generation.generate.assert_awaited_once()
+    await first_service.flight.close()
+
+    second_service = TranslationService(generation, store=store)
+    second = await second_service.translate(VERSE, "bn")
+    assert second["translation"] == "কর্মে তোমার অধিকার"
+    assert second["cached"] is True
+    generation.generate.assert_awaited_once()
+    await second_service.flight.close()
