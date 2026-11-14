@@ -7,6 +7,22 @@ import { VitePWA } from 'vite-plugin-pwa';
 const webBase = process.env.VITE_BASE_PATH || '/';
 const siteUrl = (process.env.VITE_SITE_URL || 'https://gyansutraapp.com/').replace(/\/$/, '') + '/';
 process.env.VITE_SITE_URL = siteUrl;
+const buildVersion = process.env.CF_PAGES_COMMIT_SHA || process.env.GITHUB_SHA || Date.now().toString(36);
+process.env.VITE_APP_VERSION = buildVersion;
+
+function versionManifestPlugin() {
+  return {
+    name: 'gyansutra-version-manifest',
+    apply: 'build',
+    generateBundle() {
+      this.emitFile({
+        type: 'asset',
+        fileName: 'version.json',
+        source: JSON.stringify({ version: buildVersion }),
+      });
+    },
+  };
+}
 
 export default defineConfig(({ mode }) => {
   const isAndroidBuild = mode === 'android';
@@ -16,6 +32,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       tailwindcss(),
       react(),
+      versionManifestPlugin(),
       !isAndroidBuild && VitePWA({
       // Take a new app shell immediately. `prompt` leaves installed PWAs on
       // their old HTML/chunk set until every open client has been closed,
@@ -25,10 +42,26 @@ export default defineConfig(({ mode }) => {
       workbox: {
         clientsClaim: true,
         skipWaiting: true,
-        // Cache the small shell, not every reader and the large audio inventory
-        // during a first homepage visit. Other chunks cache as they are opened.
-        globPatterns: ['index.html', 'icons/*.{png,svg,ico}', 'assets/*.{css,woff,woff2}', 'assets/{index,vendor,polyfills,rolldown-runtime}-*.js'],
+        cleanupOutdatedCaches: true,
+        navigateFallback: null,
+        // Never precache index.html so online visitors always receive the newest
+        // deployment HTML; NetworkFirst below keeps offline navigation working.
+        globPatterns: ['icons/*.{png,svg,ico}', 'assets/*.{css,woff,woff2}', 'assets/{index,vendor,polyfills,rolldown-runtime}-*.js'],
         runtimeCaching: [
+          {
+            urlPattern: /\/version\.json$/i,
+            handler: 'NetworkOnly',
+          },
+          {
+            urlPattern: ({ request }) => request.mode === 'navigate',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'html-pages',
+              networkTimeoutSeconds: 3,
+              expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 7 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
           {
             urlPattern: /\/assets\/.*\.js$/i,
             handler: 'CacheFirst',

@@ -22,18 +22,19 @@ function canAttemptRecovery() {
   }
 }
 
-async function clearStaleAppShell() {
-  if ('serviceWorker' in navigator) {
-    const scope = new URL(import.meta.env.BASE_URL, window.location.origin).href;
+export async function clearStaleAppShell({ includeHtml = false, unregister = true } = {}) {
+  if (unregister && 'serviceWorker' in navigator) {
+    const scope = new URL(import.meta.env?.BASE_URL || '/', window.location.origin).href;
     const registration = await navigator.serviceWorker.getRegistration(scope);
     await registration?.unregister();
   }
 
   if ('caches' in window) {
     const cacheNames = await window.caches.keys();
+    const pattern = includeHtml ? /precache|workbox|html-pages/i : /precache|workbox/i;
     await Promise.all(
       cacheNames
-        .filter((name) => /precache|workbox/i.test(name))
+        .filter((name) => pattern.test(name))
         .map((name) => window.caches.delete(name)),
     );
   }

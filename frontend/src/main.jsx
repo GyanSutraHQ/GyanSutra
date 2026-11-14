@@ -7,8 +7,16 @@ import App from './App.jsx';
 import SplashScreen from './components/SplashScreen.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import { LanguageProvider } from './i18n/LanguageContext.jsx';
+import { initAppUpdate } from './utils/appUpdate.js';
 
 const basename = import.meta.env.BASE_URL;
+
+if (import.meta.env.PROD && import.meta.env.MODE !== 'android') {
+  initAppUpdate({
+    currentVersion: import.meta.env.VITE_APP_VERSION,
+    baseUrl: basename,
+  });
+}
 
 // React 19 manages metadata natively; Helmet 3 no longer replaces unowned
 // template tags. Retire the initial static SEO tags only when React starts,
