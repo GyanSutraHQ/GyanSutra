@@ -289,16 +289,29 @@ export default function App() {
         .slice(-4)
         .map(m => ({ role: m.role, content: m.content }));
 
+      let pageContextIds = [];
+      const verseMatch = location.pathname.match(/^\/verses\/([^/?#]+)/);
+      const vpMatch = location.pathname.match(/^\/vishnu-purana\/(\d+)\/(\d+)/);
+      if (verseMatch) {
+        try {
+          pageContextIds = [decodeURIComponent(verseMatch[1])];
+        } catch {
+          pageContextIds = [verseMatch[1]];
+        }
+      } else if (vpMatch) {
+        pageContextIds = [`vishnu-purana_${vpMatch[1]}_${vpMatch[2]}_1`];
+      }
+
       // Preserve the previous source IDs separately from prose. Referential
       // follow-ups such as "explain the second one" can then reuse the exact
       // evidence without another ambiguous vector search.
-      const contextIds = readingContextIds || [...messages]
+      const contextIds = readingContextIds || (pageContextIds.length ? pageContextIds : [...messages]
         .reverse()
         .find(m => m.role === 'sarathi' && m.citations?.length)
         ?.citations
         .map(citation => citation.id)
         .filter(Boolean)
-        .slice(0, 4) || [];
+        .slice(0, 4) || []);
 
       const result = await askQuestion(trimmed, history, contextIds, language);
       setMessages((cur) => [
@@ -322,7 +335,7 @@ export default function App() {
     } finally {
       setIsLoading(false);
     }
-  }, [isLoading, language, messages, t]);
+  }, [isLoading, language, location.pathname, messages, t]);
 
   useEffect(() => {
     const handleOpenSarathi = (e) => {
@@ -475,6 +488,7 @@ export default function App() {
         question={question}
         setQuestion={setQuestion}
         onAsk={handleAsk}
+        onSelectPrompt={(prompt) => submitQuestion(prompt)}
         isLoading={isLoading}
         suggestedPrompts={sarathiPrompts}
       /></Suspense>}

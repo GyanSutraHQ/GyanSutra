@@ -19,6 +19,7 @@
  */
 
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import AnimatedButton from './AnimatedButton';
 import useLanguage from '../i18n/useLanguage';
@@ -92,6 +93,31 @@ function citationLabel(citation, language, t) {
   return citation.book || 'Scripture source';
 }
 
+function citationPath(citation) {
+  if (!citation?.id) return null;
+  const idParts = citation.id.split('_');
+  if (
+    citation.book === 'vishnu-purana' ||
+    citation.source_id === 'vishnu-purana' ||
+    citation.id.startsWith('vishnu-purana_')
+  ) {
+    const part = citation.partNumber || idParts[1] || 1;
+    const section = citation.sectionNumber || idParts[2] || 1;
+    return `/vishnu-purana/${part}/${section}`;
+  }
+  if (
+    citation.book === 'gita' ||
+    citation.source_id === 'bhagavad-gita' ||
+    citation.id.startsWith('bhagavad-gita_') ||
+    citation.book === 'ramayana' ||
+    citation.source_id === 'valmiki-ramayana' ||
+    citation.id.startsWith('valmiki-ramayana_')
+  ) {
+    return `/verses/${encodeURIComponent(citation.id)}`;
+  }
+  return null;
+}
+
 // ── Component ──────────────────────────────────────────────────────────────
 
 export default function SarathiPanel({
@@ -101,6 +127,7 @@ export default function SarathiPanel({
   question,
   setQuestion,
   onAsk,
+  onSelectPrompt,
   isLoading,
   suggestedPrompts,
 }) {
@@ -356,12 +383,29 @@ export default function SarathiPanel({
                     <div className="sarathi-msg__sources" aria-label="Sources used for this answer">
                       <p className="sarathi-msg__sources-label">{t('sources')}</p>
                       <div className="sarathi-msg__source-list">
-                        {message.citations.map((citation, index) => (
-                          <span className="sarathi-msg__source" key={citation.id || index}>
-                            <span className="sarathi-msg__source-marker">[S{index + 1}]</span>
-                            {citationLabel(citation, language, t)}
-                          </span>
-                        ))}
+                        {message.citations.map((citation, index) => {
+                          const path = citationPath(citation);
+                          const content = (
+                            <>
+                              <span className="sarathi-msg__source-marker">[S{index + 1}]</span>
+                              {citationLabel(citation, language, t)}
+                            </>
+                          );
+                          return path ? (
+                            <Link
+                              key={citation.id || index}
+                              to={path}
+                              className="sarathi-msg__source sarathi-msg__source--link"
+                              onClick={onClose}
+                            >
+                              {content}
+                            </Link>
+                          ) : (
+                            <span className="sarathi-msg__source" key={citation.id || index}>
+                              {content}
+                            </span>
+                          );
+                        })}
                       </div>
                     </div>
                   )}
@@ -401,7 +445,13 @@ export default function SarathiPanel({
                     key={prompt}
                     type="button"
                     className="active-press sarathi-panel__path-btn"
-                    onClick={() => setQuestion(prompt)}
+                    onClick={() => {
+                      if (onSelectPrompt) {
+                        onSelectPrompt(prompt);
+                      } else {
+                        setQuestion(prompt);
+                      }
+                    }}
                   >
                     <span>{prompt}</span>
                     <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">

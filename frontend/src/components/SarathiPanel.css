@@ -469,6 +469,19 @@
   line-height: 1.25;
 }
 
+.sarathi-msg__source--link {
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease;
+}
+
+.sarathi-msg__source--link:hover,
+.sarathi-msg__source--link:focus-visible {
+  border-color: color-mix(in srgb, var(--marigold) 55%, var(--border));
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--text-primary);
+}
+
 .sarathi-msg__source-marker {
   color: var(--marigold);
   font-weight: 650;
