@@ -20,6 +20,7 @@ import SEOHead from './components/SEO/SEOHead';
 import Footer from './components/Footer';
 import NativeAppBridge from './components/NativeAppBridge';
 import { recoverFromChunkError } from './utils/chunkRecovery';
+import { clearSarathiHistory, getSarathiHistory, saveSarathiHistory } from './utils/localDb';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import AppControls from './components/AppControls';
 import useLanguage from './i18n/useLanguage';
@@ -176,6 +177,10 @@ export default function App() {
   ]);
 
   const [hasLoadedSarathi, setHasLoadedSarathi] = useState(false);
+  const didHydrateChatRef = useRef(false);
+  const hasChatInteractedRef = useRef(false);
+  const welcomeTextRef = useRef('');
+  welcomeTextRef.current = t('sarathiWelcome');
 
   const openSarathiPanel = useCallback(() => {
     setHasLoadedSarathi(true);
@@ -185,6 +190,39 @@ export default function App() {
   const closeSarathiPanel = useCallback(() => {
     setIsSarathiOpen(false);
   }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    getSarathiHistory().then((saved) => {
+      if (cancelled || hasChatInteractedRef.current) {
+        didHydrateChatRef.current = true;
+        return;
+      }
+      didHydrateChatRef.current = true;
+      if (saved.length > 0) {
+        setMessages((current) => {
+          const welcome = current.find((m) => m.id === 'welcome') || {
+            id: 'welcome',
+            role: 'sarathi',
+            content: welcomeTextRef.current,
+          };
+          return [welcome, ...saved];
+        });
+      }
+    });
+    return () => { cancelled = true; };
+  }, []);
+
+  useEffect(() => {
+    if (!didHydrateChatRef.current && !hasChatInteractedRef.current) return;
+    void saveSarathiHistory(messages);
+  }, [messages]);
+
+  const clearSarathiChat = useCallback(() => {
+    hasChatInteractedRef.current = true;
+    setMessages([{ id: 'welcome', role: 'sarathi', content: t('sarathiWelcome') }]);
+    void clearSarathiHistory();
+  }, [t]);
 
   useEffect(() => {
     setMessages((current) => current.map((message) => message.id === 'welcome'
@@ -277,6 +315,7 @@ export default function App() {
     const trimmed = rawQuestion.trim();
     if (!trimmed || isLoading) return;
 
+    hasChatInteractedRef.current = true;
     const userMessage = { id: `${Date.now()}-user`, role: 'user', content: trimmed };
     setMessages((cur) => [...cur, userMessage]);
     setQuestion('');
@@ -484,6 +523,7 @@ export default function App() {
       {(hasLoadedSarathi || isSarathiOpen) && <Suspense fallback={null}><SarathiPanel
         isOpen={isSarathiOpen}
         onClose={closeSarathiPanel}
+        onClearChat={clearSarathiChat}
         messages={messages}
         question={question}
         setQuestion={setQuestion}

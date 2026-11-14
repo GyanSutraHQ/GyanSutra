@@ -123,6 +123,7 @@ function citationPath(citation) {
 export default function SarathiPanel({
   isOpen,
   onClose,
+  onClearChat,
   messages,
   question,
   setQuestion,
@@ -328,6 +329,20 @@ export default function SarathiPanel({
 
           {/* Header Controls (Mobile & Desktop) ────────────────────────── */}
           <div className="sarathi-panel__header-btns">
+            {messages.length > 1 && onClearChat && (
+              <AnimatedButton
+                type="button"
+                className="active-press sarathi-panel__header-btn"
+                onClick={onClearChat}
+                aria-label="Start new conversation"
+                title="New chat"
+              >
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M4.5 10a5.5 5.5 0 1 0 1.4-3.65L4 8.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M4 4.5v3.75h3.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </AnimatedButton>
+            )}
             {/* Maximise / Restore button (Mobile only, Desktop is fixed) */}
             <div className="sarathi-panel__size-btns" role="group" aria-label="Resize panel">
               <AnimatedButton
