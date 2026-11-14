@@ -207,7 +207,9 @@ class RagService:
             size, integer("RAG_RETRIEVAL_CACHE_TTL_SECONDS", 3600, 30, 86400)
         )
         self.cache_enabled = enabled("RAG_CACHE_ENABLED")
-        self.persistent_cache_enabled = self.cache_enabled and enabled("RAG_PERSISTENT_CACHE_ENABLED")
+        self.persistent_cache_enabled = self.cache_enabled and enabled(
+            "RAG_PERSISTENT_CACHE_ENABLED"
+        )
         self.persistent_cache_ttl = integer(
             "RAG_PERSISTENT_CACHE_TTL_SECONDS", 2592000, 300, 31536000
         )

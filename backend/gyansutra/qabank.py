@@ -193,13 +193,14 @@ HINGLISH_NOISE = frozenset(
 
 # Canonical Sanskrit terms that already appear directly in English scripture discussions.
 _CORPUS_SANSKRIT = frozenset(
-    "bhakti dhyan ahimsa satya seva tyag sanyas gyan buddhi atma aatma prabhu shanti yug prem"
-    .split()
+    "bhakti dhyan ahimsa satya seva tyag sanyas gyan buddhi atma aatma prabhu shanti yug prem".split()
 )
 _HINGLISH_TRIGGER = (frozenset(HINGLISH_MAP) | HINGLISH_NOISE) - _CORPUS_SANSKRIT
 
 
-def _translate_hinglish_text(question: str, *, include_corpus_terms: bool = False) -> tuple[str, bool]:
+def _translate_hinglish_text(
+    question: str, *, include_corpus_terms: bool = False
+) -> tuple[str, bool]:
     """Translate Romanized Hindi words into English equivalents for dense and lexical matching."""
     raw = re.findall(r"[a-z0-9]+", normalize_question(question))
     if not any(tok in _HINGLISH_TRIGGER for tok in raw):
@@ -273,8 +274,7 @@ def _strip_assistant_boilerplate(question: str) -> tuple[str, bool]:
     """Strip ReadingAssistant instructions/excerpt suffix while flagging assistant prompts."""
     lower = question.lower()
     is_assistant = (
-        "distinguish interpretation from translation" in lower
-        or "partial source excerpt" in lower
+        "distinguish interpretation from translation" in lower or "partial source excerpt" in lower
     )
     if not is_assistant:
         return question, False
@@ -469,7 +469,9 @@ class QABankService:
             return
         if self._load_future is None:
             loop = asyncio.get_running_loop()
-            self._load_future = asyncio.ensure_future(loop.run_in_executor(self._executor, self.load_sync))
+            self._load_future = asyncio.ensure_future(
+                loop.run_in_executor(self._executor, self.load_sync)
+            )
         await asyncio.shield(self._load_future)
 
     async def close(self) -> None:
@@ -487,7 +489,9 @@ class QABankService:
         cids = cluster.get("citationIds") or []
         return bool(cids) and all(self._record_source(cid) in sources for cid in cids)
 
-    def _format_hit(self, idx: int, aspect: str, language: str, question: str, score: float) -> dict:
+    def _format_hit(
+        self, idx: int, aspect: str, language: str, question: str, score: float
+    ) -> dict:
         cluster = self.clusters[idx]
         answers = cluster.get("answers") or {}
         use_hindi = language == "hi" or (aspect == "hi") or _has_devanagari(question)
@@ -631,9 +635,7 @@ class QABankService:
         if not refs and context_ids and len(context_ids) >= 1:
             ctx_id = context_ids[0]
             if ctx_id in self.citation_to_cluster and (
-                is_assistant
-                or follow_up(match_q)
-                or len(_query_lex_tokens(match_q)) <= 3
+                is_assistant or follow_up(match_q) or len(_query_lex_tokens(match_q)) <= 3
             ):
                 idx = self.citation_to_cluster[ctx_id]
                 if is_assistant or not self._extra_unknown_terms(match_q, idx):
@@ -679,7 +681,9 @@ class QABankService:
                         dense >= 0.72 and (overlap >= 2 or coverage >= 0.5)
                     )
                 else:
-                    accepted = dense >= 0.78 and (overlap >= 2 or coverage >= 0.8) and coverage >= 0.5
+                    accepted = (
+                        dense >= 0.78 and (overlap >= 2 or coverage >= 0.8) and coverage >= 0.5
+                    )
             else:
                 accepted = is_macro_or_topic and overlap >= 2 and coverage >= 0.6
 

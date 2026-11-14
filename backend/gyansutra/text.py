@@ -217,7 +217,10 @@ def retrieval_query(question, history) -> str:
 
 def direct_request(question) -> bool:
     lowered = str(question or "").lower()
-    if "distinguish interpretation from translation" in lowered or "partial source excerpt" in lowered:
+    if (
+        "distinguish interpretation from translation" in lowered
+        or "partial source excerpt" in lowered
+    ):
         return False
     return bool(
         explicit_references(question)

@@ -169,7 +169,9 @@ class TranslationService:
 
         async def generate():
             if self.store is not None and self.persistent_cache_enabled:
-                persisted = await read_persistent_cache(self.store, "translationCache", cache_doc_id)
+                persisted = await read_persistent_cache(
+                    self.store, "translationCache", cache_doc_id
+                )
                 if persisted and persisted.get("translation") and persisted.get("cacheKey") == key:
                     restored = {
                         "requestedLanguage": language,

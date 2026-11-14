@@ -200,7 +200,11 @@ def _pick_gita_speaker(payload: dict, previous_speaker: str) -> tuple[str, str]:
     sanskrit = payload.get("sanskrit") or ""
     translation = (payload.get("translationEnglish") or "").lower()
 
-    if "श्रीभगवानुवाच" in sanskrit or "blessed lord said" in translation or "supreme personality" in translation:
+    if (
+        "श्रीभगवानुवाच" in sanskrit
+        or "blessed lord said" in translation
+        or "supreme personality" in translation
+    ):
         return "Lord Krishna", "Arjuna"
     if "अर्जुन उवाच" in sanskrit or "arjuna said" in translation:
         return "Arjuna", "Lord Krishna"
@@ -288,21 +292,20 @@ def _build_gita_data(records_by_id: dict[str, dict]):
         tags = [str(t).strip() for t in (payload.get("tags") or []) if str(t).strip()]
         theme = CHAPTER_THEMES.get(ch, ch_title_en)
 
-        what_ans = f"In Bhagavad Gita {ch}.{vs} ({ch_title_en}), {speaker} states: \"{verse_en}\" [S1]."
+        what_ans = (
+            f'In Bhagavad Gita {ch}.{vs} ({ch_title_en}), {speaker} states: "{verse_en}" [S1].'
+        )
         if en_comm and en_comm.lower() != verse_en.lower():
             what_ans += f" {en_comm} [S1]."
 
-        why_ans = (
-            f"Bhagavad Gita {ch}.{vs} is spoken during {theme.lower()} [S1]. "
-            + (
-                f"Commentators note: {en_comm} [S1]."
-                if en_comm
-                else f"It clarifies why {speaker} guides {listener} through this moment of dharma and inner clarity [S1]."
-            )
+        why_ans = f"Bhagavad Gita {ch}.{vs} is spoken during {theme.lower()} [S1]. " + (
+            f"Commentators note: {en_comm} [S1]."
+            if en_comm
+            else f"It clarifies why {speaker} guides {listener} through this moment of dharma and inner clarity [S1]."
         )
 
         how_ans = (
-            f"Practicing Bhagavad Gita {ch}.{vs} means applying its core insight—\"{ _sentence_clip(verse_en, 210) }\"—in daily choices [S1]. "
+            f'Practicing Bhagavad Gita {ch}.{vs} means applying its core insight—"{_sentence_clip(verse_en, 210)}"—in daily choices [S1]. '
             + (
                 f"In commentary: {en_comm} [S1]."
                 if en_comm
@@ -316,32 +319,44 @@ def _build_gita_data(records_by_id: dict[str, dict]):
         )
 
         where_ans = (
-            f"Bhagavad Gita {ch}.{vs} appears in Chapter {ch}, titled \"{ch_title_en}\" ({ch_title_sk}) [S1]. "
+            f'Bhagavad Gita {ch}.{vs} appears in Chapter {ch}, titled "{ch_title_en}" ({ch_title_sk}) [S1]. '
             f"The setting is the sacred battlefield of Kurukshetra, where {speaker} addresses {listener} [S1]."
         )
 
         who_ans = (
             f"In Bhagavad Gita {ch}.{vs}, {speaker} is speaking to {listener} during Chapter {ch} ({ch_title_en}) [S1]. "
-            f"Here, {speaker} conveys this message: \"{_sentence_clip(verse_en, 200)}\" [S1]."
+            f'Here, {speaker} conveys this message: "{_sentence_clip(verse_en, 200)}" [S1].'
         )
 
-        hi_ans = f"भगवद्गीता अध्याय {ch} ({ch_title_hi}) के श्लोक {vs} में {speaker_hi} {listener_hi} से कहते हैं: \"{verse_hi}\" [S1]।"
+        hi_ans = f'भगवद्गीता अध्याय {ch} ({ch_title_hi}) के श्लोक {vs} में {speaker_hi} {listener_hi} से कहते हैं: "{verse_hi}" [S1]।'
         if hi_comm:
             hi_ans += f" {hi_comm} [S1]।"
 
         speaker_short = speaker.replace("Lord ", "").replace("King ", "")
         questions = [
             {"q": f"What does Bhagavad Gita {ch}.{vs} say?", "aspect": "what"},
-            {"q": f"What is the meaning of Bhagavad Gita chapter {ch} verse {vs}?", "aspect": "what"},
+            {
+                "q": f"What is the meaning of Bhagavad Gita chapter {ch} verse {vs}?",
+                "aspect": "what",
+            },
             {"q": f"What does Gita {ch}.{vs} teach?", "aspect": "what"},
             {"q": f"Why is Bhagavad Gita {ch}.{vs} significant?", "aspect": "why"},
-            {"q": f"Why does {speaker_short} teach this in Bhagavad Gita {ch}.{vs}?", "aspect": "why"},
+            {
+                "q": f"Why does {speaker_short} teach this in Bhagavad Gita {ch}.{vs}?",
+                "aspect": "why",
+            },
             {"q": f"How can I apply Bhagavad Gita {ch}.{vs} in daily life?", "aspect": "how"},
             {"q": f"How is the teaching of Gita {ch}.{vs} practiced?", "aspect": "how"},
             {"q": f"When was Bhagavad Gita {ch}.{vs} spoken?", "aspect": "when"},
             {"q": f"When in life should I remember Bhagavad Gita {ch}.{vs}?", "aspect": "when"},
-            {"q": f"Where does Bhagavad Gita {ch}.{vs} appear in the scripture?", "aspect": "where"},
-            {"q": f"Where is the setting of Bhagavad Gita chapter {ch} verse {vs}?", "aspect": "where"},
+            {
+                "q": f"Where does Bhagavad Gita {ch}.{vs} appear in the scripture?",
+                "aspect": "where",
+            },
+            {
+                "q": f"Where is the setting of Bhagavad Gita chapter {ch} verse {vs}?",
+                "aspect": "where",
+            },
             {"q": f"Who is speaking in Bhagavad Gita {ch}.{vs}?", "aspect": "who"},
             {"q": f"Who is addressed in Bhagavad Gita {ch}.{vs}?", "aspect": "who"},
             {"q": f"Explain Bhagavad Gita {ch}.{vs} simply", "aspect": "summary"},
@@ -429,26 +444,31 @@ def _build_gita_data(records_by_id: dict[str, dict]):
         ch_verses = verses_by_chapter[ch]
         first_id, first_payload = ch_verses[0]
         key_vs = famous_verses.get(ch, 1)
-        key_pair = next((pair for pair in ch_verses if int(pair[1].get("verseNumber") or 0) == key_vs), ch_verses[-1])
+        key_pair = next(
+            (pair for pair in ch_verses if int(pair[1].get("verseNumber") or 0) == key_vs),
+            ch_verses[-1],
+        )
         key_id, key_payload = key_pair
         cids = [first_id] if key_id == first_id else [first_id, key_id]
         s2_marker = "[S2]" if len(cids) > 1 else "[S1]"
 
-        first_en = _sentence_clip(_clean_english(first_payload.get("translationEnglish") or ""), 200)
+        first_en = _sentence_clip(
+            _clean_english(first_payload.get("translationEnglish") or ""), 200
+        )
         key_en = _sentence_clip(_clean_english(key_payload.get("translationEnglish") or ""), 220)
         key_hi = _sentence_clip(_clean_hindi(key_payload.get("translationHindi") or ""), 220)
 
         what_ans = (
-            f"Bhagavad Gita Chapter {ch}, \"{ch_title_en}\" ({ch_title_sk}), contains {vcount} verses and focuses on {theme} [S1]. "
-            f"It opens with {first_en} [S1] and highlights teachings such as: \"{key_en}\" {s2_marker}."
+            f'Bhagavad Gita Chapter {ch}, "{ch_title_en}" ({ch_title_sk}), contains {vcount} verses and focuses on {theme} [S1]. '
+            f'It opens with {first_en} [S1] and highlights teachings such as: "{key_en}" {s2_marker}.'
         )
         why_ans = (
             f"Chapter {ch} ({ch_title_en}) matters in the Bhagavad Gita because it develops {theme} [S1]. "
-            f"A central insight of this chapter is captured in {ch}.{key_vs}: \"{key_en}\" {s2_marker}."
+            f'A central insight of this chapter is captured in {ch}.{key_vs}: "{key_en}" {s2_marker}.'
         )
         how_ans = (
             f"You can apply the message of Gita Chapter {ch} ({ch_title_en}) by reflecting on {theme} in daily decisions [S1]. "
-            f"In particular, put its core principle into practice: \"{key_en}\" {s2_marker}."
+            f'In particular, put its core principle into practice: "{key_en}" {s2_marker}.'
         )
         when_ans = (
             f"Chapter {ch} is taught on the battlefield of Kurukshetra just before the Mahabharata war begins, as Krishna addresses Arjuna's confusion ({vcount} verses) [S1]. "
@@ -463,8 +483,8 @@ def _build_gita_data(records_by_id: dict[str, dict]):
             f"Across its {vcount} verses, their exchange reveals {theme} {s2_marker}."
         )
         hi_ans = (
-            f"भगवद्गीता अध्याय {ch} ({ch_title_hi}) में {vcount} श्लोक हैं और इसका मुख्य विषय \"{theme}\" है [S1]। "
-            f"इस अध्याय का प्रमुख संदेश: \"{key_hi}\" {s2_marker}।"
+            f'भगवद्गीता अध्याय {ch} ({ch_title_hi}) में {vcount} श्लोक हैं और इसका मुख्य विषय "{theme}" है [S1]। '
+            f'इस अध्याय का प्रमुख संदेश: "{key_hi}" {s2_marker}।'
         )
 
         questions = [
@@ -537,8 +557,10 @@ def _build_ramayana_data(records_by_id: dict[str, dict], needed_cids: set[str] |
     clusters = []
     kanda_sargas: dict[int, list[tuple[int, str, str, str]]] = defaultdict(list)
 
-    for (knum, snum) in sorted(sarga_groups.keys()):
-        items = sorted(sarga_groups[(knum, snum)], key=lambda pair: int(pair[1].get("shlokaNumber") or 0))
+    for knum, snum in sorted(sarga_groups.keys()):
+        items = sorted(
+            sarga_groups[(knum, snum)], key=lambda pair: int(pair[1].get("shlokaNumber") or 0)
+        )
         kname = kanda_names.get(knum, f"Kanda {knum}")
         kname_hi = KANDA_HINDI.get(knum, kname)
 
@@ -576,7 +598,7 @@ def _build_ramayana_data(records_by_id: dict[str, dict], needed_cids: set[str] |
             f"In Valmiki Ramayana, {kname}, Sarga {snum} ({shloka_count} shlokas), {summary} [S1]."
         )
         if opening and opening.lower() not in summary.lower():
-            what_ans += f" The opening lines relate: \"{_sentence_clip(opening, 220)}\" {s2_marker}."
+            what_ans += f' The opening lines relate: "{_sentence_clip(opening, 220)}" {s2_marker}.'
 
         why_ans = (
             f"{kname}, Sarga {snum} is an integral episode {timeline} [S1]. "
@@ -594,12 +616,8 @@ def _build_ramayana_data(records_by_id: dict[str, dict], needed_cids: set[str] |
             f"This episode is recorded in Sarga {snum} of {kname} in Sage Valmiki's Ramayana ({shloka_count} shlokas) [S1]. "
             f"Context of the scene: {_sentence_clip(summary, 230)} {s2_marker}."
         )
-        who_ans = (
-            f"In {kname}, Sarga {snum} of the Valmiki Ramayana, the scene focuses on the figures involved in this episode: {_sentence_clip(summary, 250)} [S1]."
-        )
-        hi_ans = (
-            f"वाल्मीकि रामायण के {kname_hi} (सर्ग {snum}, {shloka_count} श्लोक) का सार यह है: {_sentence_clip(summary, 240)} [S1]।"
-        )
+        who_ans = f"In {kname}, Sarga {snum} of the Valmiki Ramayana, the scene focuses on the figures involved in this episode: {_sentence_clip(summary, 250)} [S1]."
+        hi_ans = f"वाल्मीकि रामायण के {kname_hi} (सर्ग {snum}, {shloka_count} श्लोक) का सार यह है: {_sentence_clip(summary, 240)} [S1]।"
 
         questions = [
             {"q": f"What happens in Valmiki Ramayana {kname} Sarga {snum}?", "aspect": "what"},
@@ -623,8 +641,7 @@ def _build_ramayana_data(records_by_id: dict[str, dict], needed_cids: set[str] |
         ]
 
         embed_text = (
-            f"Valmiki Ramayana {kname} Kanda {knum} Sarga {snum} Canto {snum}. "
-            f"{summary} {opening}"
+            f"Valmiki Ramayana {kname} Kanda {knum} Sarga {snum} Canto {snum}. {summary} {opening}"
         )
 
         clusters.append(
@@ -659,7 +676,9 @@ def _build_ramayana_data(records_by_id: dict[str, dict], needed_cids: set[str] |
         sargas = kanda_sargas[knum]
         first_sarga = sargas[0]
         mid_sarga = sargas[len(sargas) // 2]
-        cids = [first_sarga[1]] if mid_sarga[1] == first_sarga[1] else [first_sarga[1], mid_sarga[1]]
+        cids = (
+            [first_sarga[1]] if mid_sarga[1] == first_sarga[1] else [first_sarga[1], mid_sarga[1]]
+        )
         s2_marker = "[S2]" if len(cids) > 1 else "[S1]"
         timeline = KANDA_TIMELINE.get(knum, f"in {kname}")
         scount = len(sargas)
@@ -672,18 +691,10 @@ def _build_ramayana_data(records_by_id: dict[str, dict], needed_cids: set[str] |
             f"{kname} is essential to the Valmiki Ramayana because its {scount} sargas trace events {timeline} [S1]. "
             f"Key episodes highlight dharmic duty, perseverance, and devotion under trial {s2_marker}."
         )
-        how_ans = (
-            f"Across {scount} sargas, {kname} progresses from {_sentence_clip(first_sarga[2], 170)} [S1] toward major turning points {timeline} {s2_marker}."
-        )
-        when_ans = (
-            f"{kname} is the {knum}th book of Valmiki's seven-kanda epic, chronicling events {timeline} [S1]."
-        )
-        where_ans = (
-            f"{kname} forms Book {knum} ({scount} sargas) of the Valmiki Ramayana [S1]. Key settings and events include {_sentence_clip(first_sarga[2], 200)} [S1]."
-        )
-        who_ans = (
-            f"In {kname}, Sage Valmiki narrates pivotal episodes {timeline}, opening with {_sentence_clip(first_sarga[2], 200)} [S1]."
-        )
+        how_ans = f"Across {scount} sargas, {kname} progresses from {_sentence_clip(first_sarga[2], 170)} [S1] toward major turning points {timeline} {s2_marker}."
+        when_ans = f"{kname} is the {knum}th book of Valmiki's seven-kanda epic, chronicling events {timeline} [S1]."
+        where_ans = f"{kname} forms Book {knum} ({scount} sargas) of the Valmiki Ramayana [S1]. Key settings and events include {_sentence_clip(first_sarga[2], 200)} [S1]."
+        who_ans = f"In {kname}, Sage Valmiki narrates pivotal episodes {timeline}, opening with {_sentence_clip(first_sarga[2], 200)} [S1]."
         hi_ans = (
             f"{kname_hi} वाल्मीकि रामायण का {knum}वाँ काण्ड है, जिसमें {scount} सर्ग हैं [S1]। "
             f"इसका आरम्भ इस प्रसंग से होता है: {_sentence_clip(first_sarga[2], 200)} [S1]।"
@@ -781,49 +792,67 @@ def _build_vishnu_data(records_by_id: dict[str, dict]):
             summary = _sentence_clip(synopsis or para1, 360)
             excerpt = _sentence_clip(para1, 240)
 
-            what_ans = f"In Vishnu Purana, Part {pnum} ({ptitle}), Section {snum} (\"{stitle}\"), {summary} [S1]."
+            what_ans = f'In Vishnu Purana, Part {pnum} ({ptitle}), Section {snum} ("{stitle}"), {summary} [S1].'
             if excerpt and excerpt.lower() not in summary.lower():
-                what_ans += f" Opening text: \"{excerpt}\" [S1]."
+                what_ans += f' Opening text: "{excerpt}" [S1].'
 
             why_ans = (
-                f"Section {snum} (\"{stitle}\") contributes to Part {pnum}'s overarching focus on {ptheme.lower()} [S1]. "
+                f'Section {snum} ("{stitle}") contributes to Part {pnum}\'s overarching focus on {ptheme.lower()} [S1]. '
                 f"In this section, Sage Parashara clarifies: {_sentence_clip(summary, 240)} [S1]."
             )
-            how_ans = (
-                f"The Vishnu Purana presents \"{stitle}\" (Part {pnum}, Section {snum}) as a dialogue in which Maitreya questions Sage Parashara: {_sentence_clip(summary, 240)} [S1]."
-            )
+            how_ans = f'The Vishnu Purana presents "{stitle}" (Part {pnum}, Section {snum}) as a dialogue in which Maitreya questions Sage Parashara: {_sentence_clip(summary, 240)} [S1].'
             when_ans = (
-                f"Vishnu Purana Part {pnum}, Section {snum} (\"{stitle}\") appears within the {pnum}th Part ({ptitle}), structured around {ptheme.lower()} [S1]. "
+                f'Vishnu Purana Part {pnum}, Section {snum} ("{stitle}") appears within the {pnum}th Part ({ptitle}), structured around {ptheme.lower()} [S1]. '
                 f"Read this section when exploring {_sentence_clip(summary, 180)} [S1]."
             )
-            where_ans = (
-                f"This teaching is located in Vishnu Purana, Part {pnum} ({ptitle}), Section {snum}, titled \"{stitle}\" [S1]."
-            )
+            where_ans = f'This teaching is located in Vishnu Purana, Part {pnum} ({ptitle}), Section {snum}, titled "{stitle}" [S1].'
             who_ans = (
-                f"Like the rest of the Vishnu Purana, Part {pnum}, Section {snum} (\"{stitle}\") is narrated by Sage Parashara to his disciple Maitreya [S1]. "
+                f'Like the rest of the Vishnu Purana, Part {pnum}, Section {snum} ("{stitle}") is narrated by Sage Parashara to his disciple Maitreya [S1]. '
                 f"The discourse centers on: {_sentence_clip(summary, 220)} [S1]."
             )
-            hi_ans = (
-                f"विष्णु पुराण के {p_hi} ({ptitle}), अध्याय {snum} (\"{stitle}\") में महर्षि पराशर मैत्रेय को यह वर्णन सुनाते हैं: {_sentence_clip(summary, 240)} [S1]।"
-            )
+            hi_ans = f'विष्णु पुराण के {p_hi} ({ptitle}), अध्याय {snum} ("{stitle}") में महर्षि पराशर मैत्रेय को यह वर्णन सुनाते हैं: {_sentence_clip(summary, 240)} [S1]।'
 
             questions = [
                 {"q": f"What is Vishnu Purana Part {pnum} Section {snum} about?", "aspect": "what"},
                 {"q": f"What does Vishnu Purana {pnum}.{snum} ({stitle}) teach?", "aspect": "what"},
-                {"q": f"What is the story of \"{stitle}\" in Vishnu Purana?", "aspect": "what"},
-                {"q": f"Why is Vishnu Purana Part {pnum} Section {snum} important?", "aspect": "why"},
-                {"q": f"Why does Sage Parashara explain {stitle} in Vishnu Purana {pnum}.{snum}?", "aspect": "why"},
+                {"q": f'What is the story of "{stitle}" in Vishnu Purana?', "aspect": "what"},
+                {
+                    "q": f"Why is Vishnu Purana Part {pnum} Section {snum} important?",
+                    "aspect": "why",
+                },
+                {
+                    "q": f"Why does Sage Parashara explain {stitle} in Vishnu Purana {pnum}.{snum}?",
+                    "aspect": "why",
+                },
                 {"q": f"How does Vishnu Purana describe {stitle}?", "aspect": "how"},
                 {"q": f"How is Vishnu Purana Part {pnum} Section {snum} framed?", "aspect": "how"},
-                {"q": f"When does the topic of {stitle} appear in Vishnu Purana?", "aspect": "when"},
-                {"q": f"Where is the story of {stitle} found in the Vishnu Purana?", "aspect": "where"},
-                {"q": f"Where does Vishnu Purana Part {pnum} Section {snum} fit in the text?", "aspect": "where"},
+                {
+                    "q": f"When does the topic of {stitle} appear in Vishnu Purana?",
+                    "aspect": "when",
+                },
+                {
+                    "q": f"Where is the story of {stitle} found in the Vishnu Purana?",
+                    "aspect": "where",
+                },
+                {
+                    "q": f"Where does Vishnu Purana Part {pnum} Section {snum} fit in the text?",
+                    "aspect": "where",
+                },
                 {"q": f"Who speaks in Vishnu Purana Part {pnum} Section {snum}?", "aspect": "who"},
                 {"q": f"Who asks questions in Vishnu Purana {pnum}.{snum}?", "aspect": "who"},
-                {"q": f"Explain Vishnu Purana Part {pnum} Section {snum} simply", "aspect": "summary"},
+                {
+                    "q": f"Explain Vishnu Purana Part {pnum} Section {snum} simply",
+                    "aspect": "summary",
+                },
                 {"q": f"Summarize Vishnu Purana Part {pnum} Section {snum}", "aspect": "summary"},
-                {"q": f"What are the key points of Vishnu Purana {pnum}.{snum}?", "aspect": "points"},
-                {"q": f"Vishnu Purana Part {pnum} Section {snum} mein kya bataya gaya hai?", "aspect": "what"},
+                {
+                    "q": f"What are the key points of Vishnu Purana {pnum}.{snum}?",
+                    "aspect": "points",
+                },
+                {
+                    "q": f"Vishnu Purana Part {pnum} Section {snum} mein kya bataya gaya hai?",
+                    "aspect": "what",
+                },
                 {"q": f"Vishnu Purana {pnum}.{snum} ka matlab kya hai?", "aspect": "summary"},
                 {"q": f"विष्णु पुराण {p_hi} अध्याय {snum} में क्या वर्णन है?", "aspect": "hi"},
                 {"q": f"विष्णु पुराण भाग {pnum} खंड {snum} ({stitle}) किस बारे में है?", "aspect": "hi"},
@@ -858,39 +887,38 @@ def _build_vishnu_data(records_by_id: dict[str, dict]):
             sample_topics = ", ".join(section_titles[:4])
             s2_marker = "[S2]" if len(part_cids) > 1 else "[S1]"
             what_ans = (
-                f"Vishnu Purana Part {pnum}, titled \"{ptitle}\", contains {scount} sections focused on {ptheme.lower()} [S1]. "
+                f'Vishnu Purana Part {pnum}, titled "{ptitle}", contains {scount} sections focused on {ptheme.lower()} [S1]. '
                 f"Its sections include {sample_topics} {s2_marker}."
             )
-            why_ans = (
-                f"Part {pnum} ({ptitle}) is crucial because its {scount} sections explain {ptheme.lower()} in the cosmic narrative of the Vishnu Purana [S1]."
-            )
-            how_ans = (
-                f"Part {pnum} progresses through {scount} dialogue sections between Maitreya and Sage Parashara, beginning with {sample_topics} [S1]."
-            )
-            when_ans = (
-                f"Part {pnum} ({ptitle}) forms the {pnum}th of the six books (Amshas) of the Vishnu Purana, detailing {ptheme.lower()} [S1]."
-            )
-            where_ans = (
-                f"Part {pnum} ({ptitle}) spans {scount} sections within the six-part structure of the Vishnu Purana [S1]."
-            )
-            who_ans = (
-                f"Throughout Part {pnum} ({ptitle}), Sage Parashara answers Maitreya's questions across {scount} sections on {ptheme.lower()} [S1]."
-            )
+            why_ans = f"Part {pnum} ({ptitle}) is crucial because its {scount} sections explain {ptheme.lower()} in the cosmic narrative of the Vishnu Purana [S1]."
+            how_ans = f"Part {pnum} progresses through {scount} dialogue sections between Maitreya and Sage Parashara, beginning with {sample_topics} [S1]."
+            when_ans = f"Part {pnum} ({ptitle}) forms the {pnum}th of the six books (Amshas) of the Vishnu Purana, detailing {ptheme.lower()} [S1]."
+            where_ans = f"Part {pnum} ({ptitle}) spans {scount} sections within the six-part structure of the Vishnu Purana [S1]."
+            who_ans = f"Throughout Part {pnum} ({ptitle}), Sage Parashara answers Maitreya's questions across {scount} sections on {ptheme.lower()} [S1]."
             hi_ans = (
                 f"विष्णु पुराण के {p_hi} ({ptitle}) में {scount} अध्याय हैं, जिनका मुख्य विषय {ptheme} है [S1]।"
             )
 
             questions = [
                 {"q": f"What is Vishnu Purana Part {pnum} about?", "aspect": "what"},
-                {"q": f"What does Part {pnum} ({ptitle}) of the Vishnu Purana cover?", "aspect": "what"},
+                {
+                    "q": f"What does Part {pnum} ({ptitle}) of the Vishnu Purana cover?",
+                    "aspect": "what",
+                },
                 {"q": f"What is the summary of Vishnu Purana Part {pnum}?", "aspect": "what"},
                 {"q": f"Why is Vishnu Purana Part {pnum} significant?", "aspect": "why"},
-                {"q": f"Why does Sage Parashara teach Part {pnum} of Vishnu Purana?", "aspect": "why"},
+                {
+                    "q": f"Why does Sage Parashara teach Part {pnum} of Vishnu Purana?",
+                    "aspect": "why",
+                },
                 {"q": f"How is Vishnu Purana Part {pnum} organized?", "aspect": "how"},
                 {"q": f"How many sections are in Vishnu Purana Part {pnum}?", "aspect": "what"},
                 {"q": f"When is Vishnu Purana Part {pnum} studied in the text?", "aspect": "when"},
                 {"q": f"When does Part {pnum} appear in the Vishnu Purana?", "aspect": "when"},
-                {"q": f"Where do the teachings of Part {pnum} fit in Vishnu Purana?", "aspect": "where"},
+                {
+                    "q": f"Where do the teachings of Part {pnum} fit in Vishnu Purana?",
+                    "aspect": "where",
+                },
                 {"q": f"Where does Part {pnum} ({ptitle}) appear?", "aspect": "where"},
                 {"q": f"Who narrates Vishnu Purana Part {pnum}?", "aspect": "who"},
                 {"q": f"Who is listening in Vishnu Purana Part {pnum}?", "aspect": "who"},
@@ -983,7 +1011,9 @@ def _build_curated_clusters(records_by_id: dict[str, dict]):
         cids = list(topic.get("citationIds") or [])
         missing = [cid for cid in cids if cid not in records_by_id]
         if missing:
-            raise ValueError(f"Curated topic {topic['id']} references unknown citationIds: {missing}")
+            raise ValueError(
+                f"Curated topic {topic['id']} references unknown citationIds: {missing}"
+            )
 
         q_sample = " ".join(item["q"] for item in topic["questions"][:6])
         embed_text = f"{topic['title']} {topic['keywords']} {q_sample}"
@@ -1014,7 +1044,9 @@ def _embed_clusters(embed_texts: list[str], batch_size: int = 128) -> np.ndarray
             batch_vecs = embeddings.embed_documents(batch)
             vectors.extend(batch_vecs)
             if (start // batch_size) % 4 == 0:
-                print(f"  Embedded {min(start + batch_size, len(embed_texts))}/{len(embed_texts)} clusters...")
+                print(
+                    f"  Embedded {min(start + batch_size, len(embed_texts))}/{len(embed_texts)} clusters..."
+                )
     finally:
         embeddings.close()
 

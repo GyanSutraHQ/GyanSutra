@@ -24,7 +24,10 @@ def _topic(
         {"q": f"How can I practice {title.lower()} in daily life?", "aspect": "how"},
         {"q": f"How do I overcome or apply {title.lower()}?", "aspect": "how"},
         {"q": f"When is {title.lower()} most needed or emphasized?", "aspect": "when"},
-        {"q": f"Where is {title.lower()} taught in the Gita, Ramayana, or Vishnu Purana?", "aspect": "where"},
+        {
+            "q": f"Where is {title.lower()} taught in the Gita, Ramayana, or Vishnu Purana?",
+            "aspect": "where",
+        },
         {"q": f"Who exemplifies or teaches {title.lower()} in the scriptures?", "aspect": "who"},
         {"q": f"शास्त्रों में {title.lower()} के बारे में क्या शिक्षा दी गई है?", "aspect": "what"},
         {"q": f"{title.lower()} का क्या महत्व है और इसे जीवन में कैसे अपनाएँ?", "aspect": "how"},
@@ -492,9 +495,7 @@ CURATED_TOPICS = [
         (
             "This clarifies things whenever spirituality is mistaken for passivity or when apathy disguises itself as detachment [S1][S2]."
         ),
-        (
-            "These ideas appear in Bhagavad Gita 3.4, 3.8, and 4.18 [S1][S2][S3]."
-        ),
+        ("These ideas appear in Bhagavad Gita 3.4, 3.8, and 4.18 [S1][S2][S3]."),
         (
             "Sri Krishna corrects Arjuna's impulse to drop his bow, distinguishing true renunciation from mere avoidance [S1][S3]."
         ),
@@ -813,9 +814,7 @@ CURATED_TOPICS = [
         (
             "Divine manifestation is spoken of whenever moral order reaches crisis across ages (yuga yuge) [S1][S2]."
         ),
-        (
-            "These famous verses sit at Bhagavad Gita Chapter 4 Verses 4.7 and 4.8 [S1][S2]."
-        ),
+        ("These famous verses sit at Bhagavad Gita Chapter 4 Verses 4.7 and 4.8 [S1][S2]."),
         (
             "Sri Krishna reveals the mystery of His divine incarnations directly to Arjuna while explaining how eternal Yoga persists through time [S1][S2]."
         ),
@@ -991,9 +990,7 @@ CURATED_TOPICS = [
         (
             "This teaching applies directly during busy workdays, household chores, studying, or community service when formal temple time is brief [S1][S2]."
         ),
-        (
-            "Work as worship stands out clearly in Gita 3.30, 9.27, and 18.46 [S1][S2][S3]."
-        ),
+        ("Work as worship stands out clearly in Gita 3.30, 9.27, and 18.46 [S1][S2][S3]."),
         (
             "Sri Krishna teaches Arjuna how ordinary human effort—whether statecraft, teaching, craft, or family care—becomes a path of worship [S1][S2]."
         ),
@@ -1447,9 +1444,7 @@ CURATED_TOPICS = [
         (
             "Rama and Lakshmana visit Shabari's peaceful ashram near Lake Pampa shortly before entering Rishyamuka to meet Hanuman and Sugriva [S1]."
         ),
-        (
-            "Shabari's meeting with Rama appears in Aranya Kanda Sarga 74 [S1]."
-        ),
+        ("Shabari's meeting with Rama appears in Aranya Kanda Sarga 74 [S1]."),
         (
             "Mata Shabari—disciple of Sage Matanga—welcomes Sri Rama and Lakshmana with humble offerings [S1]."
         ),
@@ -1620,9 +1615,7 @@ CURATED_TOPICS = [
         (
             "This collective construction occurs immediately after Rama calms the ocean at the edge of Lanka's crossing [S1]."
         ),
-        (
-            "The construction of the great bridge is described in Yuddha Kanda Sarga 22 [S1]."
-        ),
+        ("The construction of the great bridge is described in Yuddha Kanda Sarga 22 [S1]."),
         (
             "Vanara architect Nala guides the army under Sri Rama's supervision while Samudra holds the waves steady [S1]."
         ),
@@ -1655,9 +1648,7 @@ CURATED_TOPICS = [
         (
             "Parashara narrates cosmic creation at the dawn of each cosmic cycle (Kalpa) in answer to Maitreya's opening questions [S1][S2]."
         ),
-        (
-            "Creation cosmology anchors Vishnu Purana Part 1, notably Sections 2 and 4 [S1][S2]."
-        ),
+        ("Creation cosmology anchors Vishnu Purana Part 1, notably Sections 2 and 4 [S1][S2]."),
         (
             "Sage Parashara teaches his disciple Maitreya how Vishnu guides cosmic manifestation and rescue of the earth [S1][S2]."
         ),
@@ -1723,9 +1714,7 @@ CURATED_TOPICS = [
         (
             "Prahlada's trials take place throughout his childhood education under his father's rule [S1][S2]."
         ),
-        (
-            "Prahlada's story fills Vishnu Purana Part 1, Sections 17 through 20 [S1][S2]."
-        ),
+        ("Prahlada's story fills Vishnu Purana Part 1, Sections 17 through 20 [S1][S2]."),
         (
             "Prince Prahlada teaches devotion to his schoolmates and softens even Hiranyakashipu's hostility through fearless grace [S1][S2]."
         ),
@@ -2025,9 +2014,7 @@ CURATED_TOPICS = [
         (
             "Chapter 15 provides a concise synthesis of Vedantic metaphysics just before the Gita turns toward ethics in Chapters 16-18 [S1][S2]."
         ),
-        (
-            "These core definitions sit at Bhagavad Gita Chapter 15 Verses 16 and 18 [S1][S2]."
-        ),
+        ("These core definitions sit at Bhagavad Gita Chapter 15 Verses 16 and 18 [S1][S2]."),
         (
             "Sri Krishna reveals Himself as Purushottama—revered across Vedas and lived wisdom alike [S2]."
         ),
@@ -2121,9 +2108,7 @@ CURATED_TOPICS = [
         (
             "Bodily, verbal, and mental discipline build character continuously in family conversations, work, and solitude [S1]."
         ),
-        (
-            "The three austerities are taught in Bhagavad Gita 17.14-17.17 [S1][S2]."
-        ),
+        ("The three austerities are taught in Bhagavad Gita 17.14-17.17 [S1][S2]."),
         (
             "Sri Krishna outlines balanced discipline of body, speech, and thought for Arjuna [S1][S2]."
         ),
@@ -2153,9 +2138,7 @@ CURATED_TOPICS = [
         (
             "Reflect on Gita 18.37 whenever instant gratification competes with long-term wellbeing [S2]."
         ),
-        (
-            "Threefold happiness appears in Bhagavad Gita Chapter 18 Verses 18.36-18.39 [S1][S2]."
-        ),
+        ("Threefold happiness appears in Bhagavad Gita Chapter 18 Verses 18.36-18.39 [S1][S2]."),
         (
             "Sri Krishna explains the psychology of real lasting joy versus fleeting excitement to Arjuna [S1][S2]."
         ),
@@ -2218,9 +2201,7 @@ CURATED_TOPICS = [
         (
             "Practice steady remembrance consistently day by day—both while active in work and at quiet evening reflection [S1]."
         ),
-        (
-            "This teaching sits in Bhagavad Gita Chapter 8 Verses 8.5 through 8.7 [S1][S2]."
-        ),
+        ("This teaching sits in Bhagavad Gita Chapter 8 Verses 8.5 through 8.7 [S1][S2]."),
         (
             "Sri Krishna answers Arjuna's opening questions in Chapter 8 regarding Brahman, action, and the hour of departure [S1][S2]."
         ),
@@ -2250,9 +2231,7 @@ CURATED_TOPICS = [
         (
             "Samadarshana is essential whenever social bias, status pride, or bitterness tries to harden your heart [S1][S2]."
         ),
-        (
-            "This teaching shines in Bhagavad Gita 5.18 and Chapter 6 Verse 6.29 [S1][S2]."
-        ),
+        ("This teaching shines in Bhagavad Gita 5.18 and Chapter 6 Verse 6.29 [S1][S2]."),
         (
             "Sri Krishna defines genuine spiritual enlightenment through humble, impartial respect toward every creature [S1][S2]."
         ),
@@ -2260,7 +2239,10 @@ CURATED_TOPICS = [
             "गीता 5.18 और 6.29 सिखाते हैं कि सच्चा ज्ञानी विद्या-विनययुक्त विद्वान, गाय, हाथी, श्वान और चांडाल सभी में एक ही परमात्मा को समभाव से देखता है [S1][S2]।"
         ),
         [
-            ("What does the Bhagavad Gita teach about equality and respect for all beings?", "what"),
+            (
+                "What does the Bhagavad Gita teach about equality and respect for all beings?",
+                "what",
+            ),
             ("Why does Gita 5.18 list a scholar, cow, dog, and outcaste together?", "why"),
         ],
     ),
@@ -2348,12 +2330,8 @@ CURATED_TOPICS = [
         (
             "Apply Gita 12.13 whenever others' recognition, wealth, or success triggers bitterness [S1]."
         ),
-        (
-            "Non-envy and contentment stand out in Gita 3.30, 12.13, and 4.22 [S1][S2]."
-        ),
-        (
-            "Sri Krishna praises hearts free from envy and possessive comparison [S1]."
-        ),
+        ("Non-envy and contentment stand out in Gita 3.30, 12.13, and 4.22 [S1][S2]."),
+        ("Sri Krishna praises hearts free from envy and possessive comparison [S1]."),
         (
             "ईर्ष्या और द्वेष से मुक्त रहकर सबका मित्र बनना, संतुष्ट रहना और अपने कर्तव्य को निष्काम भाव से निभाना सच्चे आत्मिक विकास का मार्ग है [S1][S2]।"
         ),
@@ -2384,9 +2362,7 @@ CURATED_TOPICS = [
         (
             "Righteous leadership appears in Gita 10.38 and the portrait of toxic greed in 16.13-16.16 [S1][S2]."
         ),
-        (
-            "Sri Krishna contrasts righteous strength with unchecked egoistic accumulation [S1][S2]."
-        ),
+        ("Sri Krishna contrasts righteous strength with unchecked egoistic accumulation [S1][S2]."),
         (
             "गीता ईमानदारी से समृद्धि और कर्तव्य-सफलता के विरुद्ध नहीं है, परंतु अंधे लोभ और अहंकारपूर्ण धन-संग्रह की निंदा करती है [S1][S2]।"
         ),
@@ -2414,9 +2390,7 @@ CURATED_TOPICS = [
         (
             "Practice Kshama whenever old family hurts, workplace conflicts, or unthinking remarks weigh on your heart [S1][S2]."
         ),
-        (
-            "Forgiveness appears prominently in Bhagavad Gita 16.1-16.3 and 12.13-12.14 [S1][S2]."
-        ),
+        ("Forgiveness appears prominently in Bhagavad Gita 16.1-16.3 and 12.13-12.14 [S1][S2]."),
         (
             "Sri Krishna counts Kshama among the noble qualities that lead toward inner liberation [S1][S2]."
         ),
@@ -2481,9 +2455,7 @@ CURATED_TOPICS = [
         (
             "This famous origin event occurs right before the main narrative begins in Bala Kanda, Sarga 2 [S2]."
         ),
-        (
-            "On the banks of the Tamasa River near Valmiki's ashram in Bala Kanda, Sarga 2 [S2]."
-        ),
+        ("On the banks of the Tamasa River near Valmiki's ashram in Bala Kanda, Sarga 2 [S2]."),
         (
             "Sage Valmiki witnesses the hunter and grieving female Krauncha bird after earlier conversing with Narada in Sarga 1 [S1][S2]."
         ),
@@ -2548,9 +2520,7 @@ CURATED_TOPICS = [
         (
             "At Sage Gautama's secluded hermitage outside Mithila in Bala Kanda, Sargas 48-49 [S1][S2]."
         ),
-        (
-            "Lord Rama honors Ahalya in the presence of Lakshmana and Sage Vishwamitra [S2]."
-        ),
+        ("Lord Rama honors Ahalya in the presence of Lakshmana and Sage Vishwamitra [S2]."),
         (
             "मिथिला जाते समय गौतम ऋषि के आश्रम में श्रीराम के चरण-स्पर्श व करुणा से तपस्विनी अहल्या का उद्धार होता है और वे पुनः आदरपूर्वक अपने परिवार से मिलती हैं [S1][S2]।"
         ),
@@ -2577,12 +2547,8 @@ CURATED_TOPICS = [
         (
             "Unfolds through the fateful night before Rama's planned coronation in Ayodhya Kanda [S1][S2]."
         ),
-        (
-            "Inside Kaikeyi's chamber in Ayodhya (Ayodhya Kanda, Sargas 10-14) [S1][S2]."
-        ),
-        (
-            "Queen Kaikeyi demands the boons from agonized King Dasharatha [S1][S2]."
-        ),
+        ("Inside Kaikeyi's chamber in Ayodhya (Ayodhya Kanda, Sargas 10-14) [S1][S2]."),
+        ("Queen Kaikeyi demands the boons from agonized King Dasharatha [S1][S2]."),
         (
             "मंथरा के बहकावे में आकर कैकेयी ने राजा दशरथ से भरत के राज्याभिषेक और श्रीराम के लिए 14 वर्ष के वनवास के दो वर मांग लिए, जिससे दशरथ अत्यंत व्यथित हो गए [S1][S2]।"
         ),
@@ -2609,9 +2575,7 @@ CURATED_TOPICS = [
         (
             "Takes place shortly after Rama, Sita, and Lakshmana leave Ayodhya for the forest [S1][S2]."
         ),
-        (
-            "At Shringiberapura on the banks of River Ganga in Ayodhya Kanda, Sargas 50-52 [S1][S2]."
-        ),
+        ("At Shringiberapura on the banks of River Ganga in Ayodhya Kanda, Sargas 50-52 [S1][S2]."),
         (
             "Lord Rama honors Chief Guha, who stays awake guarding the sleeping exiles and ferries them across the Ganga [S1][S2]."
         ),
@@ -2641,9 +2605,7 @@ CURATED_TOPICS = [
         (
             "Occurs during Bharata's emotional council trying to persuade Rama to return from Chitrakuta [S1][S2]."
         ),
-        (
-            "At Chitrakuta hermitage in Ayodhya Kanda, Sargas 108-109 [S1][S2]."
-        ),
+        ("At Chitrakuta hermitage in Ayodhya Kanda, Sargas 108-109 [S1][S2]."),
         (
             "Sage-counselor Jabali tests Rama with skeptical reasoning, and Lord Rama refutes it calmly [S1][S2]."
         ),
@@ -2667,15 +2629,11 @@ CURATED_TOPICS = [
         (
             "Wisdom and preparedness walk together: saints recognize the moral need to empower righteous protectors against oppression [S1][S2]."
         ),
-        (
-            "Seek blessing and guidance from wise elders when taking up major responsibilities [S2]."
-        ),
+        ("Seek blessing and guidance from wise elders when taking up major responsibilities [S2]."),
         (
             "After ten years of peaceful forest wanderings, leading into the Panchavati years in Aranya Kanda [S1][S2]."
         ),
-        (
-            "At Sage Agastya's hermitage in Dandaka forest (Aranya Kanda, Sargas 11-13) [S1][S2]."
-        ),
+        ("At Sage Agastya's hermitage in Dandaka forest (Aranya Kanda, Sargas 11-13) [S1][S2]."),
         (
             "Sage Agastya welcomes Rama, Sita, and Lakshmana and equips Rama to protect the forest sages [S2]."
         ),
@@ -2705,9 +2663,7 @@ CURATED_TOPICS = [
         (
             "Happens right after Rama and Sugriva forge their friendship alliance in Kishkindha Kanda [S1][S2]."
         ),
-        (
-            "At the gates of Kishkindha in Kishkindha Kanda, Sargas 17 and 18 [S1][S2]."
-        ),
+        ("At the gates of Kishkindha in Kishkindha Kanda, Sargas 17 and 18 [S1][S2]."),
         (
             "Dying King Vali questions Lord Rama candidly, and Rama states his moral justification cleanly before blessing Vali's son Angada [S1][S2]."
         ),
@@ -2737,9 +2693,7 @@ CURATED_TOPICS = [
         (
             "Before Vali's fatal duel and later when the rainy season ends and Lakshmana arrives angrily in Kishkindha [S1][S2]."
         ),
-        (
-            "In Kishkindha palace (Kishkindha Kanda, Sargas 15 and 33-35) [S1][S2]."
-        ),
+        ("In Kishkindha palace (Kishkindha Kanda, Sargas 15 and 33-35) [S1][S2]."),
         (
             "Queen Tara counsels Vali honestly and mediates peaceably with Lakshmana on Sugriva's behalf [S1][S2]."
         ),
@@ -2801,9 +2755,7 @@ CURATED_TOPICS = [
         (
             "Occurs across Sundara Kanda's opening sea crossing and arrival at Lanka's gates [S1][S2]."
         ),
-        (
-            "Over the ocean between Mount Mahendra and Lanka in Sundara Kanda, Sargas 1-2 [S1][S2]."
-        ),
+        ("Over the ocean between Mount Mahendra and Lanka in Sundara Kanda, Sargas 1-2 [S1][S2]."),
         (
             "Hanuman navigates Mainaka, Surasa, and Simhika seamlessly before entering Lanka [S1][S2]."
         ),
@@ -2833,9 +2785,7 @@ CURATED_TOPICS = [
         (
             "Happens late in Sundara Kanda right before Hanuman bids Sita farewell and returns to Rama [S1][S2]."
         ),
-        (
-            "Inside Ravana's court and across golden Lanka in Sundara Kanda, Sargas 53-54 [S1][S2]."
-        ),
+        ("Inside Ravana's court and across golden Lanka in Sundara Kanda, Sargas 53-54 [S1][S2]."),
         (
             "Ravana orders Hanuman's humiliation, and Hanuman turns the burning tail against Lanka [S1][S2]."
         ),
@@ -2862,15 +2812,9 @@ CURATED_TOPICS = [
         (
             "Speak truth honestly to family and leaders before disaster strikes—never silence conscience just to flatter [S1]."
         ),
-        (
-            "Midway through Yuddha Kanda's Lanka war after major demon commanders fall [S1][S2]."
-        ),
-        (
-            "Ravana's war council and the Lanka battlefield in Yuddha Kanda, Sargas 63-67 [S1][S2]."
-        ),
-        (
-            "Kumbhakarna admonishes Ravana candidly before confronting Rama on the field [S1][S2]."
-        ),
+        ("Midway through Yuddha Kanda's Lanka war after major demon commanders fall [S1][S2]."),
+        ("Ravana's war council and the Lanka battlefield in Yuddha Kanda, Sargas 63-67 [S1][S2]."),
+        ("Kumbhakarna admonishes Ravana candidly before confronting Rama on the field [S1][S2]."),
         (
             "युद्धकाण्ड में कुंभकर्ण ने रावण के समक्ष स्पष्ट कहा कि सीता का हरण अधर्म है, यद्यपि भ्रातृ-निष्ठा के कारण उसने युद्ध में जाकर श्रीराम के हाथों वीरगति पाई [S1][S2]।"
         ),
@@ -2894,12 +2838,8 @@ CURATED_TOPICS = [
         (
             "Act swiftly and decisively when someone needs urgent help—bring your whole strength rather than offering half-measures [S1]."
         ),
-        (
-            "During critical night battles and Indrajit/Ravana encounters in Yuddha Kanda [S1][S2]."
-        ),
-        (
-            "Between the Lanka battlefield and Himalayas (Yuddha Kanda, Sargas 74 and 101) [S1][S2]."
-        ),
+        ("During critical night battles and Indrajit/Ravana encounters in Yuddha Kanda [S1][S2]."),
+        ("Between the Lanka battlefield and Himalayas (Yuddha Kanda, Sargas 74 and 101) [S1][S2]."),
         (
             "Directed by Jambavan and physician Sushena, Hanuman rescues Lakshmana and thousands of fallen Vanaras [S1][S2]."
         ),
@@ -2926,15 +2866,9 @@ CURATED_TOPICS = [
         (
             "When overwhelmed or fatigued before an important challenge, pause briefly, breathe calmly, and reconnect with radiant inner courage and purpose [S1]."
         ),
-        (
-            "Taught immediately prior to the final decisive battle between Rama and Ravana [S1]."
-        ),
-        (
-            "Delivered on the Lanka battlefield in Yuddha Kanda, Sarga 107 [S1]."
-        ),
-        (
-            "Sage Agastya instructs fatigued Sri Rama in the sacred Aditya Hridayam hymn [S1]."
-        ),
+        ("Taught immediately prior to the final decisive battle between Rama and Ravana [S1]."),
+        ("Delivered on the Lanka battlefield in Yuddha Kanda, Sarga 107 [S1]."),
+        ("Sage Agastya instructs fatigued Sri Rama in the sacred Aditya Hridayam hymn [S1]."),
         (
             "रावण से कठिन युद्ध के बीच थकान दूर करने और विजय प्राप्त करने के लिए महर्षि अगस्त्य ने श्रीराम को सूर्य देव की स्तुति 'आदित्य हृदय स्तोत्र' का उपदेश दिया [S1]।"
         ),
@@ -2961,9 +2895,7 @@ CURATED_TOPICS = [
         (
             "Immediately following Ravana's fall in Lanka before the triumphant return to Ayodhya [S1][S2]."
         ),
-        (
-            "Outside Lanka's assembly of gods and warriors in Yuddha Kanda, Sargas 118-121 [S1][S2]."
-        ),
+        ("Outside Lanka's assembly of gods and warriors in Yuddha Kanda, Sargas 118-121 [S1][S2]."),
         (
             "Devi Sita defends her spotless character fiercely and Agni testifies to her innocence before Lord Rama and Brahma [S1][S2]."
         ),
@@ -2993,9 +2925,7 @@ CURATED_TOPICS = [
         (
             "Crowning conclusion of the main epic at the close of Yuddha Kanda, continuing throughout Rama's reign [S1]."
         ),
-        (
-            "Described joyfully in Yuddha Kanda, Sarga 131 upon Rama's coronation in Ayodhya [S1]."
-        ),
+        ("Described joyfully in Yuddha Kanda, Sarga 131 upon Rama's coronation in Ayodhya [S1]."),
         (
             "King Sri Rama governs justly alongside Queen Sita and his devoted brothers, ministers, and allies [S1]."
         ),
@@ -3022,9 +2952,7 @@ CURATED_TOPICS = [
         (
             "Pass sacred stories and values lovingly to children [S1], while remembering that inward truth outlives royal power or public misunderstanding [S2]."
         ),
-        (
-            "Unfolds in the years following Rama's coronation across Uttara Kanda [S1][S2]."
-        ),
+        ("Unfolds in the years following Rama's coronation across Uttara Kanda [S1][S2]."),
         (
             "At Sage Valmiki's forest ashram and Naimisha assembly in Uttara Kanda (Sargas 66-98) [S1][S2]."
         ),
@@ -3058,9 +2986,7 @@ CURATED_TOPICS = [
         (
             "Forms the opening two sections of Vishnu Purana Part 1 before cosmological narration begins [S1][S2]."
         ),
-        (
-            "Vishnu Purana Part 1, Sections 1 and 2 [S1][S2]."
-        ),
+        ("Vishnu Purana Part 1, Sections 1 and 2 [S1][S2]."),
         (
             "Sage Parashara teaches devoted pupil Maitreya throughout all six books of the Vishnu Purana [S1][S2]."
         ),
@@ -3087,15 +3013,9 @@ CURATED_TOPICS = [
         (
             "Honor and protect the Earth's ecological balance while trusting that cosmic order has deep restorative power [S1]."
         ),
-        (
-            "Takes place at the beginning of the present cosmic Kalpa following dissolution [S1]."
-        ),
-        (
-            "Narrated vividly in Vishnu Purana Part 1, Section 4 [S1]."
-        ),
-        (
-            "Lord Narayana manifests as Varaha and Earth (Prithivi) offers heartfelt praise [S1]."
-        ),
+        ("Takes place at the beginning of the present cosmic Kalpa following dissolution [S1]."),
+        ("Narrated vividly in Vishnu Purana Part 1, Section 4 [S1]."),
+        ("Lord Narayana manifests as Varaha and Earth (Prithivi) offers heartfelt praise [S1]."),
         (
             "विष्णु पुराण प्रथम अंश अध्याय 4 में कल्प के आरंभ में भगवान नारायण वराह अवतार धारण कर जल में डूबी पृथ्वी को अपनी दाढ़ों पर ऊपर उठाकर स्थापित करते हैं [S1]।"
         ),
@@ -3119,9 +3039,7 @@ CURATED_TOPICS = [
         (
             "Treat your present human life and duties as a rare opportunity for spiritual growth and service instead of squandering them [S2]."
         ),
-        (
-            "Studied within the cosmic cosmology and earth-geography chapters of Part 2 [S1][S2]."
-        ),
+        ("Studied within the cosmic cosmology and earth-geography chapters of Part 2 [S1][S2]."),
         (
             "Vishnu Purana Part 2, Sections 1 through 4 (notably Section 3 on Bharata-Varsha) [S1][S2]."
         ),
@@ -3151,12 +3069,8 @@ CURATED_TOPICS = [
         (
             "Check whether your spiritual knowledge softens ego and hostility—if not, pause and practice seeing one shared consciousness behind surface roles [S2]."
         ),
-        (
-            "Told by Jadabharata to King Sauvira near the end of Vishnu Purana Part 2 [S1][S2]."
-        ),
-        (
-            "Vishnu Purana Part 2, Sections 15 and 16 [S1][S2]."
-        ),
+        ("Told by Jadabharata to King Sauvira near the end of Vishnu Purana Part 2 [S1][S2]."),
+        ("Vishnu Purana Part 2, Sections 15 and 16 [S1][S2]."),
         (
             "Sage Ribhu gently awakens disciple Nidagha to non-dual wisdom, recounted through Jadabharata [S1][S2]."
         ),
@@ -3186,9 +3100,7 @@ CURATED_TOPICS = [
         (
             "Occurs near the end of every Dwapara age, especially before the present Kali age [S1][S2]."
         ),
-        (
-            "Vishnu Purana Part 3, Sections 3 and 4 [S1][S2]."
-        ),
+        ("Vishnu Purana Part 3, Sections 3 and 4 [S1][S2]."),
         (
             "Krishna Dwaipayana (Veda Vyasa) transmits the four Vedas through his principal disciples [S2]."
         ),
@@ -3215,12 +3127,8 @@ CURATED_TOPICS = [
         (
             "Cultivate harmlessness, clean honesty, freedom from jealousy, and steady remembrance of the Divine—the marks Yama himself honors [S1]."
         ),
-        (
-            "Applies lifelong in daily conduct and removes fear when facing mortality [S1]."
-        ),
-        (
-            "Vishnu Purana Part 3, Section 7 [S1]."
-        ),
+        ("Applies lifelong in daily conduct and removes fear when facing mortality [S1]."),
+        ("Vishnu Purana Part 3, Section 7 [S1]."),
         (
             "Yama instructs his servants, recounted by Bhishma to Nakula and shared by Sage Parashara [S1]."
         ),
@@ -3250,12 +3158,8 @@ CURATED_TOPICS = [
         (
             "Vital whenever chasing pleasure, shopping, status, or endless sensory novelty fails to bring lasting peace [S1]."
         ),
-        (
-            "Vishnu Purana Part 4, Section 10 [S1]."
-        ),
-        (
-            "King Yayati learns directly from experience alongside his devoted son Puru [S1]."
-        ),
+        ("Vishnu Purana Part 4, Section 10 [S1]."),
+        ("King Yayati learns directly from experience alongside his devoted son Puru [S1]."),
         (
             "राजा ययाति की कथा (चतुर्थ अंश, अध्याय 10) यह अमर सत्य सिखाती है कि कामनाएँ भोगने से कभी शांत नहीं होतीं, बल्कि घी डालने पर अग्नि की तरह और बढ़ती हैं—संतोष ही शांति देता है [S1]।"
         ),
@@ -3279,12 +3183,8 @@ CURATED_TOPICS = [
         (
             "Keep working patiently toward a worthy goal for family and society even when previous setbacks look insurmountable [S1]."
         ),
-        (
-            "Appears inside the Solar Dynasty chronicles in Vishnu Purana Part 4 [S1]."
-        ),
-        (
-            "Vishnu Purana Part 4, Section 4 [S1]."
-        ),
+        ("Appears inside the Solar Dynasty chronicles in Vishnu Purana Part 4 [S1]."),
+        ("Vishnu Purana Part 4, Section 4 [S1]."),
         (
             "Kings Sagara, Amshumat, Dilipa, and steadfast King Bhagiratha with Sage Kapila and Shiva [S1]."
         ),
@@ -3311,9 +3211,7 @@ CURATED_TOPICS = [
         (
             "Hold steady hope even when circumstances feel confining—quiet devotion opens paths through seemingly locked doors [S1]."
         ),
-        (
-            "Opens Krishna's earthly life story early in Vishnu Purana Part 5 [S1]."
-        ),
+        ("Opens Krishna's earthly life story early in Vishnu Purana Part 5 [S1]."),
         (
             "Between Kamsa's prison in Mathura and Nandagokula in Vishnu Purana Part 5, Section 3 [S1]."
         ),
@@ -3343,12 +3241,8 @@ CURATED_TOPICS = [
         (
             "Value real livelihood and ecological care around you, and meet sudden crises calmly while protecting vulnerable people beside you [S1]."
         ),
-        (
-            "Narrated during Krishna's Vrindavan youth in Vishnu Purana Part 5 [S1]."
-        ),
-        (
-            "At Mount Govardhana in Vraja (Vishnu Purana Part 5, Section 11) [S1]."
-        ),
+        ("Narrated during Krishna's Vrindavan youth in Vishnu Purana Part 5 [S1]."),
+        ("At Mount Govardhana in Vraja (Vishnu Purana Part 5, Section 11) [S1]."),
         (
             "Child Krishna shields the cowherd community while Indra realizes his arrogant mistake [S1]."
         ),
@@ -3378,18 +3272,17 @@ CURATED_TOPICS = [
         (
             "Climaxes Krishna's youth journey from Vrindavan to Mathura in Vishnu Purana Part 5 [S1]."
         ),
-        (
-            "In Mathura city and Kamsa's arena (Vishnu Purana Part 5, Section 20) [S1]."
-        ),
-        (
-            "Lord Krishna and Balarama defeat Kamsa and liberate their parents and citizens [S1]."
-        ),
+        ("In Mathura city and Kamsa's arena (Vishnu Purana Part 5, Section 20) [S1]."),
+        ("Lord Krishna and Balarama defeat Kamsa and liberate their parents and citizens [S1]."),
         (
             "मथुरा में भगवान श्रीकृष्ण और बलराम ने कुब्जा का उद्धार कर क्रूर कंस का वध किया तथा अपने माता-पिता और प्रजा को अत्याचार से मुक्त कराया [S1]।"
         ),
         [
             ("How did Krishna defeat Kamsa in Mathura?", "how"),
-            ("What happened when Krishna and Balarama met Kubja and entered Kamsa's court?", "what"),
+            (
+                "What happened when Krishna and Balarama met Kubja and entered Kamsa's court?",
+                "what",
+            ),
         ],
     ),
     _topic(
@@ -3407,12 +3300,8 @@ CURATED_TOPICS = [
         (
             "Step back from passing worldly setbacks with cosmic perspective while focusing seriously on inner realization and compassion [S1][S2]."
         ),
-        (
-            "Concludes cosmic philosophy near the end of Vishnu Purana Part 6 [S1][S2]."
-        ),
-        (
-            "Vishnu Purana Part 6, Sections 3 and 4 [S1][S2]."
-        ),
+        ("Concludes cosmic philosophy near the end of Vishnu Purana Part 6 [S1][S2]."),
+        ("Vishnu Purana Part 6, Sections 3 and 4 [S1][S2]."),
         (
             "Sage Parashara instructs Maitreya on vast timescales, Kalpas, and ultimate liberation [S1][S2]."
         ),
@@ -3442,9 +3331,7 @@ CURATED_TOPICS = [
         (
             "Serves as the philosophical and practical crown closing the entire Vishnu Purana in Part 6 [S1][S2]."
         ),
-        (
-            "Vishnu Purana Part 6, Sections 6 and 7 [S1][S2]."
-        ),
+        ("Vishnu Purana Part 6, Sections 6 and 7 [S1][S2]."),
         (
             "Wise king Keshidhwaja instructs former rival Khandikya in contemplative Yoga, concluding Parashara's teaching to Maitreya [S1][S2]."
         ),
@@ -3505,9 +3392,7 @@ CURATED_TOPICS = [
         (
             "Keep calm integrity during sudden loss or praise—acting diligently on right responsibility just as Krishna teaches and Rama demonstrates [S1][S2]."
         ),
-        (
-            "Reflect on both passages whenever sudden reversals test emotional balance [S1][S2]."
-        ),
+        ("Reflect on both passages whenever sudden reversals test emotional balance [S1][S2]."),
         (
             "Compare Gita Chapter 2 Verse 2.56 [S1] directly with Ayodhya Kanda Sarga 19 Verse 1 [S2]."
         ),
@@ -3572,12 +3457,8 @@ CURATED_TOPICS = [
         (
             "Takes place shortly after Rama meets Sugriva at Rishyamuka mountain during the search for Sita [S1]."
         ),
-        (
-            "In Kishkindha Kanda, Sarga 6 upon examining Sita's fallen ornaments [S1]."
-        ),
-        (
-            "Lakshmana speaks respectfully to grieving Sri Rama in Sugriva's presence [S1]."
-        ),
+        ("In Kishkindha Kanda, Sarga 6 upon examining Sita's fallen ornaments [S1]."),
+        ("Lakshmana speaks respectfully to grieving Sri Rama in Sugriva's presence [S1]."),
         (
             "किष्किन्धाकाण्ड में सीता जी के आभूषण देखकर लक्ष्मण कहते हैं कि वे न तो कंगन और न ही कुंडल पहचानते हैं—वे केवल प्रतिदिन चरण-वंदना करने के कारण केवल नूपुर (पायल) ही पहचानते हैं [S1]।"
         ),
@@ -3601,15 +3482,9 @@ CURATED_TOPICS = [
         (
             "Refuse to join cruelty just because everyone around you does; speak gentle truth and stand kindly with vulnerable people [S1]."
         ),
-        (
-            "Unfolds on the night before Hanuman meets Sita directly in Ashoka Vatika [S1]."
-        ),
-        (
-            "Ashoka Vatika in Sundara Kanda, Sarga 27 [S1]."
-        ),
-        (
-            "Compassionate Trijata comforts Devi Sita while rebuking cruel guards [S1]."
-        ),
+        ("Unfolds on the night before Hanuman meets Sita directly in Ashoka Vatika [S1]."),
+        ("Ashoka Vatika in Sundara Kanda, Sarga 27 [S1]."),
+        ("Compassionate Trijata comforts Devi Sita while rebuking cruel guards [S1]."),
         (
             "सुन्दरकाण्ड (सर्ग 27) में त्रिजटा अपने शुभ स्वप्न का वर्णन कर अशोक वाटिका में माता सीता को ढांढस बंधाती हैं और श्रीराम की विजय का विश्वास दिलाती हैं [S1]।"
         ),
@@ -3636,12 +3511,8 @@ CURATED_TOPICS = [
         (
             "Told within the early royal lineage narratives following Dhruva in Vishnu Purana Part 1 [S1]."
         ),
-        (
-            "Vishnu Purana Part 1, Section 13 [S1]."
-        ),
-        (
-            "Wise King Prithu succeeds tyrannical Vena and establishes harmonious prosperity [S1]."
-        ),
+        ("Vishnu Purana Part 1, Section 13 [S1]."),
+        ("Wise King Prithu succeeds tyrannical Vena and establishes harmonious prosperity [S1]."),
         (
             "विष्णु पुराण (अंश 1, अध्याय 13) में अधर्मी राजा वेन के विपरीत आदर्श राजा पृथु की कथा है, जिन्होंने पृथ्वी का पोषण और प्रजा की रक्षा कर धरती को 'पृथ्वी' नाम दिया [S1]।"
         ),
@@ -3668,19 +3539,17 @@ CURATED_TOPICS = [
         (
             "During autumn nights in Vrindavan, midway through Krishna's youth in Vishnu Purana Part 5 [S1]."
         ),
-        (
-            "Vishnu Purana Part 5, Section 13 [S1]."
-        ),
-        (
-            "Sri Krishna and the devoted Gopis along the Yamuna woods in Vrindavan [S1]."
-        ),
+        ("Vishnu Purana Part 5, Section 13 [S1]."),
+        ("Sri Krishna and the devoted Gopis along the Yamuna woods in Vrindavan [S1]."),
         (
             "विष्णु पुराण (अंश 5, अध्याय 13) में शरद् पूर्णिमा की रात्रि में श्रीकृष्ण और गोपियों की रासलीला तथा अहंकार-रहित विशुद्ध प्रेम-भक्ति का सुंदर वर्णन है [S1]।"
         ),
         [
-            ("What is the deeper meaning of Krishna and the Gopis' Rasa in Vishnu Purana 5.13?", "what"),
+            (
+                "What is the deeper meaning of Krishna and the Gopis' Rasa in Vishnu Purana 5.13?",
+                "what",
+            ),
             ("Where in the Vishnu Purana is the autumn dance with the Gopis told?", "where"),
         ],
     ),
 ]
-
